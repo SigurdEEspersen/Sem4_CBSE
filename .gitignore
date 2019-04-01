@@ -2,3 +2,4 @@
 *.info
 buildlog.txt
 log.txt
+SilentUpdate/src/main/resources/org/netbeans/modules/autoupdate/silentupdate/resources/Bundle.properties
