@@ -21,13 +21,13 @@ public class KeyBindings {
     public static final int SPACE = 5;
 
     public KeyBindings() {
-        keys = new boolean[keys.length];
-        pressedKeys = new boolean[keys.length];
+        keys = new boolean[6];
+        pressedKeys = new boolean[6];
 
     }
 
     public void update() {
-        for (int i = 0; i < keys.length; i++) {
+        for (int i = 0; i < 5; i++) {
             pressedKeys[i] = keys[i];
         }
     }
