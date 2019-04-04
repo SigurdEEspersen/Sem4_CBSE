@@ -5,12 +5,13 @@
  */
 package services;
 
+import data.GameData;
+import data.World;
+
 /**
  *
  * @author Peter
  */
-public interface IControlSystem {
-    
+public interface IPostProcessor {
     void execute(GameData gameData, World world);
-    
 }

@@ -5,12 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import dk.sdu.mmmi.cbse.common.data.Entity;
-import dk.sdu.mmmi.cbse.common.data.GameData;
-import dk.sdu.mmmi.cbse.common.data.World;
-import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
-import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
+import data.Entity;
+import data.GameData;
+import data.World;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +15,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
+import services.IPluginService;
+import services.IPostProcessor;
+import services.IControlService;
 
 public class Game implements ApplicationListener {
 
@@ -26,8 +26,8 @@ public class Game implements ApplicationListener {
     private final Lookup lookup = Lookup.getDefault();
     private final GameData gameData = new GameData();
     private World world = new World();
-    private List<IGamePluginService> gamePlugins = new CopyOnWriteArrayList<>();
-    private Lookup.Result<IGamePluginService> result;
+    private List<IPluginService> gamePlugins = new CopyOnWriteArrayList<>();
+    private Lookup.Result<IPluginService> result;
 
     @Override
     public void create() {
@@ -42,11 +42,11 @@ public class Game implements ApplicationListener {
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
-        result = lookup.lookupResult(IGamePluginService.class);
+        result = lookup.lookupResult(IPluginService.class);
         result.addLookupListener(lookupListener);
         result.allItems();
 
-        for (IGamePluginService plugin : result.allInstances()) {
+        for (IPluginService plugin : result.allInstances()) {
             plugin.start(gameData, world);
             gamePlugins.add(plugin);
         }
@@ -67,13 +67,13 @@ public class Game implements ApplicationListener {
 
     private void update() {
         // Update
-        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
-            entityProcessorService.process(gameData, world);
+        for (IControlService entityProcessorService : getEntityProcessingServices()) {
+            entityProcessorService.execute(gameData, world);
         }
 
         // Post Update
-        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
-            postEntityProcessorService.process(gameData, world);
+        for (IPostProcessor postEntityProcessorService : getPostEntityProcessingServices()) {
+            postEntityProcessorService.execute(gameData, world);
         }
     }
 
@@ -113,21 +113,21 @@ public class Game implements ApplicationListener {
     public void dispose() {
     }
 
-    private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
-        return lookup.lookupAll(IEntityProcessingService.class);
+    private Collection<? extends IControlService> getEntityProcessingServices() {
+        return lookup.lookupAll(IControlService.class);
     }
 
-    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
-        return lookup.lookupAll(IPostEntityProcessingService.class);
+    private Collection<? extends IPostProcessor> getPostEntityProcessingServices() {
+        return lookup.lookupAll(IPostProcessor.class);
     }
 
     private final LookupListener lookupListener = new LookupListener() {
         @Override
         public void resultChanged(LookupEvent le) {
 
-            Collection<? extends IGamePluginService> updated = result.allInstances();
+            Collection<? extends IPluginService> updated = result.allInstances();
 
-            for (IGamePluginService us : updated) {
+            for (IPluginService us : updated) {
                 // Newly installed modules
                 if (!gamePlugins.contains(us)) {
                     us.start(gameData, world);
@@ -136,7 +136,7 @@ public class Game implements ApplicationListener {
             }
 
             // Stop and remove module
-            for (IGamePluginService gs : gamePlugins) {
+            for (IPluginService gs : gamePlugins) {
                 if (!updated.contains(gs)) {
                     gs.stop(gameData, world);
                     gamePlugins.remove(gs);

@@ -68,8 +68,8 @@
         <module>Core</module>
         <module>SilentUpdate</module>
         <module>Common</module>
+        <module>Player</module>
     </modules>
-
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
         <brandingToken>asteroidsnetbeansmodules</brandingToken>

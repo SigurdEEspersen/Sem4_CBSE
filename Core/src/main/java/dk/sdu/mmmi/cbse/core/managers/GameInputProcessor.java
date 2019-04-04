@@ -2,8 +2,8 @@ package dk.sdu.mmmi.cbse.core.managers;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import dk.sdu.mmmi.cbse.common.data.GameData;
-import dk.sdu.mmmi.cbse.common.data.GameKeys;
+import data.GameData;
+import data.KeyBindings;
 
 public class GameInputProcessor extends InputAdapter {
 
@@ -15,57 +15,49 @@ public class GameInputProcessor extends InputAdapter {
 
     public boolean keyDown(int k) {
         if (k == Keys.UP) {
-            gameData.getKeys().setKey(GameKeys.UP, true);
+            gameData.getKeys().setKey(KeyBindings.UP, true);
         }
         if (k == Keys.LEFT) {
-            gameData.getKeys().setKey(GameKeys.LEFT, true);
+            gameData.getKeys().setKey(KeyBindings.LEFT, true);
         }
         if (k == Keys.DOWN) {
-            gameData.getKeys().setKey(GameKeys.DOWN, true);
+            gameData.getKeys().setKey(KeyBindings.DOWN, true);
         }
         if (k == Keys.RIGHT) {
-            gameData.getKeys().setKey(GameKeys.RIGHT, true);
+            gameData.getKeys().setKey(KeyBindings.RIGHT, true);
         }
-        if (k == Keys.ENTER) {
-            gameData.getKeys().setKey(GameKeys.ENTER, true);
-        }
+
         if (k == Keys.ESCAPE) {
-            gameData.getKeys().setKey(GameKeys.ESCAPE, true);
+            gameData.getKeys().setKey(KeyBindings.ESCAPE, true);
         }
         if (k == Keys.SPACE) {
-            gameData.getKeys().setKey(GameKeys.SPACE, true);
+            gameData.getKeys().setKey(KeyBindings.SPACE, true);
         }
-        if (k == Keys.SHIFT_LEFT || k == Keys.SHIFT_RIGHT) {
-            gameData.getKeys().setKey(GameKeys.SHIFT, true);
-        }
+
         return true;
     }
 
     public boolean keyUp(int k) {
         if (k == Keys.UP) {
-            gameData.getKeys().setKey(GameKeys.UP, false);
+            gameData.getKeys().setKey(KeyBindings.UP, false);
         }
         if (k == Keys.LEFT) {
-            gameData.getKeys().setKey(GameKeys.LEFT, false);
+            gameData.getKeys().setKey(KeyBindings.LEFT, false);
         }
         if (k == Keys.DOWN) {
-            gameData.getKeys().setKey(GameKeys.DOWN, false);
+            gameData.getKeys().setKey(KeyBindings.DOWN, false);
         }
         if (k == Keys.RIGHT) {
-            gameData.getKeys().setKey(GameKeys.RIGHT, false);
+            gameData.getKeys().setKey(KeyBindings.RIGHT, false);
         }
-        if (k == Keys.ENTER) {
-            gameData.getKeys().setKey(GameKeys.ENTER, false);
-        }
+
         if (k == Keys.ESCAPE) {
-            gameData.getKeys().setKey(GameKeys.ESCAPE, false);
+            gameData.getKeys().setKey(KeyBindings.ESCAPE, false);
         }
         if (k == Keys.SPACE) {
-            gameData.getKeys().setKey(GameKeys.SPACE, false);
+            gameData.getKeys().setKey(KeyBindings.SPACE, false);
         }
-        if (k == Keys.SHIFT_LEFT || k == Keys.SHIFT_RIGHT) {
-            gameData.getKeys().setKey(GameKeys.SHIFT, false);
-        }
+
         return true;
     }
 }
