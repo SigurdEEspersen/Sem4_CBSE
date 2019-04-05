@@ -79,6 +79,7 @@ public class Game implements ApplicationListener {
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
+            
             sr.setColor(1, 1, 1, 1);
 
             sr.begin(ShapeRenderer.ShapeType.Line);
