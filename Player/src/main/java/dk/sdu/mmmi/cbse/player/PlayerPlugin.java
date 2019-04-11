@@ -38,11 +38,9 @@ public class PlayerPlugin implements IPluginService {
         world.addEntity(player);
     }
 
-    private Entity createPlayerShip(GameData gameData) {
-
-        float deacceleration = 10;
-        float acceleration = 200;
-        float maxSpeed = 300;
+    private Player createPlayerShip(GameData gameData) {
+        
+        float speed = 300;
         float rotationSpeed = 5;
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
@@ -54,8 +52,13 @@ public class PlayerPlugin implements IPluginService {
         colour[2] = 1.0f;
         colour[3] = 1.0f;
 
-        Entity playerShip = new Player();
+        Player playerShip = new Player();
 
+        playerShip.setPositionX(x);
+        playerShip.setPositionY(y);
+        playerShip.setSpeed(speed);
+        playerShip.setPositionRadians(radians);
+        
         return playerShip;
     }
 
