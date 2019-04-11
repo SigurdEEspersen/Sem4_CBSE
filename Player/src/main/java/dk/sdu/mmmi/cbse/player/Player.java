@@ -63,8 +63,6 @@ public class Player extends Entity implements IEntityMovement {
 
     @Override
     public void execute(GameData gameData, Entity entity) {
-        float x = entity.getPositionX();
-        float y = entity.getPositionY();
         float radians = entity.getPositionRadians();
         float dt = gameData.getDelta();
 
@@ -80,30 +78,33 @@ public class Player extends Entity implements IEntityMovement {
 
         entity.setPositionX(entity.getPositionX() * dt);
 
-        if (entity.getPositionX() > gameData.getDisplayWidth()) {
-            entity.setPositionX(gameData.getDisplayWidth());
-        }
+//        if (entity.getPositionX() > gameData.getDisplayWidth()) {
+//            entity.setPositionX(gameData.getDisplayWidth());
+//        }
 
         entity.setPositionY(entity.getPositionY() * dt);
 
-        if (entity.getPositionY() > gameData.getDisplayHeight()) {
-            entity.setPositionY(gameData.getDisplayHeight());
-
-        }
+//        if (entity.getPositionY() > gameData.getDisplayHeight()) {
+//            entity.setPositionY(gameData.getDisplayHeight());
+//
+//        }
 
         // turning
         if (left) {
             entity.setPositionRadians(entity.getPositionRadians() + 5 * dt);
+            System.out.println("LEFT!");
         }
         if (right) {
             entity.setPositionRadians(entity.getPositionRadians() - 5 * dt);
+            System.out.println("RIGHT!");
         }
 
         // Speed
-        if (up || down) {
+        if (up||down ) {
             entity.setPositionX((float) (cos(entity.getPositionRadians()) * speed * dt + entity.getPositionX()));
             entity.setPositionY((float) (sin(entity.getPositionRadians()) * speed * dt + entity.getPositionY()));
         }
+
 
     }
 
