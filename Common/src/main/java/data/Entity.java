@@ -5,8 +5,11 @@
  */
 package data;
 
+import Interfaces.IEntityMovement;
 import java.awt.Image;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -22,6 +25,20 @@ public class Entity {
     private float positionX, positionY, positionRadians;
     private float[] shapeX, shapeY;
     private Image[] sprite;
+    private Map<Class, IEntityMovement> movingParts;
+    
+    
+    public Entity(){
+        movingParts = new ConcurrentHashMap<>();
+    }
+    
+    public void addMovement(IEntityMovement movement){
+        movingParts.put(movement.getClass(), movement);
+    }
+    
+    public <E extends IEntityMovement> E getMovement(Class movementClass){
+        return (E) movingParts.get(movementClass);
+    }
     
     
     public float[] getShapeX() {

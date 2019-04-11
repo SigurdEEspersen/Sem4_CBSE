@@ -27,7 +27,7 @@ public class KeyBindings {
     }
 
     public void update() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             pressedKeys[i] = keys[i];
         }
     }

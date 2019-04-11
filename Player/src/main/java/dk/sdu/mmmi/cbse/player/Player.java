@@ -1,7 +1,10 @@
 package dk.sdu.mmmi.cbse.player;
 
 
+import Interfaces.IEntityMovement;
 import data.Entity;
+import data.GameData;
+import static java.lang.Math.cos;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,7 +16,7 @@ import data.Entity;
  *
  * @author Peter
  */
-public class Player extends Entity{
+public class Player extends Entity implements IEntityMovement{
     
     private boolean left, right, up, down;
     
@@ -57,6 +60,20 @@ public class Player extends Entity{
 
     public void setSpeed(float speed) {
         this.speed = speed;
+    }
+
+    @Override
+    public void execute(GameData gameData, Entity entity) {
+//        float x = entity.getPositionX();
+//        float y = entity.getPositionY();
+//        float radians = entity.getPositionRadians();
+//        float dt = gameData.getDelta();
+//        
+//        if (down) {
+//           entity.setPositionX((float) ((float) entity.getPositionX() + cos(radians) * speed * dt));
+//        }
+//        
+        System.out.println("HEllo");
     }
     
     

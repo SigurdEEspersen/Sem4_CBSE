@@ -2,6 +2,7 @@ package dk.sdu.mmmi.cbse.player;
 
 
 
+import Interfaces.IEntityMovement;
 import data.Entity;
 import data.GameData;
 import data.World;
@@ -33,6 +34,7 @@ public class PlayerPlugin implements IPluginService {
 
         // Add entities to the world
         player = createPlayerShip(gameData);
+        player.addMovement((IEntityMovement) player);
         world.addEntity(player);
     }
 
