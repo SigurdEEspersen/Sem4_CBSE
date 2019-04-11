@@ -19,6 +19,7 @@
                     <publicPackages>
                         <publicPackage>services</publicPackage>
                         <publicPackage>data</publicPackage>
+                        <publicPackage>Interfaces</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
