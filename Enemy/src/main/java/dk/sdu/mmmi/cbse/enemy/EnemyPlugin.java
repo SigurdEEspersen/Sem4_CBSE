@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.enemy;
 
+import Interfaces.IEntityMovement;
 import data.Entity;
 import data.GameData;
 import data.World;
@@ -25,6 +26,7 @@ public class EnemyPlugin implements IPluginService {
 
         // Add entities to the world
         enemy = createEnemyShip(gameData);
+        enemy.addMovement((IEntityMovement) enemy);
         world.addEntity(enemy);
     }
 

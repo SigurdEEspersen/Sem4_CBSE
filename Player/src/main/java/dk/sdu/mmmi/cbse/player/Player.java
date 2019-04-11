@@ -73,7 +73,7 @@ public class Player extends Entity implements IEntityMovement{
 //           entity.setPositionX((float) ((float) entity.getPositionX() + cos(radians) * speed * dt));
 //        }
 //        
-        System.out.println("HEllo");
+        
     }
     
     

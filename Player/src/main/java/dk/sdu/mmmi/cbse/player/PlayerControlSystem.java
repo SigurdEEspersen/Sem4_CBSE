@@ -1,7 +1,5 @@
 package dk.sdu.mmmi.cbse.player;
 
-
-import Interfaces.IEntityMovement;
 import data.Entity;
 import data.GameData;
 import data.KeyBindings;
@@ -47,24 +45,17 @@ public class PlayerControlSystem implements IControlService {
     @Override
     public void execute(GameData gameData, World world) {
 
-        for (Entity player : world.getEntities(Player.class)) {
+        for (Entity entity : world.getEntities(Player.class)) {
+            Player playerMovement = entity.getMovement(Player.class);
 
-            updateShape(player);
-
-               for (Entity entity : world.getEntities(Player.class)) {
-                    Player playerMovement = entity.getMovement(Player.class);
-                    
-                    playerMovement.setDown(gameData.getKeys().isDown(KeyBindings.DOWN));
-                    playerMovement.setUp(gameData.getKeys().isDown(KeyBindings.UP));
-                    playerMovement.setLeft(gameData.getKeys().isDown(KeyBindings.LEFT));
-                    playerMovement.setRight(gameData.getKeys().isDown(KeyBindings.RIGHT)); 
-                    playerMovement.execute(gameData, entity);
-              
-                   
+            playerMovement.setDown(gameData.getKeys().isDown(KeyBindings.DOWN));
+            playerMovement.setUp(gameData.getKeys().isDown(KeyBindings.UP));
+            playerMovement.setLeft(gameData.getKeys().isDown(KeyBindings.LEFT));
+            playerMovement.setRight(gameData.getKeys().isDown(KeyBindings.RIGHT));
+            playerMovement.execute(gameData, entity);
 
             updateShape(entity);
 
         }
     }
-
 }
