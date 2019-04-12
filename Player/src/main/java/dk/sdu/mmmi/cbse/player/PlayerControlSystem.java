@@ -1,7 +1,5 @@
 package dk.sdu.mmmi.cbse.player;
 
-
-import Interfaces.IEntityMovement;
 import data.Entity;
 import data.GameData;
 import data.KeyBindings;
@@ -15,16 +13,13 @@ import services.IControlService;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Peter
  */
-
 @ServiceProviders(value = {
     @ServiceProvider(service = IControlService.class),})
 public class PlayerControlSystem implements IControlService {
-
 
     private void updateShape(Entity entity) {
         float[] shapex = new float[4];
@@ -49,16 +44,15 @@ public class PlayerControlSystem implements IControlService {
 
     @Override
     public void execute(GameData gameData, World world) {
-               for (Entity entity : world.getEntities(Player.class)) {
-                    Player playerMovement = entity.getMovement(Player.class);
-                    
-                    playerMovement.setDown(gameData.getKeys().isDown(KeyBindings.DOWN));
-                    playerMovement.setUp(gameData.getKeys().isDown(KeyBindings.UP));
-                    playerMovement.setLeft(gameData.getKeys().isDown(KeyBindings.LEFT));
-                    playerMovement.setRight(gameData.getKeys().isDown(KeyBindings.RIGHT)); 
-                    playerMovement.execute(gameData, entity);
-              
-                   
+
+        for (Entity entity : world.getEntities(Player.class)) {
+            Player playerMovement = entity.getMovement(Player.class);
+
+            playerMovement.setDown(gameData.getKeys().isDown(KeyBindings.DOWN));
+            playerMovement.setUp(gameData.getKeys().isDown(KeyBindings.UP));
+            playerMovement.setLeft(gameData.getKeys().isDown(KeyBindings.LEFT));
+            playerMovement.setRight(gameData.getKeys().isDown(KeyBindings.RIGHT));
+            playerMovement.execute(gameData, entity);
 
                       System.out.println("Entity har x: " + entity.getPositionX());
                       System.out.println("Entity har y: " + entity.getPositionY());
@@ -66,5 +60,4 @@ public class PlayerControlSystem implements IControlService {
 
         }
     }
-
 }

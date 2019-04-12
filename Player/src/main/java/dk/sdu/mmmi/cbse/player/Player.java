@@ -116,7 +116,5 @@ public class Player extends Entity implements IEntityMovement {
             entity.setPositionX((float) (cos(entity.getPositionRadians()) * -speed * dt + entity.getPositionX()));
             entity.setPositionY((float) (sin(entity.getPositionRadians()) * -speed * dt + entity.getPositionY()));
         }
-
     }
-
 }
