@@ -6,25 +6,25 @@
 package data;
 
 import Interfaces.IEntityMovement;
-import java.awt.Image;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
- * @author Peter
+     * @author Peter
  */
 public class Entity {
-    
-    
     private final UUID ID = UUID.randomUUID();
-
-
-
     private float positionX, positionY, positionRadians;
     private float[] shapeX, shapeY;
-    private Image[] sprite;
+    
+    // graphics
+    private Texture texture;
+    private float textureWidth, textureHeight;
+    
     private Map<Class, IEntityMovement> movingParts;
     
     
@@ -40,59 +40,34 @@ public class Entity {
         return (E) movingParts.get(movementClass);
     }
     
+    public float[] getShapeX() { return shapeX; }
+    public void setShapeX(float[] shapeX) { this.shapeX = shapeX; }
     
-    public float[] getShapeX() {
-        return shapeX;
-    }
+    public float[] getShapeY() { return shapeY; }
+    public void setShapeY(float[] shapeY) { this.shapeY = shapeY; }
 
-    public void setShapeX(float[] shapeX) {
-        this.shapeX = shapeX;
-    }
-
-    public float[] getShapeY() {
-        return shapeY;
-    }
-
-    public void setShapeY(float[] shapeY) {
-        this.shapeY = shapeY;
-    }
-
-    public Image[] getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(Image[] sprite) {
-        this.sprite = sprite;
-    }
+    public Texture getTexture() { return texture; }
+    public void setTexture(Texture texture) { this.texture = texture; }
     
-    public String getID(){
-        return ID.toString();
-    }
+    public float getTextureWidth() { return textureWidth; }
+    public void setTextureWidth(float textureWidth) { this.textureWidth = textureWidth; }
     
-        public float getPositionX() {
-        return positionX;
-    }
-
-    public void setPositionX(float positionX) {
-        this.positionX = positionX;
-    }
-
-    public float getPositionY() {
-        return positionY;
-    }
-
-    public void setPositionY(float positionY) {
-        this.positionY = positionY;
-    }
-
-    public float getPositionRadians() {
-        return positionRadians;
-    }
-
-    public void setPositionRadians(float positionRadians) {
-        this.positionRadians = positionRadians;
-    }
+    public float getTextureHeight() { return textureHeight; }
+    public void setTextureHeight(float textureHeight) { this.textureHeight = textureHeight; }
     
-   
+    public String getID(){ return ID.toString(); }
+    
+    public float getPositionX() { return positionX; }
+    public void setPositionX(float positionX) { this.positionX = positionX; }
+
+    public float getPositionY() { return positionY; }
+    public void setPositionY(float positionY) { this.positionY = positionY; }
+
+    public float getPositionRadians() { return positionRadians; }
+    public void setPositionRadians(float positionRadians) { this.positionRadians = positionRadians; }
+    
+    public void draw(SpriteBatch batch) {
+        batch.draw(texture, textureWidth, textureHeight);
+    }
     
 }

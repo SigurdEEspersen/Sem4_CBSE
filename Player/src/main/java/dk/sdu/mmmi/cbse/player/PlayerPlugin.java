@@ -3,6 +3,7 @@ package dk.sdu.mmmi.cbse.player;
 
 
 import Interfaces.IEntityMovement;
+import com.badlogic.gdx.graphics.Texture;
 import data.Entity;
 import data.GameData;
 import data.World;
@@ -36,6 +37,7 @@ public class PlayerPlugin implements IPluginService {
         player = createPlayerShip(gameData);
         player.addMovement((IEntityMovement) player);
         world.addEntity(player);
+        Texture texture = new Texture("/Update_Center_Folder/player.gif");
     }
 
     private Player createPlayerShip(GameData gameData) {
@@ -45,21 +47,26 @@ public class PlayerPlugin implements IPluginService {
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
         float radians = 3.1415f / 2;
-
+        
         float[] colour = new float[4];
         colour[0] = 1.0f;
         colour[1] = 1.0f;
         colour[2] = 1.0f;
         colour[3] = 1.0f;
 
-        Player playerShip = new Player();
+        Player player = new Player();
 
-        playerShip.setPositionX(x);
-        playerShip.setPositionY(y);
-        playerShip.setSpeed(speed);
-        playerShip.setPositionRadians(radians);
+        player.setPositionX(x);
+        player.setPositionY(y);
+        player.setSpeed(speed);
+        player.setPositionRadians(radians);
         
-        return playerShip;
+        
+        //player.setTexture(new Texture("/Update_Center_Folder/player.gif"));
+        //player.setTextureWidth(253);
+        //player.setTextureWidth(216);
+        
+        return player;
     }
 
     @Override
