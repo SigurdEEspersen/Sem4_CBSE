@@ -43,7 +43,7 @@ public class PlayerPlugin implements IPluginService {
         float speed = 300;
         float rotationSpeed = 5;
         float x = gameData.getDisplayWidth() / 2;
-        float y = gameData.getDisplayHeight() / 2;
+        float y = 15;
         float radians = 3.1415f / 2;
 
         float[] colour = new float[4];
