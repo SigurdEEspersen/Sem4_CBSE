@@ -67,22 +67,26 @@ public class Player extends Entity implements IEntityMovement {
         float dt = gameData.getDelta();
 
         if (down) {
-            entity.setPositionX((float) ((float) entity.getPositionX() + cos(radians + 1) * speed * dt));
+            entity.setPositionX((float) ((float) entity.getPositionX() - cos(radians + 1) * speed * dt));
+            entity.setPositionY((float) ((float) entity.getPositionY() - sin(radians + 1) * speed * dt));
+
             System.out.println("DOWN!");
         }
 
         if (up) {
             entity.setPositionX((float) ((float) entity.getPositionX() + cos(radians) * speed * dt));
+            entity.setPositionY((float) ((float) entity.getPositionY() + sin(radians + 1) * speed * dt));
+
             System.out.println("UP!");
         }
 
-        entity.setPositionX(entity.getPositionX() * dt);
+//        entity.setPositionX(entity.getPositionX() * dt);
 
 //        if (entity.getPositionX() > gameData.getDisplayWidth()) {
 //            entity.setPositionX(gameData.getDisplayWidth());
 //        }
 
-        entity.setPositionY(entity.getPositionY() * dt);
+//        entity.setPositionY(entity.getPositionY() * dt);
 
 //        if (entity.getPositionY() > gameData.getDisplayHeight()) {
 //            entity.setPositionY(gameData.getDisplayHeight());
