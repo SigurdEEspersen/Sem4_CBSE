@@ -32,9 +32,7 @@ public class EnemyPlugin implements IPluginService {
 
     private Enemy createEnemyShip(GameData gameData) {
 
-        float deacceleration = 10;
-        float acceleration = 200;
-        float maxSpeed = 300;
+        float speed = 100;
         float rotationSpeed = 5;
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
@@ -48,6 +46,11 @@ public class EnemyPlugin implements IPluginService {
 
         Enemy enemyShip = new Enemy();
 
+        enemyShip.setPositionX(x);
+        enemyShip.setPositionY(y);
+        enemyShip.setSpeed(speed);
+        enemyShip.setPositionRadians(radians);
+        
         return enemyShip;
     }
 

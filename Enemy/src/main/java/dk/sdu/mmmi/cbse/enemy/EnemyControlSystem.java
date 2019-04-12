@@ -31,7 +31,7 @@ public class EnemyControlSystem implements IControlService {
             Enemy enemyMovement = enemy.getMovement(Enemy.class);
             
             float rotation = (float) Math.atan2(playerY - enemy.getPositionY(), playerX - enemy.getPositionX());
-            enemy.setPositionRadians(rotation);
+            enemyMovement.setPositionRadians(rotation);
 
             enemyMovement.setUp(true);
             enemyMovement.execute(gameData, enemy);
@@ -45,17 +45,17 @@ public class EnemyControlSystem implements IControlService {
         float[] shapey = new float[4];
         float radians = entity.getPositionRadians();
 
-        shapex[0] = (float) (350 + Math.cos(radians) * 50);
-        shapey[0] = (float) (350 + Math.sin(radians) * 50);
+        shapex[0] = (float) (entity.getPositionX() + Math.cos(radians) * 10);
+        shapey[0] = (float) (entity.getPositionY() + Math.sin(radians) * 10);
 
-        shapex[1] = (float) (350 + Math.cos(radians - 4 * 3.1415f / 5) * 50);
-        shapey[1] = (float) (350 + Math.sin(radians - 4 * 3.1145f / 5) * 50);
+        shapex[1] = (float) (entity.getPositionX() + Math.cos(radians - 4 * 3.1415f / 5) * 10);
+        shapey[1] = (float) (entity.getPositionY() + Math.sin(radians - 4 * 3.1145f / 5) * 10);
 
-        shapex[2] = (float) (350 + Math.cos(radians + 3.1415f) * 50 * 0.5);
-        shapey[2] = (float) (350 + Math.sin(radians + 3.1415f) * 50 * 0.5);
+        shapex[2] = (float) (entity.getPositionX() + Math.cos(radians + 3.1415f) * 10 * 0.5);
+        shapey[2] = (float) (entity.getPositionY() + Math.sin(radians + 3.1415f) * 10 * 0.5);
 
-        shapex[3] = (float) (350 + Math.cos(radians + 4 * 3.1415f / 5) * 50);
-        shapey[3] = (float) (350 + Math.sin(radians + 4 * 3.1415f / 5) * 50);
+        shapex[3] = (float) (entity.getPositionX() + Math.cos(radians + 4 * 3.1415f / 5) * 10);
+        shapey[3] = (float) (entity.getPositionY() + Math.sin(radians + 4 * 3.1415f / 5) * 10);
 
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
