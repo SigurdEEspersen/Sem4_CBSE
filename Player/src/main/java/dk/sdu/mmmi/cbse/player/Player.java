@@ -80,18 +80,30 @@ public class Player extends Entity implements IEntityMovement {
             System.out.println("UP!");
         }
 
-//        entity.setPositionX(entity.getPositionX() * dt);
 
-//        if (entity.getPositionX() > gameData.getDisplayWidth()) {
-//            entity.setPositionX(gameData.getDisplayWidth());
-//        }
+        
+        // skal ind i en collision klasse
+        if (entity.getPositionX() >= (gameData.getDisplayWidth()-15)) {
+            entity.setPositionX(gameData.getDisplayWidth()-15);
+        }
 
-//        entity.setPositionY(entity.getPositionY() * dt);
 
-//        if (entity.getPositionY() > gameData.getDisplayHeight()) {
-//            entity.setPositionY(gameData.getDisplayHeight());
-//
-//        }
+        if (entity.getPositionY() >= (gameData.getDisplayHeight()-15)) {
+            entity.setPositionY(gameData.getDisplayHeight()-15);
+        }
+        
+        
+         if (entity.getPositionX() <= 15) {
+            entity.setPositionX(15);
+        }
+
+
+        if (entity.getPositionY() <= (15)) {
+            entity.setPositionY(15);
+        }
+        
+        
+        
 
         // turning
         if (left) {
