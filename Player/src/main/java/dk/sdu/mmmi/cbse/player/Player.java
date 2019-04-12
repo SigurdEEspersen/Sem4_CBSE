@@ -79,31 +79,22 @@ public class Player extends Entity implements IEntityMovement {
 //
 //            System.out.println("UP!");
 //        }
-
-
-        
         // skal ind i en collision klasse
-        if (entity.getPositionX() >= (gameData.getDisplayWidth()-15)) {
-            entity.setPositionX(gameData.getDisplayWidth()-15);
+        if (entity.getPositionX() >= (gameData.getDisplayWidth() - 15)) {
+            entity.setPositionX(gameData.getDisplayWidth() - 15);
         }
 
-
-        if (entity.getPositionY() >= (gameData.getDisplayHeight()-15)) {
-            entity.setPositionY(gameData.getDisplayHeight()-15);
+        if (entity.getPositionY() >= (gameData.getDisplayHeight() - 15)) {
+            entity.setPositionY(gameData.getDisplayHeight() - 15);
         }
-        
-        
-         if (entity.getPositionX() <= 15) {
+
+        if (entity.getPositionX() <= 15) {
             entity.setPositionX(15);
         }
-
 
         if (entity.getPositionY() <= (15)) {
             entity.setPositionY(15);
         }
-        
-        
-        
 
         // turning
         if (left) {
@@ -116,11 +107,15 @@ public class Player extends Entity implements IEntityMovement {
         }
 
         // Speed
-        if (up||down ) {
+        if (up) {
             entity.setPositionX((float) (cos(entity.getPositionRadians()) * speed * dt + entity.getPositionX()));
             entity.setPositionY((float) (sin(entity.getPositionRadians()) * speed * dt + entity.getPositionY()));
         }
 
+        if (down) {
+            entity.setPositionX((float) (cos(entity.getPositionRadians()) * -speed * dt + entity.getPositionX()));
+            entity.setPositionY((float) (sin(entity.getPositionRadians()) * -speed * dt + entity.getPositionY()));
+        }
 
     }
 
