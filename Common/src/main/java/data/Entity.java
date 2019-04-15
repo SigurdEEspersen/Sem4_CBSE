@@ -6,6 +6,7 @@
 package data;
 
 import Interfaces.IEntityMovement;
+import Interfaces.IShooter;
 import java.awt.Image;
 import java.util.Map;
 import java.util.UUID;
@@ -26,10 +27,19 @@ public class Entity {
     private float[] shapeX, shapeY;
     private Image[] sprite;
     private Map<Class, IEntityMovement> movingParts;
+    private Map<Class, IShooter> weaponParts;
     
     
     public Entity(){
         movingParts = new ConcurrentHashMap<>();
+    }
+    
+    public <E extends IShooter> E getWeapons(Class shootClass){
+        return (E) weaponParts.get(shootClass);
+    }
+
+    public void addWeapons(IShooter shoot) {
+        this.weaponParts.put(shoot.getClass(), shoot);
     }
     
     public void addMovement(IEntityMovement movement){
@@ -39,7 +49,6 @@ public class Entity {
     public <E extends IEntityMovement> E getMovement(Class movementClass){
         return (E) movingParts.get(movementClass);
     }
-    
     
     public float[] getShapeX() {
         return shapeX;

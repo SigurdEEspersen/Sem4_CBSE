@@ -99,11 +99,11 @@ public class Player extends Entity implements IEntityMovement {
         // turning
         if (left) {
             entity.setPositionRadians(entity.getPositionRadians() + 5 * dt);
-            System.out.println("LEFT!");
+//            System.out.println("LEFT!");
         }
         if (right) {
             entity.setPositionRadians(entity.getPositionRadians() - 5 * dt);
-            System.out.println("RIGHT!");
+//            System.out.println("RIGHT!");
         }
 
         // Speed

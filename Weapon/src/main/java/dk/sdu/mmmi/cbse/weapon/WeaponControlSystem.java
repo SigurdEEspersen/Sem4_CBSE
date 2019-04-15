@@ -8,7 +8,9 @@ package dk.sdu.mmmi.cbse.weapon;
 import Interfaces.IEntityMovement;
 import data.Entity;
 import data.GameData;
+import data.KeyBindings;
 import data.World;
+import dk.sdu.mmmi.cbse.player.Player;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import services.IControlService;
@@ -20,18 +22,55 @@ import services.IControlService;
 @ServiceProviders(value = {
     @ServiceProvider(service = IControlService.class),})
 public class WeaponControlSystem implements IControlService {
+    private Entity projectile;
+    private Weapon wpn;
+
 
     @Override
     public void execute(GameData gameData, World world) {
+        float playerX = 0;
+        float playerY = 0;
+        
+        for (Entity p : world.getEntities(Player.class)) {
+          playerX = p.getPositionX();
+          playerY = p.getPositionY();
+        }
+        
         for (Entity weapon : world.getEntities()) {
+            
+            wpn = weapon.getWeapons(Weapon.class);
+            
+            wpn.setShoot(gameData.getKeys().isPressed(KeyBindings.SPACE));
+
+            if (wpn.isShoot()) {
+                projectile = createWeapon(gameData, playerX, playerY);
+                System.out.println("SHOOT");
+                world.addEntity(projectile);
+            }
+
             updateShape(weapon);
         }
     }
     
-    private Entity createWeapon(float x, float y, float radians, String uuid) {
-        Entity wpn = new Weapon();
+    private Weapon createWeapon(GameData gameData, float dx, float dy) {
+        float speed = 300;
+        float rotationSpeed = 5;
+        float x = dx;
+        float y = dy;
+        float radians = 3.1415f / 2;
+
+        float[] colour = new float[4];
+        colour[0] = 1.0f;
+        colour[1] = 1.0f;
+        colour[2] = 1.0f;
+        colour[3] = 1.0f;
+
+
+        wpn.setPositionX(x);
+        wpn.setPositionY(y);
+        wpn.setSpeed(speed);
+        wpn.setPositionRadians(radians);
         
-        wpn.addMovement((IEntityMovement) wpn);
         return wpn;
     }
 
@@ -54,5 +93,5 @@ public class WeaponControlSystem implements IControlService {
         weapon.setShapeX(shapex);
         weapon.setShapeY(shapey);
     }
-    
+
 }
