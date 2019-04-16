@@ -12,8 +12,16 @@ import data.GameData;
  *
  * @author Peter
  */
-public interface IEntityMovement {
+public interface ICombatEntity {
     
     void execute (GameData gameData, Entity entity);
+    
+    int getLife();
+    
+    boolean isDead();
+    
+    boolean isHit();
+    
+    boolean isShooting();
     
 }

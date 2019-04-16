@@ -5,7 +5,6 @@
  */
 package dk.sdu.mmmi.cbse.weapon;
 
-import Interfaces.IEntityMovement;
 import data.Entity;
 import data.GameData;
 import data.KeyBindings;
@@ -14,6 +13,7 @@ import dk.sdu.mmmi.cbse.player.Player;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import services.IControlService;
+import Interfaces.ICombatEntity;
 
 /**
  *
@@ -36,23 +36,26 @@ public class WeaponControlSystem implements IControlService {
           playerY = p.getPositionY();
         }
         
-        for (Entity weapon : world.getEntities()) {
-            
-            wpn = weapon.getWeapons(Weapon.class);
-            
-            wpn.setShoot(gameData.getKeys().isPressed(KeyBindings.SPACE));
-
-            if (wpn.isShoot()) {
-                projectile = createWeapon(gameData, playerX, playerY);
-                System.out.println("SHOOT");
-                world.addEntity(projectile);
+        for (Entity entity : world.getEntities()) {
+            if(entity.getCombat(ICombatEntity.class)){
+                ICombatEntity combatEntity = entity.getCombat(ICombatEntity.class);
+                    wpn = entity.getWeapons(Weapon.class);
+                    wpn.setShoot(combatEntity.isShooting());
+                    if(wpn.isShoot()){
+                        System.out.println("Bang bang");
+                        projectile = createProjectile(gameData, playerX, playerY);
+                        wpn.setShoot(false); // burde kunne fjernes
+                        world.addEntity(projectile);
+                    }
+                
             }
+            
 
-            updateShape(weapon);
+            updateShape(entity);
         }
     }
     
-    private Weapon createWeapon(GameData gameData, float dx, float dy) {
+    private Weapon createProjectile(GameData gameData, float dx, float dy) {
         float speed = 300;
         float rotationSpeed = 5;
         float x = dx;

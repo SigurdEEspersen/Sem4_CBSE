@@ -28,7 +28,7 @@ public class EnemyControlSystem implements IControlService {
        }
         
         for (Entity enemy : world.getEntities(Enemy.class)) {
-            Enemy enemyMovement = enemy.getMovement(Enemy.class);
+            Enemy enemyMovement = enemy.getCombat(Enemy.class);
             
             float rotation = (float) Math.atan2(playerY - enemy.getPositionY(), playerX - enemy.getPositionX());
             enemyMovement.setPositionRadians(rotation);

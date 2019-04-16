@@ -1,12 +1,12 @@
 package dk.sdu.mmmi.cbse.enemy;
 
-import Interfaces.IEntityMovement;
 import data.Entity;
 import data.GameData;
 import data.World;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import services.IPluginService;
+import Interfaces.ICombatEntity;
 
 /**
  *
@@ -26,7 +26,7 @@ public class EnemyPlugin implements IPluginService {
 
         // Add entities to the world
         enemy = createEnemyShip(gameData);
-        enemy.addMovement((IEntityMovement) enemy);
+        enemy.addCombat((ICombatEntity) enemy);
         world.addEntity(enemy);
     }
 
