@@ -22,39 +22,44 @@ import Interfaces.ICombatEntity;
 @ServiceProviders(value = {
     @ServiceProvider(service = IControlService.class),})
 public class WeaponControlSystem implements IControlService {
+
+    private float playerX, playerY;
+
     private Entity projectile;
     private Weapon wpn;
 
-
     @Override
     public void execute(GameData gameData, World world) {
-        float playerX = 0;
-        float playerY = 0;
-        
-        for (Entity p : world.getEntities(Player.class)) {
-          playerX = p.getPositionX();
-          playerY = p.getPositionY();
-        }
-        
-        for (Entity entity : world.getEntities()) {
-            if(entity.getCombat(ICombatEntity.class)){
-                ICombatEntity combatEntity = entity.getCombat(ICombatEntity.class);
-                    wpn = entity.getWeapons(Weapon.class);
-                    wpn.setShoot(combatEntity.isShooting());
-                    if(wpn.isShoot()){
-                        System.out.println("Bang bang");
-                        projectile = createProjectile(gameData, playerX, playerY);
-                        wpn.setShoot(false); // burde kunne fjernes
-                        world.addEntity(projectile);
-                    }
-                
-            }
-            
 
+        for (Entity p : world.getEntities(Player.class)) {
+            playerX = p.getPositionX();
+            playerY = p.getPositionY();
+        }
+//        
+//        for (Entity entity : world.getEntities()) {
+//            if(entity.getCombat(ICombatEntity.class)){
+//                ICombatEntity combatEntity = entity.getCombat(ICombatEntity.class);
+//                    wpn = entity.getWeapons(Weapon.class);
+//                    wpn.setShoot(combatEntity.isShooting());
+//                    if(wpn.isShoot()){
+//                        System.out.println("Bang bang");
+//                        projectile = createProjectile(gameData, playerX, playerY);
+//                        wpn.setShoot(false); // burde kunne fjernes
+//                        world.addEntity(projectile);
+//                    }
+//                
+//            }
+//            
+//
+//            updateShape(entity);
+//        }
+
+        for (Entity entity : world.getEntities(Weapon.class)) {
             updateShape(entity);
         }
+
     }
-    
+
     private Weapon createProjectile(GameData gameData, float dx, float dy) {
         float speed = 300;
         float rotationSpeed = 5;
@@ -68,12 +73,11 @@ public class WeaponControlSystem implements IControlService {
         colour[2] = 1.0f;
         colour[3] = 1.0f;
 
-
-        wpn.setPositionX(x);
-        wpn.setPositionY(y);
+        wpn.setPositionX(500);
+        wpn.setPositionY(500);
         wpn.setSpeed(speed);
         wpn.setPositionRadians(radians);
-        
+
         return wpn;
     }
 
@@ -81,17 +85,17 @@ public class WeaponControlSystem implements IControlService {
         float[] shapex = new float[4];
         float[] shapey = new float[4];
 
-        shapex[0] = (float) (weapon.getPositionX() + Math.cos(weapon.getPositionRadians()) * 5);
-        shapey[0] = (float) (weapon.getPositionY() + Math.sin(weapon.getPositionRadians()) * 5);
+        shapex[0] = (float) ((playerX + 5) + Math.cos(weapon.getPositionRadians()) * 5);
+        shapey[0] = (float) ((playerY + 5) + Math.sin(weapon.getPositionRadians()) * 5);
 
-        shapex[1] = (float) (weapon.getPositionX() + Math.cos(weapon.getPositionRadians() - 4 * 3.1415f / 5) * 5);
-        shapey[1] = (float) (weapon.getPositionY() + Math.sin(weapon.getPositionRadians() - 4 * 3.1145f / 5) * 5);
+        shapex[1] = (float) ((playerX + 5) + Math.cos(weapon.getPositionRadians() - 4 * 3.1415f / 5) * 5);
+        shapey[1] = (float) ((playerY + 5) + Math.sin(weapon.getPositionRadians() - 4 * 3.1145f / 5) * 5);
 
-        shapex[2] = (float) (weapon.getPositionX() + Math.cos(weapon.getPositionRadians() + 3.1415f) * 5 * 0.5);
-        shapey[2] = (float) (weapon.getPositionY() + Math.sin(weapon.getPositionRadians() + 3.1415f) * 5 * 0.5);
+        shapex[2] = (float) ((playerX + 5) + Math.cos(weapon.getPositionRadians() + 3.1415f) * 5 * 0.5);
+        shapey[2] = (float) ((playerY + 5) + Math.sin(weapon.getPositionRadians() + 3.1415f) * 5 * 0.5);
 
-        shapex[3] = (float) (weapon.getPositionX() + Math.cos(weapon.getPositionRadians() + 4 * 3.1415f / 5) * 5);
-        shapey[3] = (float) (weapon.getPositionY() + Math.sin(weapon.getPositionRadians() + 4 * 3.1415f / 5) * 5);
+        shapex[3] = (float) ((playerX + 5) + Math.cos(weapon.getPositionRadians() + 4 * 3.1415f / 5) * 5);
+        shapey[3] = (float) ((playerY + 5) + Math.sin(weapon.getPositionRadians() + 4 * 3.1415f / 5) * 5);
 
         weapon.setShapeX(shapex);
         weapon.setShapeY(shapey);

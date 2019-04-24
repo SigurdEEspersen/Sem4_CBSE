@@ -5,6 +5,7 @@
  */
 package dk.sdu.mmmi.cbse.weapon;
 
+import Interfaces.IShooter;
 import data.Entity;
 import data.GameData;
 import data.World;
@@ -19,11 +20,23 @@ import services.IPluginService;
 @ServiceProviders(value = {
     @ServiceProvider(service = IPluginService.class),})
 public class WeaponPlugin implements IPluginService {
+    
+    Entity weapon;
 
     @Override
     public void start(GameData gameData, World world) {
+        weapon = createWeapon(gameData);
+//        weapon.addWeapons((IShooter) weapon);
+        world.addEntity(weapon);
         
     }
+    
+    private Weapon createWeapon(GameData gameData) {
+        Weapon weapon = new Weapon();
+        return weapon;
+    }
+    
+    
 
     @Override
     public void stop(GameData gameData, World world) {
