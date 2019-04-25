@@ -34,10 +34,11 @@ public class Game implements ApplicationListener {
     private World world = new World();
     private List<IPluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private Lookup.Result<IPluginService> result;
-    private AssetManager assetManager;
     private Texture t;
     private Sprite sprite;
+    private Sprite backgroundSprite;
     private SpriteBatch spriteBatch;
+    private String spritePath;
     private float playerX;
     private float playerY;
     private float playerRadians;
@@ -45,9 +46,9 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
-        
-       spriteBatch = new SpriteBatch();
-       sprite = new Sprite(new Texture("C:/Users/jonas/Desktop/player.gif/"));
+       
+       
+       
        
        
         
@@ -58,8 +59,6 @@ public class Game implements ApplicationListener {
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
 
-       // assetManager = new AssetManager();
-       // assetManager.load("C:/Users/jonas/Desktop/player.png", Texture.class);
         sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
@@ -72,6 +71,16 @@ public class Game implements ApplicationListener {
             plugin.start(gameData, world);
             gamePlugins.add(plugin);
         }
+        
+        for (Entity p : world.getEntities(Player.class)) {
+           spritePath = p.getSpritePath();
+           System.out.println(p.getSpritePath());
+           
+       }
+        
+        spriteBatch = new SpriteBatch();
+        backgroundSprite = new Sprite(new Texture("C:/users/Jonas/Desktop/background.png"));
+        sprite = new Sprite(new Texture(spritePath));
     }
 
     @Override
@@ -100,9 +109,13 @@ public class Game implements ApplicationListener {
         
         spriteBatch.begin();
         sprite.setSize(80, 50);
-       // sprite.rotate();
+        
+        
         sprite.setPosition(playerX, playerY);
+        backgroundSprite.setPosition(-355, -165);
+         backgroundSprite.draw(spriteBatch);
         sprite.draw(spriteBatch);
+       
         spriteBatch.end();
 
         update();

@@ -6,6 +6,8 @@
 package data;
 
 import Interfaces.IEntityMovement;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.awt.Image;
 import java.util.Map;
 import java.util.UUID;
@@ -24,7 +26,7 @@ public class Entity {
 
     private float positionX, positionY, positionRadians;
     private float[] shapeX, shapeY;
-    private Image[] sprite;
+    protected String spritePath;
     private Map<Class, IEntityMovement> movingParts;
     
     
@@ -38,6 +40,14 @@ public class Entity {
     
     public <E extends IEntityMovement> E getMovement(Class movementClass){
         return (E) movingParts.get(movementClass);
+    }
+
+    public String getSpritePath() {
+        return spritePath;
+    }
+
+    public void setSpritePath(String spritePath) {
+        this.spritePath = spritePath;
     }
     
     
@@ -57,13 +67,9 @@ public class Entity {
         this.shapeY = shapeY;
     }
 
-    public Image[] getSprite() {
-        return sprite;
-    }
 
-    public void setSprite(Image[] sprite) {
-        this.sprite = sprite;
-    }
+
+    
     
     public String getID(){
         return ID.toString();

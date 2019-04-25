@@ -1,6 +1,8 @@
 package dk.sdu.mmmi.cbse.player;
 
 import Interfaces.IEntityMovement;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import data.Entity;
 import data.GameData;
 import static java.lang.Math.cos;
@@ -20,7 +22,17 @@ public class Player extends Entity implements IEntityMovement {
     private boolean left, right, up, down;
 
     private float speed = 20;
+    
 
+    public Player() {
+      // The file path for the sprite. 
+      spritePath = "C:/Users/jonas/Desktop/player.gif/";
+     
+    }
+    
+    
+    
+    
     public boolean isLeft() {
         return left;
     }
@@ -62,9 +74,22 @@ public class Player extends Entity implements IEntityMovement {
     }
 
     @Override
+    public String getSpritePath() {
+        return this.spritePath;
+    }
+
+    @Override
+    public void setSpritePath(String spritePath) {
+        this.spritePath = spritePath;
+    }
+
+      
+
+    @Override
     public void execute(GameData gameData, Entity entity) {
         float radians = entity.getPositionRadians();
         float dt = gameData.getDelta();
+    
 
 //        if (down) {
 //            entity.setPositionX((float) ((float) entity.getPositionX() - cos(radians) * speed * dt));
