@@ -101,7 +101,7 @@ public class WeaponControlSystem implements IControlService {
         wpn.setPositionX(x);
         wpn.setPositionY(y);
         wpn.setPositionRadians(rad);
-        ((Weapon) wpn).setSpeed(200);
+        ((Weapon) wpn).setSpeed(55);
         wpn.addCombat((ICombatEntity) wpn);
         return wpn;
 

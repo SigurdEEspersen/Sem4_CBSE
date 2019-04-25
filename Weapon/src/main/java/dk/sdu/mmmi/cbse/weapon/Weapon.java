@@ -59,7 +59,7 @@ public class Weapon extends Entity implements ICombatEntity {
             entity.setPositionX((float) (cos(entity.getPositionRadians()) * speed * dt + entity.getPositionX()));
             entity.setPositionY((float) (sin(entity.getPositionRadians()) * speed * dt + entity.getPositionY()));
         }
-        if((timeAlive + 2000) < System.currentTimeMillis()) {
+        if((timeAlive + 7000) < System.currentTimeMillis()) {
             dead = true;
         }
     }
