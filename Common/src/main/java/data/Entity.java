@@ -5,11 +5,12 @@
  */
 package data;
 
-import Interfaces.IEntityMovement;
+import Interfaces.IShooter;
 import java.awt.Image;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import Interfaces.ICombatEntity;
 
 /**
  *
@@ -25,21 +26,29 @@ public class Entity {
     private float positionX, positionY, positionRadians;
     private float[] shapeX, shapeY;
     private Image[] sprite;
-    private Map<Class, IEntityMovement> movingParts;
+    private Map<Class, ICombatEntity> movingParts;
+    private Map<Class, IShooter> weaponParts;
     
     
     public Entity(){
         movingParts = new ConcurrentHashMap<>();
     }
     
-    public void addMovement(IEntityMovement movement){
+    public <E extends IShooter> E getWeapons(Class shootClass){
+        return (E) weaponParts.get(shootClass);
+    }
+
+    public void addWeapons(IShooter shoot) {
+        this.weaponParts.put(shoot.getClass(), shoot);
+    }
+    
+    public void addCombat(ICombatEntity movement){
         movingParts.put(movement.getClass(), movement);
     }
     
-    public <E extends IEntityMovement> E getMovement(Class movementClass){
+    public <E extends ICombatEntity> E getCombat(Class movementClass){
         return (E) movingParts.get(movementClass);
     }
-    
     
     public float[] getShapeX() {
         return shapeX;

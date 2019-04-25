@@ -1,10 +1,10 @@
 package dk.sdu.mmmi.cbse.player;
 
-import Interfaces.IEntityMovement;
 import data.Entity;
 import data.GameData;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+import Interfaces.ICombatEntity;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,11 +15,52 @@ import static java.lang.Math.sin;
  *
  * @author Peter
  */
-public class Player extends Entity implements IEntityMovement {
+public class Player extends Entity implements ICombatEntity {
 
     private boolean left, right, up, down;
 
     private float speed = 20;
+
+    private boolean isShooting;
+
+    private boolean dead = false;
+
+    private int life;
+    
+    private boolean isHit = false;
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    @Override
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setIsHit(boolean isHit) {
+        this.isHit = isHit;
+    }
+
+    public boolean isShooting() {
+        return isShooting;
+    }
+
+    public void setShooting(boolean isShooting) {
+        this.isShooting = isShooting;
+    }
 
     public boolean isLeft() {
         return left;
@@ -99,11 +140,11 @@ public class Player extends Entity implements IEntityMovement {
         // turning
         if (left) {
             entity.setPositionRadians(entity.getPositionRadians() + 5 * dt);
-            System.out.println("LEFT!");
+//            System.out.println("LEFT!");
         }
         if (right) {
             entity.setPositionRadians(entity.getPositionRadians() - 5 * dt);
-            System.out.println("RIGHT!");
+//            System.out.println("RIGHT!");
         }
 
         // Speed
@@ -115,6 +156,19 @@ public class Player extends Entity implements IEntityMovement {
         if (down) {
             entity.setPositionX((float) (cos(entity.getPositionRadians()) * -speed * dt + entity.getPositionX()));
             entity.setPositionY((float) (sin(entity.getPositionRadians()) * -speed * dt + entity.getPositionY()));
+        }
+        
+        
+         if (isHit) {
+            life = - 1;
+            isHit = false;
+        }
+        if (life <= 0) {
+            dead = true;
+        }
+        
+        if(isShooting){
+            // weapon.setShooting(true);
         }
     }
 }

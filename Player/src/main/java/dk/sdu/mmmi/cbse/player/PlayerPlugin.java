@@ -2,13 +2,13 @@ package dk.sdu.mmmi.cbse.player;
 
 
 
-import Interfaces.IEntityMovement;
 import data.Entity;
 import data.GameData;
 import data.World;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import services.IPluginService;
+import Interfaces.ICombatEntity;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,7 +34,7 @@ public class PlayerPlugin implements IPluginService {
 
         // Add entities to the world
         player = createPlayerShip(gameData);
-        player.addMovement((IEntityMovement) player);
+        player.addCombat((ICombatEntity) player);
         world.addEntity(player);
     }
 

@@ -5,13 +5,16 @@
  */
 package dk.sdu.mmmi.cbse.weapon;
 
-import Interfaces.IEntityMovement;
 import data.Entity;
 import data.GameData;
+import data.KeyBindings;
 import data.World;
+import dk.sdu.mmmi.cbse.player.Player;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import services.IControlService;
+import Interfaces.ICombatEntity;
+import Interfaces.IShooter;
 
 /**
  *
@@ -21,18 +24,56 @@ import services.IControlService;
     @ServiceProvider(service = IControlService.class),})
 public class WeaponControlSystem implements IControlService {
 
+
+    private float x, y;
+
     @Override
     public void execute(GameData gameData, World world) {
-        for (Entity weapon : world.getEntities()) {
-            updateShape(weapon);
+
+        for (Entity entity : world.getEntities()) {
+            x = entity.getPositionX();
+            y = entity.getPositionY();
+            float rad = entity.getPositionRadians();
+            String id = entity.getID();
+            if (entity instanceof ICombatEntity && !(entity instanceof Weapon)) {
+                if (((ICombatEntity) entity).isShooting()) {
+                    Entity wpn = createWeapon(x, y, rad);
+                    ((ICombatEntity) entity).setShooting(false);
+                    world.addEntity(wpn);
+                }
+            }
         }
-    }
-    
-    private Entity createWeapon(float x, float y, float radians, String uuid) {
-        Entity wpn = new Weapon();
-        
-        wpn.addMovement((IEntityMovement) wpn);
-        return wpn;
+//        
+//        for( Entity e : world.getEntities(Weapon.class)){
+//            (Weapon) e.setU
+//        }
+
+//        
+//        for (Entity entity : world.getEntities()) {
+//            if(entity.getCombat(ICombatEntity.class)){
+//                ICombatEntity combatEntity = entity.getCombat(ICombatEntity.class);
+//                    wpn = entity.getWeapons(Weapon.class);
+//                    wpn.setShoot(combatEntity.isShooting());
+//                    if(wpn.isShoot()){
+//                        System.out.println("Bang bang");
+//                        projectile = createProjectile(gameData, playerX, playerY);
+//                        wpn.setShoot(false); // burde kunne fjernes
+//                        world.addEntity(projectile);
+//                    }
+//                
+//            }
+//            
+//
+//            updateShape(entity);
+//        }
+        for (Entity entity : world.getEntities(Weapon.class)) {
+            if (((Weapon) entity).isDead()) {
+                world.removeEntity(entity);
+            }
+            ((Weapon) entity).execute(gameData, entity);
+            updateShape(entity);
+        }
+
     }
 
     private void updateShape(Entity weapon) {
@@ -54,5 +95,16 @@ public class WeaponControlSystem implements IControlService {
         weapon.setShapeX(shapex);
         weapon.setShapeY(shapey);
     }
-    
+
+    private Entity createWeapon(float x, float y, float rad) {
+        Entity wpn = new Weapon(true);
+        wpn.setPositionX(x);
+        wpn.setPositionY(y);
+        wpn.setPositionRadians(rad);
+        ((Weapon) wpn).setSpeed(200);
+        wpn.addCombat((ICombatEntity) wpn);
+        return wpn;
+
+    }
+
 }

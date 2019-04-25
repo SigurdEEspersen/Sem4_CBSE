@@ -25,7 +25,7 @@ public class PlayerControlSystem implements IControlService {
         float[] shapex = new float[4];
         float[] shapey = new float[4];
         float radians = entity.getPositionRadians();
-        
+
         shapex[0] = (float) (entity.getPositionX() + Math.cos(radians) * 15);
         shapey[0] = (float) (entity.getPositionY() + Math.sin(radians) * 15);
 
@@ -37,7 +37,7 @@ public class PlayerControlSystem implements IControlService {
 
         shapex[3] = (float) (entity.getPositionX() + Math.cos(radians + 4 * 3.1415f / 5) * 15);
         shapey[3] = (float) (entity.getPositionY() + Math.sin(radians + 4 * 3.1415f / 5) * 15);
-        
+
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
     }
@@ -46,16 +46,19 @@ public class PlayerControlSystem implements IControlService {
     public void execute(GameData gameData, World world) {
 
         for (Entity entity : world.getEntities(Player.class)) {
-            Player playerMovement = entity.getMovement(Player.class);
+            Player playerCombat = entity.getCombat(Player.class);
 
-            playerMovement.setDown(gameData.getKeys().isDown(KeyBindings.DOWN));
-            playerMovement.setUp(gameData.getKeys().isDown(KeyBindings.UP));
-            playerMovement.setLeft(gameData.getKeys().isDown(KeyBindings.LEFT));
-            playerMovement.setRight(gameData.getKeys().isDown(KeyBindings.RIGHT));
-            playerMovement.execute(gameData, entity);
+            playerCombat.setDown(gameData.getKeys().isDown(KeyBindings.DOWN));
+            playerCombat.setUp(gameData.getKeys().isDown(KeyBindings.UP));
+            playerCombat.setLeft(gameData.getKeys().isDown(KeyBindings.LEFT));
+            playerCombat.setRight(gameData.getKeys().isDown(KeyBindings.RIGHT));
+            playerCombat.setShooting(gameData.getKeys().isDown(KeyBindings.SPACE));
+            
 
-                      System.out.println("Entity har x: " + entity.getPositionX());
-                      System.out.println("Entity har y: " + entity.getPositionY());
+            playerCombat.execute(gameData, entity);
+
+//            System.out.println("Entity har x: " + entity.getPositionX());
+//            System.out.println("Entity har y: " + entity.getPositionY());
             updateShape(entity);
 
         }
