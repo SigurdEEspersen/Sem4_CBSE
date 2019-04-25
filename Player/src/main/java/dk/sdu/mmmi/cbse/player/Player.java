@@ -26,12 +26,9 @@ public class Player extends Entity implements IEntityMovement {
 
     public Player() {
       // The file path for the sprite. 
-      spritePath = "C:/Users/jonas/Desktop/player.gif/";
+      spritePath = "/player.gif";
      
     }
-    
-    
-    
     
     public boolean isLeft() {
         return left;
@@ -87,7 +84,7 @@ public class Player extends Entity implements IEntityMovement {
 
     @Override
     public void execute(GameData gameData, Entity entity) {
-        float radians = entity.getPositionRadians();
+        
         float dt = gameData.getDelta();
     
 
@@ -121,25 +118,15 @@ public class Player extends Entity implements IEntityMovement {
             entity.setPositionY(15);
         }
 
-        // turning
-        if (left) {
-            entity.setPositionRadians(entity.getPositionRadians() + 5 * dt);
-            System.out.println("LEFT!");
-        }
-        if (right) {
-            entity.setPositionRadians(entity.getPositionRadians() - 5 * dt);
-            System.out.println("RIGHT!");
-        }
-
-        // Speed
+        //Speed
         if (up) {
-            entity.setPositionX((float) (cos(entity.getPositionRadians()) * speed * dt + entity.getPositionX()));
-            entity.setPositionY((float) (sin(entity.getPositionRadians()) * speed * dt + entity.getPositionY()));
+            entity.setPositionX((float) (cos(radians) * speed * dt + entity.getPositionX()));
+            entity.setPositionY((float) (sin(radians) * speed * dt + entity.getPositionY()));
         }
 
         if (down) {
-            entity.setPositionX((float) (cos(entity.getPositionRadians()) * -speed * dt + entity.getPositionX()));
-            entity.setPositionY((float) (sin(entity.getPositionRadians()) * -speed * dt + entity.getPositionY()));
+            entity.setPositionX((float) (cos(radians) * -speed * dt + entity.getPositionX()));
+            entity.setPositionY((float) (sin(radians) * -speed * dt + entity.getPositionY()));
         }
     }
 }

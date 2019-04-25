@@ -2,13 +2,13 @@ package dk.sdu.mmmi.cbse.core.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import data.Entity;
 import data.GameData;
 import data.World;
@@ -16,7 +16,6 @@ import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import org.lwjgl.opengl.GL11;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
@@ -42,16 +41,9 @@ public class Game implements ApplicationListener {
     private float playerX;
     private float playerY;
     private float playerRadians;
-    
 
     @Override
     public void create() {
-       
-       
-       
-       
-       
-        
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -74,52 +66,37 @@ public class Game implements ApplicationListener {
         
         for (Entity p : world.getEntities(Player.class)) {
            spritePath = p.getSpritePath();
-           System.out.println(p.getSpritePath());
            
        }
         
         spriteBatch = new SpriteBatch();
-        backgroundSprite = new Sprite(new Texture("C:/users/Jonas/Desktop/background.png"));
+        backgroundSprite = new Sprite(new Texture("/background.png"));
         sprite = new Sprite(new Texture(spritePath));
     }
 
     @Override
     public void render() {
         
+        update();
       
         for (Entity p : world.getEntities(Player.class)) {
           playerX = p.getPositionX();
           playerY = p.getPositionY();
-          playerRadians = p.getPositionRadians();
+          playerRadians = (float) Math.atan2(
+                  gameData.getDisplayHeight() - Gdx.input.getY() - p.getPositionY(), 
+                  Gdx.input.getX() - p.getPositionX()
+          );
+          
+          p.setRadians(playerRadians);
+          
        }
-        
-      
-    
-    
-        
-        
-        // clear screen to black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
         
-            spriteBatch.setProjectionMatrix(cam.combined);
+        spriteBatch.setProjectionMatrix(cam.combined);
         
-        spriteBatch.begin();
-        sprite.setSize(80, 50);
-        
-        
-        sprite.setPosition(playerX, playerY);
-        backgroundSprite.setPosition(-355, -165);
-         backgroundSprite.draw(spriteBatch);
-        sprite.draw(spriteBatch);
-       
-        spriteBatch.end();
-
-        update();
-      //  draw();
+        draw();
     }
 
     private void update() {
@@ -137,27 +114,35 @@ public class Game implements ApplicationListener {
 
     private void draw() {
         
-          
+        // clear screen to black
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        for (Entity entity : world.getEntities()) {
-            sr.setColor(1, 1, 1, 1);
-
-            sr.begin(ShapeRenderer.ShapeType.Line);
-
-            float[] shapex = entity.getShapeX();
-            float[] shapey = entity.getShapeY();
-            
-//            sr.circle(350, 350, 50);
-            
-            for (int i = 0, j = shapex.length - 1;
-                    i < shapex.length;
-                    j = i++) {
-
-                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-            }
-
-            sr.end();
-        }
+        spriteBatch.begin();
+        sprite.setSize(sprite.getWidth(), sprite.getHeight());
+        
+        float angle = playerRadians * MathUtils.radDeg;
+        
+        if (angle < 0)
+            angle +=360;
+        
+        sprite.setPosition(
+                playerX - (sprite.getWidth() / 2),
+                playerY - (sprite.getHeight() / 2)
+        );
+        
+        sprite.setScale(0.3F);
+        sprite.setRotation(angle);
+        backgroundSprite.setPosition(-355, -165);
+        
+        backgroundSprite.draw(spriteBatch);
+        sprite.draw(spriteBatch);
+       
+        spriteBatch.end();
+        
+//        for (Entity entity : world.getEntities()) {
+//            
+//        }
     }
 
     @Override
