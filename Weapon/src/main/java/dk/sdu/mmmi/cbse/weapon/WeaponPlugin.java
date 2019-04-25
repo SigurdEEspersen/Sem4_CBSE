@@ -25,16 +25,10 @@ public class WeaponPlugin implements IPluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        weapon = createWeapon(gameData);
-//        weapon.addWeapons((IShooter) weapon);
-        world.addEntity(weapon);
+          
         
     }
-    
-    private Weapon createWeapon(GameData gameData) {
-        Weapon weapon = new Weapon();
-        return weapon;
-    }
+
     
     
 

@@ -24,4 +24,6 @@ public interface ICombatEntity {
     
     boolean isShooting();
     
+    void setShooting(boolean b);
+    
 }

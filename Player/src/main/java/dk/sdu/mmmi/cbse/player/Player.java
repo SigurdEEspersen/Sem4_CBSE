@@ -168,7 +168,6 @@ public class Player extends Entity implements ICombatEntity {
         }
         
         if(isShooting){
-            System.out.println("BANG!");
             // weapon.setShooting(true);
         }
     }
