@@ -4,11 +4,17 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import data.Entity;
 import data.GameData;
 import data.World;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
+import dk.sdu.mmmi.cbse.enemy.Enemy;
+import dk.sdu.mmmi.cbse.player.Player;
+import dk.sdu.mmmi.cbse.weapon.Weapon;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -28,6 +34,15 @@ public class Game implements ApplicationListener {
     private World world = new World();
     private List<IPluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private Lookup.Result<IPluginService> result;
+    private SpriteBatch spriteBatch;
+    private Sprite sprite;
+    private Sprite backgroundSprite;
+    private Sprite bulletSprite;
+    private Sprite enemySprite;
+    private float playerX;
+    private float playerY;
+    private float bulletX;
+    private float bulletY;
 
     @Override
     public void create() {
@@ -50,6 +65,13 @@ public class Game implements ApplicationListener {
             plugin.start(gameData, world);
             gamePlugins.add(plugin);
         }
+        
+        spriteBatch = new SpriteBatch();
+        backgroundSprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
+        sprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif"));
+        bulletSprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
+        enemySprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
+        
     }
 
     @Override
@@ -61,6 +83,20 @@ public class Game implements ApplicationListener {
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
 
+        spriteBatch.setProjectionMatrix(cam.combined);
+        
+        for(Entity p: world.getEntities(Player.class)) {
+            playerX = p.getPositionX();
+            playerY = p.getPositionY();
+        }
+        
+        for(Entity p: world.getEntities(Weapon.class)) {
+            bulletX = p.getPositionX();
+            bulletY = p.getPositionY();
+        }
+        
+        
+        
         update();
         draw();
     }
@@ -97,6 +133,23 @@ public class Game implements ApplicationListener {
 
             sr.end();
         }
+        
+        spriteBatch.begin();
+        backgroundSprite.setPosition(-355, -165);
+        backgroundSprite.draw(spriteBatch);
+        sprite.setPosition(playerX, playerY);
+        sprite.setSize(80, 50);
+        for (Entity b : world.getEntities(Weapon.class)) {
+        bulletSprite.setPosition(b.getPositionX(), b.getPositionY());
+        bulletSprite.setSize(32, 65);
+        bulletSprite.draw(spriteBatch);
+        }
+        for (Entity e : world.getEntities(Enemy.class)) {
+        enemySprite.setPosition(e.getPositionX(), e.getPositionY());
+        enemySprite.draw(spriteBatch);
+        }
+        sprite.draw(spriteBatch);
+        spriteBatch.end();
     }
 
     @Override
