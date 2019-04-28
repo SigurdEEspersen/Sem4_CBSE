@@ -2,7 +2,6 @@ package dk.sdu.mmmi.cbse.enemy;
 
 import data.Entity;
 import data.GameData;
-import data.KeyBindings;
 import data.World;
 import dk.sdu.mmmi.cbse.player.Player;
 import org.openide.util.lookup.ServiceProvider;
@@ -31,7 +30,7 @@ public class EnemyControlSystem implements IControlService {
             Enemy enemyMovement = enemy.getCombat(Enemy.class);
             
             float rotation = (float) Math.atan2(playerY - enemy.getPositionY(), playerX - enemy.getPositionX());
-            enemyMovement.setPositionRadians(rotation);
+            enemyMovement.setRadians(rotation);
 
             enemyMovement.setUp(true);
             enemyMovement.execute(gameData, enemy);
@@ -43,7 +42,7 @@ public class EnemyControlSystem implements IControlService {
     private void updateShape(Entity entity) {
         float[] shapex = new float[4];
         float[] shapey = new float[4];
-        float radians = entity.getPositionRadians();
+        float radians = entity.getRadians();
 
         shapex[0] = (float) (entity.getPositionX() + Math.cos(radians) * 10);
         shapey[0] = (float) (entity.getPositionY() + Math.sin(radians) * 10);

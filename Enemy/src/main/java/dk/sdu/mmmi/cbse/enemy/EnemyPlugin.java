@@ -49,7 +49,7 @@ public class EnemyPlugin implements IPluginService {
         enemyShip.setPositionX(x);
         enemyShip.setPositionY(y);
         enemyShip.setSpeed(speed);
-        enemyShip.setPositionRadians(radians);
+        enemyShip.setRadians(radians);
         
         return enemyShip;
     }

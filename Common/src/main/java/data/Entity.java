@@ -29,9 +29,11 @@ public class Entity {
     private Map<Class, ICombatEntity> movingParts;
     private Map<Class, IShooter> weaponParts;
     
+    private float radians;
     
     public Entity(){
         movingParts = new ConcurrentHashMap<>();
+        radians = (float) Math.PI / 2;
     }
     
     public <E extends IShooter> E getWeapons(Class shootClass){
@@ -94,12 +96,12 @@ public class Entity {
         this.positionY = positionY;
     }
 
-    public float getPositionRadians() {
-        return positionRadians;
+    public float getRadians() {
+        return radians;
     }
 
-    public void setPositionRadians(float positionRadians) {
-        this.positionRadians = positionRadians;
+    public void setRadians(float radians) {
+        this.radians = radians;
     }
     
    

@@ -78,7 +78,7 @@ public class Enemy extends Entity implements ICombatEntity{
 
     @Override
     public void execute(GameData gameData, Entity entity) {
-        float radians = entity.getPositionRadians();
+        float radians = entity.getRadians();
         float dt = gameData.getDelta();
 
         if (up) {
@@ -88,8 +88,8 @@ public class Enemy extends Entity implements ICombatEntity{
         
         // Speed
         if (up ) {
-            entity.setPositionX((float) (cos(entity.getPositionRadians()) * speed * dt + entity.getPositionX()));
-            entity.setPositionY((float) (sin(entity.getPositionRadians()) * speed * dt + entity.getPositionY()));
+            entity.setPositionX((float) (cos(entity.getRadians()) * speed * dt + entity.getPositionX()));
+            entity.setPositionY((float) (sin(entity.getRadians()) * speed * dt + entity.getPositionY()));
         }
     }
 

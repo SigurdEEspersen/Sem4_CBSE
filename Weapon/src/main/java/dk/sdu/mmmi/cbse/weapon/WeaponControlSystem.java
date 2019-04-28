@@ -33,7 +33,7 @@ public class WeaponControlSystem implements IControlService {
         for (Entity entity : world.getEntities()) {
             x = entity.getPositionX();
             y = entity.getPositionY();
-            float rad = entity.getPositionRadians();
+            float rad = entity.getRadians();
             String id = entity.getID();
             if (entity instanceof ICombatEntity && !(entity instanceof Weapon)) {
                 if (((ICombatEntity) entity).isShooting()) {
@@ -80,17 +80,17 @@ public class WeaponControlSystem implements IControlService {
         float[] shapex = new float[4];
         float[] shapey = new float[4];
 
-        shapex[0] = (float) (weapon.getPositionX() + Math.cos(weapon.getPositionRadians()) * 5);
-        shapey[0] = (float) (weapon.getPositionY() + Math.sin(weapon.getPositionRadians()) * 5);
+        shapex[0] = (float) (weapon.getPositionX() + Math.cos(weapon.getRadians()) * 5);
+        shapey[0] = (float) (weapon.getPositionY() + Math.sin(weapon.getRadians()) * 5);
 
-        shapex[1] = (float) (weapon.getPositionX() + Math.cos(weapon.getPositionRadians() - 4 * 3.1415f / 5) * 5);
-        shapey[1] = (float) (weapon.getPositionY() + Math.sin(weapon.getPositionRadians() - 4 * 3.1145f / 5) * 5);
+        shapex[1] = (float) (weapon.getPositionX() + Math.cos(weapon.getRadians() - 4 * 3.1415f / 5) * 5);
+        shapey[1] = (float) (weapon.getPositionY() + Math.sin(weapon.getRadians() - 4 * 3.1145f / 5) * 5);
 
-        shapex[2] = (float) (weapon.getPositionX() + Math.cos(weapon.getPositionRadians() + 3.1415f) * 5 * 0.5);
-        shapey[2] = (float) (weapon.getPositionY() + Math.sin(weapon.getPositionRadians() + 3.1415f) * 5 * 0.5);
+        shapex[2] = (float) (weapon.getPositionX() + Math.cos(weapon.getRadians() + 3.1415f) * 5 * 0.5);
+        shapey[2] = (float) (weapon.getPositionY() + Math.sin(weapon.getRadians() + 3.1415f) * 5 * 0.5);
 
-        shapex[3] = (float) (weapon.getPositionX() + Math.cos(weapon.getPositionRadians() + 4 * 3.1415f / 5) * 5);
-        shapey[3] = (float) (weapon.getPositionY() + Math.sin(weapon.getPositionRadians() + 4 * 3.1415f / 5) * 5);
+        shapex[3] = (float) (weapon.getPositionX() + Math.cos(weapon.getRadians() + 4 * 3.1415f / 5) * 5);
+        shapey[3] = (float) (weapon.getPositionY() + Math.sin(weapon.getRadians() + 4 * 3.1415f / 5) * 5);
 
         weapon.setShapeX(shapex);
         weapon.setShapeY(shapey);
@@ -100,7 +100,7 @@ public class WeaponControlSystem implements IControlService {
         Entity wpn = new Weapon(true);
         wpn.setPositionX(x);
         wpn.setPositionY(y);
-        wpn.setPositionRadians(rad);
+        wpn.setRadians(rad);
         ((Weapon) wpn).setSpeed(200);
         wpn.addCombat((ICombatEntity) wpn);
         return wpn;

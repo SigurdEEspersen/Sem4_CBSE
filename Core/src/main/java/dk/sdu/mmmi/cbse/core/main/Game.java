@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import data.Entity;
 import data.GameData;
 import data.World;
@@ -28,7 +29,6 @@ import services.IControlService;
 public class Game implements ApplicationListener {
 
     private static OrthographicCamera cam;
-    private ShapeRenderer sr;
     private final Lookup lookup = Lookup.getDefault();
     private final GameData gameData = new GameData();
     private World world = new World();
@@ -43,6 +43,7 @@ public class Game implements ApplicationListener {
     private float playerY;
     private float bulletX;
     private float bulletY;
+    private float playerRadians;
 
     @Override
     public void create() {
@@ -52,8 +53,6 @@ public class Game implements ApplicationListener {
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
-
-        sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
@@ -67,10 +66,11 @@ public class Game implements ApplicationListener {
         }
         
         spriteBatch = new SpriteBatch();
-        backgroundSprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
-        sprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif"));
-        bulletSprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
-        enemySprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
+        
+        backgroundSprite = new Sprite(new Texture("../Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
+        sprite = new Sprite(new Texture("../Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif"));
+        bulletSprite = new Sprite(new Texture("../Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
+        enemySprite = new Sprite(new Texture("../Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
         
     }
 
@@ -88,14 +88,18 @@ public class Game implements ApplicationListener {
         for(Entity p: world.getEntities(Player.class)) {
             playerX = p.getPositionX();
             playerY = p.getPositionY();
+            playerRadians = (float) Math.atan2(
+                    Gdx.graphics.getHeight() - Gdx.input.getY() - playerY, 
+                    Gdx.input.getX() - playerX
+            );
+            
+            p.setRadians(playerRadians);
         }
         
         for(Entity p: world.getEntities(Weapon.class)) {
             bulletX = p.getPositionX();
             bulletY = p.getPositionY();
         }
-        
-        
         
         update();
         draw();
@@ -115,38 +119,35 @@ public class Game implements ApplicationListener {
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
-            sr.setColor(1, 1, 1, 1);
-
-            sr.begin(ShapeRenderer.ShapeType.Line);
-
-            float[] shapex = entity.getShapeX();
-            float[] shapey = entity.getShapeY();
             
-//            sr.circle(350, 350, 50);
-            
-            for (int i = 0, j = shapex.length - 1;
-                    i < shapex.length;
-                    j = i++) {
-
-                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-            }
-
-            sr.end();
         }
+        
+        float angle = playerRadians * MathUtils.radDeg;
+        
+        if (angle < 0)
+            angle += 360;
         
         spriteBatch.begin();
         backgroundSprite.setPosition(-355, -165);
         backgroundSprite.draw(spriteBatch);
-        sprite.setPosition(playerX, playerY);
-        sprite.setSize(80, 50);
+        
+        sprite.setPosition(
+                playerX - sprite.getWidth() / 2,
+                playerY - sprite.getHeight() / 2
+        );
+        
+        sprite.setSize(sprite.getWidth(), sprite.getHeight());
+        sprite.setRotation(angle);
+        sprite.setScale(0.2F);
+        
         for (Entity b : world.getEntities(Weapon.class)) {
-        bulletSprite.setPosition(b.getPositionX(), b.getPositionY());
-        bulletSprite.setSize(32, 65);
-        bulletSprite.draw(spriteBatch);
+            bulletSprite.setPosition(b.getPositionX(), b.getPositionY());
+            bulletSprite.setSize(32, 65);
+            bulletSprite.draw(spriteBatch);
         }
         for (Entity e : world.getEntities(Enemy.class)) {
-        enemySprite.setPosition(e.getPositionX(), e.getPositionY());
-        enemySprite.draw(spriteBatch);
+            enemySprite.setPosition(e.getPositionX(), e.getPositionY());
+            enemySprite.draw(spriteBatch);
         }
         sprite.draw(spriteBatch);
         spriteBatch.end();

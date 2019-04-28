@@ -104,22 +104,9 @@ public class Player extends Entity implements ICombatEntity {
 
     @Override
     public void execute(GameData gameData, Entity entity) {
-        float radians = entity.getPositionRadians();
+        float radians = entity.getRadians();
         float dt = gameData.getDelta();
 
-//        if (down) {
-//            entity.setPositionX((float) ((float) entity.getPositionX() - cos(radians) * speed * dt));
-//            entity.setPositionY((float) ((float) entity.getPositionY() - sin(radians + 1) * speed * dt));
-//
-//            System.out.println("DOWN!");
-//        }
-//
-//        if (up) {
-//            entity.setPositionX((float) ((float) entity.getPositionX() + cos(radians) * speed * dt));
-//            entity.setPositionY((float) ((float) entity.getPositionY() + sin(radians + 1) * speed * dt));
-//
-//            System.out.println("UP!");
-//        }
         // skal ind i en collision klasse
         if (entity.getPositionX() >= (gameData.getDisplayWidth() - 15)) {
             entity.setPositionX(gameData.getDisplayWidth() - 15);
@@ -137,25 +124,15 @@ public class Player extends Entity implements ICombatEntity {
             entity.setPositionY(15);
         }
 
-        // turning
-        if (left) {
-            entity.setPositionRadians(entity.getPositionRadians() + 5 * dt);
-//            System.out.println("LEFT!");
-        }
-        if (right) {
-            entity.setPositionRadians(entity.getPositionRadians() - 5 * dt);
-//            System.out.println("RIGHT!");
-        }
-
         // Speed
         if (up) {
-            entity.setPositionX((float) (cos(entity.getPositionRadians()) * speed * dt + entity.getPositionX()));
-            entity.setPositionY((float) (sin(entity.getPositionRadians()) * speed * dt + entity.getPositionY()));
+            entity.setPositionX((float) (cos(entity.getRadians()) * speed * dt + entity.getPositionX()));
+            entity.setPositionY((float) (sin(entity.getRadians()) * speed * dt + entity.getPositionY()));
         }
 
         if (down) {
-            entity.setPositionX((float) (cos(entity.getPositionRadians()) * -speed * dt + entity.getPositionX()));
-            entity.setPositionY((float) (sin(entity.getPositionRadians()) * -speed * dt + entity.getPositionY()));
+            entity.setPositionX((float) (cos(entity.getRadians()) * -speed * dt + entity.getPositionX()));
+            entity.setPositionY((float) (sin(entity.getRadians()) * -speed * dt + entity.getPositionY()));
         }
         
         
@@ -163,6 +140,7 @@ public class Player extends Entity implements ICombatEntity {
             life = - 1;
             isHit = false;
         }
+         
         if (life <= 0) {
             dead = true;
         }

@@ -24,7 +24,7 @@ public class PlayerControlSystem implements IControlService {
     private void updateShape(Entity entity) {
         float[] shapex = new float[4];
         float[] shapey = new float[4];
-        float radians = entity.getPositionRadians();
+        float radians = entity.getRadians();
 
         shapex[0] = (float) (entity.getPositionX() + Math.cos(radians) * 15);
         shapey[0] = (float) (entity.getPositionY() + Math.sin(radians) * 15);

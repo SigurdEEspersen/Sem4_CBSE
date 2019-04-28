@@ -57,7 +57,7 @@ public class PlayerPlugin implements IPluginService {
         playerShip.setPositionX(x);
         playerShip.setPositionY(y);
         playerShip.setSpeed(speed);
-        playerShip.setPositionRadians(radians);
+        playerShip.setRadians(radians);
         
         return playerShip;
     }

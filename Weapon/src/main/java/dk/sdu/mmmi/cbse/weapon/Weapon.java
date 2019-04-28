@@ -56,8 +56,8 @@ public class Weapon extends Entity implements ICombatEntity {
     public void execute(GameData gd, Entity entity) {
         float dt = gd.getDelta();
         if (up) {
-            entity.setPositionX((float) (cos(entity.getPositionRadians()) * speed * dt + entity.getPositionX()));
-            entity.setPositionY((float) (sin(entity.getPositionRadians()) * speed * dt + entity.getPositionY()));
+            entity.setPositionX((float) (cos(entity.getRadians()) * speed * dt + entity.getPositionX()));
+            entity.setPositionY((float) (sin(entity.getRadians()) * speed * dt + entity.getPositionY()));
         }
         if((timeAlive + 2000) < System.currentTimeMillis()) {
             dead = true;
