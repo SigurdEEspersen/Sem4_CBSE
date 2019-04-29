@@ -44,7 +44,6 @@ public class PlayerControlSystem implements IControlService {
 
     @Override
     public void execute(GameData gameData, World world) {
-
         for (Entity entity : world.getEntities(Player.class)) {
             Player playerCombat = entity.getCombat(Player.class);
 

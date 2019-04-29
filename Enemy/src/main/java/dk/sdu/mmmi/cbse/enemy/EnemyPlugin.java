@@ -7,6 +7,8 @@ import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import services.IPluginService;
 import Interfaces.ICombatEntity;
+import Interfaces.IMap;
+import java.util.Random;
 
 /**
  *
@@ -28,18 +30,20 @@ public class EnemyPlugin implements IPluginService {
         
         
         for (int i = 0; i < 3; i++) {
-            enemy = createEnemy(gameData);
+            enemy = createEnemy(gameData, world);
             enemy.addCombat((ICombatEntity) enemy);
             world.addEntity(enemy);
         }
         
     }
 
-    private Enemy createEnemy(GameData gameData) {
+    private Enemy createEnemy(GameData gameData, World world) {
 
         float speed = 30 + (float) Math.random() * (150 - 30);
-        float x = gameData.getDisplayWidth() * (float) Math.random();
-        float y = gameData.getDisplayHeight();
+        IMap map = world.getMapArray().get(0);
+        Random r = new Random();
+        float x = map.getEnemyCoordinatesX()[r.nextInt(3)];
+        float y = map.getEnemyCoordinatesY()[0];
         float radians = 3.1415f / 2;
 
         float[] colour = new float[4];
