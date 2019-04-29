@@ -3,7 +3,6 @@ package dk.sdu.mmmi.cbse.enemy;
 import data.Entity;
 import data.GameData;
 import data.World;
-import dk.sdu.mmmi.cbse.player.Player;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import services.IControlService;
@@ -18,18 +17,11 @@ public class EnemyControlSystem implements IControlService {
 
     @Override
     public void execute(GameData gameData, World world) {
-        float playerX = 0;
-        float playerY = 0;
-        
-       for (Entity p : world.getEntities(Player.class)) {
-          playerX = p.getPositionX();
-          playerY = p.getPositionY();
-       }
         
         for (Entity enemy : world.getEntities(Enemy.class)) {
             Enemy enemyMovement = enemy.getCombat(Enemy.class);
             
-            float rotation = (float) Math.atan2(playerY - enemy.getPositionY(), playerX - enemy.getPositionX());
+            float rotation = (float) Math.atan2(enemy.getPlayerY() - enemy.getPositionY(), enemy.getPlayerX() - enemy.getPositionX());
             enemyMovement.setRadians(rotation);
 
             enemyMovement.setUp(true);

@@ -21,13 +21,12 @@ public class Entity {
     
     private final UUID ID = UUID.randomUUID();
 
-
-
     private float positionX, positionY, positionRadians;
     private float[] shapeX, shapeY;
     private Image[] sprite;
     private Map<Class, ICombatEntity> movingParts;
     private Map<Class, IShooter> weaponParts;
+    protected float playerX, playerY;
     
     private float radians;
     
@@ -80,7 +79,7 @@ public class Entity {
         return ID.toString();
     }
     
-        public float getPositionX() {
+    public float getPositionX() {
         return positionX;
     }
 
@@ -103,7 +102,23 @@ public class Entity {
     public void setRadians(float radians) {
         this.radians = radians;
     }
+
+    public float getPlayerX() {
+        return playerX;
+    }
+
+    public void setPlayerX(float playerX) {
+        this.playerX = playerX;
+    }
+
+    public float getPlayerY() {
+        return playerY;
+    }
+
+    public void setPlayerY(float playerY) {
+        this.playerY = playerY;
+    }
     
-   
+    
     
 }

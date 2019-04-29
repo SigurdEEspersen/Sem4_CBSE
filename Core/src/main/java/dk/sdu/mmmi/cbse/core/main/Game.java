@@ -35,7 +35,7 @@ public class Game implements ApplicationListener {
     private List<IPluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private Lookup.Result<IPluginService> result;
     private SpriteBatch spriteBatch;
-    private Sprite sprite;
+    private Sprite playerSprite;
     private Sprite backgroundSprite;
     private Sprite bulletSprite;
     private Sprite enemySprite;
@@ -68,7 +68,7 @@ public class Game implements ApplicationListener {
         spriteBatch = new SpriteBatch();
         
         backgroundSprite = new Sprite(new Texture("../Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
-        sprite = new Sprite(new Texture("../Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif"));
+        playerSprite = new Sprite(new Texture("../Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif"));
         bulletSprite = new Sprite(new Texture("../Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
         enemySprite = new Sprite(new Texture("../Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
         
@@ -94,6 +94,11 @@ public class Game implements ApplicationListener {
             );
             
             p.setRadians(playerRadians);
+        }
+        
+        for (Entity p: world.getEntities()) {
+            p.setPlayerX(playerX - playerSprite.getWidth() / 2);
+            p.setPlayerY(playerY - playerSprite.getHeight() / 2);
         }
         
         for(Entity p: world.getEntities(Weapon.class)) {
@@ -131,14 +136,14 @@ public class Game implements ApplicationListener {
         backgroundSprite.setPosition(-355, -165);
         backgroundSprite.draw(spriteBatch);
         
-        sprite.setPosition(
-                playerX - sprite.getWidth() / 2,
-                playerY - sprite.getHeight() / 2
+        playerSprite.setPosition(
+                playerX - playerSprite.getWidth() / 2,
+                playerY - playerSprite.getHeight() / 2
         );
         
-        sprite.setSize(sprite.getWidth(), sprite.getHeight());
-        sprite.setRotation(angle);
-        sprite.setScale(0.2F);
+        playerSprite.setSize(playerSprite.getWidth(), playerSprite.getHeight());
+        playerSprite.setRotation(angle);
+        playerSprite.setScale(0.2F);
         
         for (Entity b : world.getEntities(Weapon.class)) {
             bulletSprite.setPosition(b.getPositionX(), b.getPositionY());
@@ -147,9 +152,15 @@ public class Game implements ApplicationListener {
         }
         for (Entity e : world.getEntities(Enemy.class)) {
             enemySprite.setPosition(e.getPositionX(), e.getPositionY());
+            float rotation = e.getRadians() * MathUtils.radDeg;
+            
+            if (rotation < 0)
+                rotation +=360;
+            
+            enemySprite.setRotation(rotation);
             enemySprite.draw(spriteBatch);
         }
-        sprite.draw(spriteBatch);
+        playerSprite.draw(spriteBatch);
         spriteBatch.end();
     }
 
