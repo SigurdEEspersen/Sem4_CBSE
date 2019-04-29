@@ -25,16 +25,20 @@ public class EnemyPlugin implements IPluginService {
     public void start(GameData gameData, World world) {
 
         // Add entities to the world
-        enemy = createEnemyShip(gameData);
-        enemy.addCombat((ICombatEntity) enemy);
-        world.addEntity(enemy);
+        
+        
+        for (int i = 0; i < 3; i++) {
+            enemy = createEnemy(gameData);
+            enemy.addCombat((ICombatEntity) enemy);
+            world.addEntity(enemy);
+        }
+        
     }
 
-    private Enemy createEnemyShip(GameData gameData) {
+    private Enemy createEnemy(GameData gameData) {
 
-        float speed = 100;
-        float rotationSpeed = 5;
-        float x = gameData.getDisplayWidth() / 2;
+        float speed = 30 + (float) Math.random() * (150 - 30);
+        float x = gameData.getDisplayWidth() * (float) Math.random();
         float y = gameData.getDisplayHeight();
         float radians = 3.1415f / 2;
 
@@ -44,14 +48,14 @@ public class EnemyPlugin implements IPluginService {
         colour[2] = 1.0f;
         colour[3] = 1.0f;
 
-        Enemy enemyShip = new Enemy();
+        Enemy enemy = new Enemy();
 
-        enemyShip.setPositionX(x);
-        enemyShip.setPositionY(y);
-        enemyShip.setSpeed(speed);
-        enemyShip.setRadians(radians);
+        enemy.setPositionX(x);
+        enemy.setPositionY(y);
+        enemy.setSpeed(speed);
+        enemy.setRadians(radians);
         
-        return enemyShip;
+        return enemy;
     }
 
     @Override
