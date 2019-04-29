@@ -26,7 +26,7 @@ public class EnemyPlugin implements IPluginService {
 
         // Add entities to the world
         for(int i = 0; i < 100; i++){
-        Entity enemy = createEnemyShip(gameData);
+        Entity enemy = createEnemy(gameData);
         enemy.addCombat((ICombatEntity) enemy);
         world.addEntity(enemy);
         }
@@ -34,7 +34,7 @@ public class EnemyPlugin implements IPluginService {
         
     }
 
-    private Enemy createEnemyShip(GameData gameData) {
+    private Enemy createEnemy(GameData gameData) {
         Random r = new Random();
         float speed = 30 + r.nextFloat() * (150 - 30);
         float rotationSpeed = 5;
