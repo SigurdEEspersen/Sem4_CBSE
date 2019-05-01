@@ -41,7 +41,6 @@ public class Map implements IMap {
 
         Runnable spawnEnemy = new Runnable() {
             public void run() {
-                System.out.println("Spawn");
                 spawn = true;
             }
         };
