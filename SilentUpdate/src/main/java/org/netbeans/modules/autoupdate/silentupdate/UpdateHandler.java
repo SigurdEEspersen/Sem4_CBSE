@@ -23,6 +23,7 @@ import org.netbeans.api.autoupdate.UpdateUnitProviderFactory;
 
 /**
  *
+ * @author Gruppe 11
  */
 public final class UpdateHandler {
 

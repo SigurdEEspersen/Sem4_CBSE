@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import data.Entity;
 import data.GameData;
@@ -26,6 +25,10 @@ import services.IPluginService;
 import services.IPostProcessor;
 import services.IControlService;
 
+/**
+ *
+ * @author Gruppe 11
+ */
 public class Game implements ApplicationListener {
 
     private static OrthographicCamera cam;
@@ -61,10 +64,11 @@ public class Game implements ApplicationListener {
         result.allItems();
 
         for (IPluginService plugin : result.allInstances()) {
+            System.out.println("Found plugin: " + plugin);
             plugin.start(gameData, world);
             gamePlugins.add(plugin);
         }
-        
+
         spriteBatch = new SpriteBatch();
         
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
@@ -110,28 +114,28 @@ public class Game implements ApplicationListener {
         gameData.getKeys().update();
 
         spriteBatch.setProjectionMatrix(cam.combined);
-        
-        for(Entity p: world.getEntities(Player.class)) {
+
+        for (Entity p : world.getEntities(Player.class)) {
             playerX = p.getPositionX();
             playerY = p.getPositionY();
             playerRadians = (float) Math.atan2(
-                    Gdx.graphics.getHeight() - Gdx.input.getY() - playerY, 
+                    Gdx.graphics.getHeight() - Gdx.input.getY() - playerY,
                     Gdx.input.getX() - playerX
             );
-            
+
             p.setRadians(playerRadians);
         }
-        
-        for (Entity p: world.getEntities()) {
+
+        for (Entity p : world.getEntities()) {
             p.setPlayerX(playerX - playerSprite.getWidth() / 2);
             p.setPlayerY(playerY - playerSprite.getHeight() / 2);
         }
-        
-        for(Entity p: world.getEntities(Weapon.class)) {
+
+        for (Entity p : world.getEntities(Weapon.class)) {
             bulletX = p.getPositionX();
             bulletY = p.getPositionY();
         }
-        
+
         update();
         draw();
     }
@@ -146,31 +150,33 @@ public class Game implements ApplicationListener {
         for (IPostProcessor postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.execute(gameData, world);
         }
+
     }
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
-            
+
         }
-        
+
         float angle = playerRadians * MathUtils.radDeg;
-        
-        if (angle < 0)
+
+        if (angle < 0) {
             angle += 360;
-        
+        }
+
         spriteBatch.begin();
         backgroundSprite.setPosition(-355, -165);
         backgroundSprite.draw(spriteBatch);
-        
+
         playerSprite.setPosition(
                 playerX - playerSprite.getWidth() / 2,
                 playerY - playerSprite.getHeight() / 2
         );
-        
+
         playerSprite.setSize(playerSprite.getWidth(), playerSprite.getHeight());
         playerSprite.setRotation(angle);
         playerSprite.setScale(0.2F);
-        
+
         for (Entity b : world.getEntities(Weapon.class)) {
             bulletSprite.setPosition(b.getPositionX(), b.getPositionY());
             bulletSprite.setSize(32, 65);
@@ -179,10 +185,11 @@ public class Game implements ApplicationListener {
         for (Entity e : world.getEntities(Enemy.class)) {
             enemySprite.setPosition(e.getPositionX(), e.getPositionY());
             float rotation = e.getRadians() * MathUtils.radDeg;
-            
-            if (rotation < 0)
-                rotation +=360;
-            
+
+            if (rotation < 0) {
+                rotation += 360;
+            }
+
             enemySprite.setRotation(rotation);
             enemySprite.draw(spriteBatch);
         }

@@ -1,6 +1,5 @@
-package dk.sdu.mmmi.cbse.weapon;
+package dk.sdu.mmmi.cbse.map;
 
-import data.Entity;
 import data.GameData;
 import data.World;
 import org.openide.util.lookup.ServiceProvider;
@@ -13,22 +12,19 @@ import services.IPluginService;
  */
 @ServiceProviders(value = {
     @ServiceProvider(service = IPluginService.class),})
-public class WeaponPlugin implements IPluginService {
+public class MapPlugin implements IPluginService {
 
-    Entity weapon;
+    private Map map;
 
     @Override
     public void start(GameData gameData, World world) {
-
+        map = new Map();
+        world.addMap(map);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity e : world.getEntities()) {
-            if (e.getClass() == Weapon.class) {
-                world.removeEntity(e);
-            }
-        }
+        world.removeMap(map);
     }
 
 }

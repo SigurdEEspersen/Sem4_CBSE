@@ -1,15 +1,18 @@
 package dk.sdu.mmmi.cbse.enemy;
 
+import Interfaces.ICombatEntity;
+import Interfaces.IMap;
 import data.Entity;
 import data.GameData;
 import data.World;
+import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import services.IControlService;
 
 /**
  *
- * @author Sigurd E. Espersen
+ * @author Gruppe 11
  */
 @ServiceProviders(value = {
     @ServiceProvider(service = IControlService.class),})
@@ -17,16 +20,29 @@ public class EnemyControlSystem implements IControlService {
 
     @Override
     public void execute(GameData gameData, World world) {
-        
+
+        if (world.getMapArray().get(0) != null) {
+            IMap map = world.getMapArray().get(0);
+            if (map.isSpawning()) {
+                Random r = new Random();
+                Entity enemy = createEnemy(gameData, world, map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
+                enemy.addCombat((ICombatEntity) enemy);
+                world.addEntity(enemy);
+                map.setSpawn(false);
+            }
+        } else {
+            System.out.println("No map to load");
+        }
+
         for (Entity enemy : world.getEntities(Enemy.class)) {
             Enemy enemyMovement = enemy.getCombat(Enemy.class);
-            
+
             float rotation = (float) Math.atan2(enemy.getPlayerY() - enemy.getPositionY(), enemy.getPlayerX() - enemy.getPositionX());
             enemyMovement.setRadians(rotation);
 
             enemyMovement.setUp(true);
             enemyMovement.execute(gameData, enemy);
-            
+
             updateShape(enemy);
         }
     }
@@ -52,4 +68,24 @@ public class EnemyControlSystem implements IControlService {
         entity.setShapeY(shapey);
     }
 
+    private Enemy createEnemy(GameData gameData, World world, float x, float y) {
+
+        float speed = 30 + (float) Math.random() * (150 - 30);
+        float radians = 3.1415f / 2;
+
+        float[] colour = new float[4];
+        colour[0] = 1.0f;
+        colour[1] = 1.0f;
+        colour[2] = 1.0f;
+        colour[3] = 1.0f;
+
+        Enemy enemy = new Enemy();
+
+        enemy.setPositionX(x);
+        enemy.setPositionY(y);
+        enemy.setSpeed(speed);
+        enemy.setRadians(radians);
+
+        return enemy;
+    }
 }

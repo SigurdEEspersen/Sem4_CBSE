@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package data;
 
+import Interfaces.IMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,11 +9,24 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
- * @author Peter
+ * @author Gruppe 11
  */
 public class World {
-    
+
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
+    private final ArrayList<IMap> mapArray = new ArrayList<>();
+
+    public ArrayList<IMap> getMapArray() {
+        return mapArray;
+    }
+
+    public void addMap(IMap map) {
+        mapArray.add(map);
+    }
+
+    public void removeMap(IMap map) {
+        mapArray.remove(map);
+    }
 
     public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);

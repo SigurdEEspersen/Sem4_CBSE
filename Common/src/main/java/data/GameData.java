@@ -1,20 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package data;
 
 /**
  *
- * @author Peter
+ * @author Gruppe 11
  */
 public class GameData {
-     private float delta;
+
+    private float delta;
     private int displayWidth;
     private int displayHeight;
     private final KeyBindings keys = new KeyBindings();
-
 
     public KeyBindings getKeys() {
         return keys;

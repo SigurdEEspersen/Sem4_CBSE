@@ -5,6 +5,10 @@ import com.badlogic.gdx.InputAdapter;
 import data.GameData;
 import data.KeyBindings;
 
+/**
+ *
+ * @author Gruppe 11
+ */
 public class GameInputProcessor extends InputAdapter {
 
     private final GameData gameData;
@@ -14,16 +18,16 @@ public class GameInputProcessor extends InputAdapter {
     }
 
     public boolean keyDown(int k) {
-        if (k == Keys.UP) {
+        if (k == Keys.W) {
             gameData.getKeys().setKey(KeyBindings.UP, true);
         }
-        if (k == Keys.LEFT) {
+        if (k == Keys.A) {
             gameData.getKeys().setKey(KeyBindings.LEFT, true);
         }
-        if (k == Keys.DOWN) {
+        if (k == Keys.S) {
             gameData.getKeys().setKey(KeyBindings.DOWN, true);
         }
-        if (k == Keys.RIGHT) {
+        if (k == Keys.D) {
             gameData.getKeys().setKey(KeyBindings.RIGHT, true);
         }
 
@@ -38,16 +42,16 @@ public class GameInputProcessor extends InputAdapter {
     }
 
     public boolean keyUp(int k) {
-        if (k == Keys.UP) {
+        if (k == Keys.W) {
             gameData.getKeys().setKey(KeyBindings.UP, false);
         }
-        if (k == Keys.LEFT) {
+        if (k == Keys.A) {
             gameData.getKeys().setKey(KeyBindings.LEFT, false);
         }
-        if (k == Keys.DOWN) {
+        if (k == Keys.S) {
             gameData.getKeys().setKey(KeyBindings.DOWN, false);
         }
-        if (k == Keys.RIGHT) {
+        if (k == Keys.D) {
             gameData.getKeys().setKey(KeyBindings.RIGHT, false);
         }
 

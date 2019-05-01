@@ -71,6 +71,7 @@
         <module>Player</module>
         <module>Enemy</module>
         <module>Weapon</module>
+        <module>Map</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>

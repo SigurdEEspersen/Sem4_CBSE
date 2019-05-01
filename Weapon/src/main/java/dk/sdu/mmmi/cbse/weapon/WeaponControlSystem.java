@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.sdu.mmmi.cbse.weapon;
 
 import data.Entity;
@@ -15,12 +10,11 @@ import Interfaces.ICombatEntity;
 
 /**
  *
- * @author Sigurd E. Espersen
+ * @author Gruppe 11
  */
 @ServiceProviders(value = {
     @ServiceProvider(service = IControlService.class),})
 public class WeaponControlSystem implements IControlService {
-
 
     private float x, y;
 
@@ -32,6 +26,7 @@ public class WeaponControlSystem implements IControlService {
             y = entity.getPositionY();
             float rad = entity.getRadians();
             String id = entity.getID();
+
             if (entity instanceof ICombatEntity && !(entity instanceof Weapon)) {
                 if (((ICombatEntity) entity).isShooting()) {
                     Entity wpn = createWeapon(x, y, rad);
@@ -40,29 +35,7 @@ public class WeaponControlSystem implements IControlService {
                 }
             }
         }
-//        
-//        for( Entity e : world.getEntities(Weapon.class)){
-//            (Weapon) e.setU
-//        }
 
-//        
-//        for (Entity entity : world.getEntities()) {
-//            if(entity.getCombat(ICombatEntity.class)){
-//                ICombatEntity combatEntity = entity.getCombat(ICombatEntity.class);
-//                    wpn = entity.getWeapons(Weapon.class);
-//                    wpn.setShoot(combatEntity.isShooting());
-//                    if(wpn.isShoot()){
-//                        System.out.println("Bang bang");
-//                        projectile = createProjectile(gameData, playerX, playerY);
-//                        wpn.setShoot(false); // burde kunne fjernes
-//                        world.addEntity(projectile);
-//                    }
-//                
-//            }
-//            
-//
-//            updateShape(entity);
-//        }
         for (Entity entity : world.getEntities(Weapon.class)) {
             if (((Weapon) entity).isDead()) {
                 world.removeEntity(entity);
@@ -101,7 +74,5 @@ public class WeaponControlSystem implements IControlService {
         ((Weapon) wpn).setSpeed(200);
         wpn.addCombat((ICombatEntity) wpn);
         return wpn;
-
     }
-
 }

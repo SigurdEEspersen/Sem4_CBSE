@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.sdu.mmmi.cbse.weapon;
 
 import Interfaces.ICombatEntity;
@@ -13,9 +8,10 @@ import static java.lang.Math.sin;
 
 /**
  *
- * @author Sigurd E. Espersen
+ * @author Gruppe 11
  */
 public class Weapon extends Entity implements ICombatEntity {
+
     private boolean shoot;
     private float speed;
     private boolean up;
@@ -31,6 +27,7 @@ public class Weapon extends Entity implements ICombatEntity {
     public void setUp(boolean up) {
         this.up = up;
     }
+
     public boolean isShoot() {
         return shoot;
     }
@@ -51,7 +48,7 @@ public class Weapon extends Entity implements ICombatEntity {
     public void setSpeed(float speed) {
         this.speed = speed;
     }
-    
+
     @Override
     public void execute(GameData gd, Entity entity) {
         float dt = gd.getDelta();
@@ -59,7 +56,7 @@ public class Weapon extends Entity implements ICombatEntity {
             entity.setPositionX((float) (cos(entity.getRadians()) * speed * dt + entity.getPositionX()));
             entity.setPositionY((float) (sin(entity.getRadians()) * speed * dt + entity.getPositionY()));
         }
-        if((timeAlive + 2000) < System.currentTimeMillis()) {
+        if ((timeAlive + 2000) < System.currentTimeMillis()) {
             dead = true;
         }
     }
@@ -91,5 +88,5 @@ public class Weapon extends Entity implements ICombatEntity {
     public void setShooting(boolean b) {
         shoot = b;
     }
-    
+
 }

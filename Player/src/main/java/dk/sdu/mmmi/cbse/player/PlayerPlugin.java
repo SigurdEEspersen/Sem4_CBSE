@@ -1,7 +1,5 @@
 package dk.sdu.mmmi.cbse.player;
 
-
-
 import data.Entity;
 import data.GameData;
 import data.World;
@@ -10,15 +8,9 @@ import org.openide.util.lookup.ServiceProviders;
 import services.IPluginService;
 import Interfaces.ICombatEntity;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
- * @author Peter
+ * @author Gruppe 11
  */
 @ServiceProviders(value = {
     @ServiceProvider(service = IPluginService.class),})
@@ -33,13 +25,13 @@ public class PlayerPlugin implements IPluginService {
     public void start(GameData gameData, World world) {
 
         // Add entities to the world
-        player = createPlayerShip(gameData);
+        player = createPlayer(gameData);
         player.addCombat((ICombatEntity) player);
         world.addEntity(player);
     }
 
-    private Player createPlayerShip(GameData gameData) {
-        
+    private Player createPlayer(GameData gameData) {
+
         float speed = 300;
         float rotationSpeed = 5;
         float x = gameData.getDisplayWidth() / 2;
@@ -52,14 +44,14 @@ public class PlayerPlugin implements IPluginService {
         colour[2] = 1.0f;
         colour[3] = 1.0f;
 
-        Player playerShip = new Player();
+        Player player = new Player();
 
-        playerShip.setPositionX(x);
-        playerShip.setPositionY(y);
-        playerShip.setSpeed(speed);
-        playerShip.setRadians(radians);
-        
-        return playerShip;
+        player.setPositionX(x);
+        player.setPositionY(y);
+        player.setSpeed(speed);
+        player.setRadians(radians);
+
+        return player;
     }
 
     @Override
@@ -67,6 +59,5 @@ public class PlayerPlugin implements IPluginService {
         // Remove entities
         world.removeEntity(player);
     }
-
 
 }

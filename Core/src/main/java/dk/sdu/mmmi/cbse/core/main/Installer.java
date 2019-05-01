@@ -4,6 +4,10 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import org.openide.modules.ModuleInstall;
 
+/**
+ *
+ * @author Gruppe 11
+ */
 public class Installer extends ModuleInstall {
 
     private static Game g;
@@ -13,7 +17,6 @@ public class Installer extends ModuleInstall {
 
         g = new Game();
 
-        System.out.println("Hello :");
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Asteroids";
         cfg.width = 1200;
