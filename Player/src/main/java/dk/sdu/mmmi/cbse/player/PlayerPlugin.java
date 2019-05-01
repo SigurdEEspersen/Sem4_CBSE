@@ -32,7 +32,7 @@ public class PlayerPlugin implements IPluginService {
 
     private Player createPlayer(GameData gameData) {
 
-        float speed = 300;
+        float speed = 500;
         float rotationSpeed = 5;
         float x = gameData.getDisplayWidth() / 2;
         float y = 15;

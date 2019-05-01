@@ -183,6 +183,7 @@ public class Game implements ApplicationListener {
             bulletSprite.draw(spriteBatch);
         }
         for (Entity e : world.getEntities(Enemy.class)) {
+            enemySprite.setScale(0.2F);
             enemySprite.setPosition(e.getPositionX(), e.getPositionY());
             float rotation = e.getRadians() * MathUtils.radDeg;
 
