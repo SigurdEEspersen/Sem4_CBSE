@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.sdu.mmmi.cbse.map;
 
 import Interfaces.IMap;
@@ -12,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *
- * @author Peter
+ * @author Gruppe 11
  */
 public class Map implements IMap {
 
@@ -85,7 +80,5 @@ public class Map implements IMap {
     public synchronized void setSpawn(boolean spawn) {
         this.spawn = spawn;
     }
-    
-    
 
 }

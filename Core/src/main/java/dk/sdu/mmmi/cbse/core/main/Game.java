@@ -1,6 +1,5 @@
 package dk.sdu.mmmi.cbse.core.main;
 
-import Interfaces.IMap;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -26,6 +25,10 @@ import services.IPluginService;
 import services.IPostProcessor;
 import services.IControlService;
 
+/**
+ *
+ * @author Gruppe 11
+ */
 public class Game implements ApplicationListener {
 
     private static OrthographicCamera cam;
@@ -125,8 +128,7 @@ public class Game implements ApplicationListener {
         for (IPostProcessor postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.execute(gameData, world);
         }
-        
-        
+
     }
 
     private void draw() {

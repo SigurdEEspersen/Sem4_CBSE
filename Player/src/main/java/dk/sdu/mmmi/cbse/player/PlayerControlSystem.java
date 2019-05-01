@@ -8,14 +8,9 @@ import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import services.IControlService;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
- * @author Peter
+ * @author Gruppe 11
  */
 @ServiceProviders(value = {
     @ServiceProvider(service = IControlService.class),})
@@ -52,12 +47,9 @@ public class PlayerControlSystem implements IControlService {
             playerCombat.setLeft(gameData.getKeys().isDown(KeyBindings.LEFT));
             playerCombat.setRight(gameData.getKeys().isDown(KeyBindings.RIGHT));
             playerCombat.setShooting(gameData.getKeys().isDown(KeyBindings.SPACE));
-            
 
             playerCombat.execute(gameData, entity);
 
-//            System.out.println("Entity har x: " + entity.getPositionX());
-//            System.out.println("Entity har y: " + entity.getPositionY());
             updateShape(entity);
 
         }

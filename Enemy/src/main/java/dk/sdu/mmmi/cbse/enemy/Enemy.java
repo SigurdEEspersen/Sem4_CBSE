@@ -8,19 +8,19 @@ import Interfaces.ICombatEntity;
 
 /**
  *
- * @author Sigurd E. Espersen
+ * @author Gruppe 11
  */
-public class Enemy extends Entity implements ICombatEntity{
+public class Enemy extends Entity implements ICombatEntity {
 
     private boolean up;
     private float speed;
-    
+
     private boolean isShooting;
 
     private boolean dead = false;
 
     private int life;
-    
+
     private boolean hit = false;
 
     public void setIsShooting(boolean isShooting) {
@@ -39,7 +39,6 @@ public class Enemy extends Entity implements ICombatEntity{
         this.hit = isHit;
     }
 
-
     public float getSpeed() {
         return speed;
     }
@@ -55,7 +54,7 @@ public class Enemy extends Entity implements ICombatEntity{
     public void setUp(boolean up) {
         this.up = up;
     }
-    
+
     @Override
     public int getLife() {
         return life;
@@ -85,9 +84,9 @@ public class Enemy extends Entity implements ICombatEntity{
             entity.setPositionX((float) ((float) entity.getPositionX() + cos(radians) * speed * dt));
             entity.setPositionY((float) ((float) entity.getPositionY() + sin(radians + 1) * speed * dt));
         }
-        
+
         // Speed
-        if (up ) {
+        if (up) {
             entity.setPositionX((float) (cos(entity.getRadians()) * speed * dt + entity.getPositionX()));
             entity.setPositionY((float) (sin(entity.getRadians()) * speed * dt + entity.getPositionY()));
         }
@@ -97,6 +96,5 @@ public class Enemy extends Entity implements ICombatEntity{
     public void setShooting(boolean b) {
         System.out.println("Enemy shooting");
     }
-
 
 }

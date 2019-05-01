@@ -6,14 +6,9 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import Interfaces.ICombatEntity;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
- * @author Peter
+ * @author Gruppe 11
  */
 public class Player extends Entity implements ICombatEntity {
 
@@ -26,7 +21,7 @@ public class Player extends Entity implements ICombatEntity {
     private boolean dead = false;
 
     private int life;
-    
+
     private boolean isHit = false;
 
     public boolean isDead() {
@@ -134,18 +129,17 @@ public class Player extends Entity implements ICombatEntity {
             entity.setPositionX((float) (cos(entity.getRadians()) * -speed * dt + entity.getPositionX()));
             entity.setPositionY((float) (sin(entity.getRadians()) * -speed * dt + entity.getPositionY()));
         }
-        
-        
-         if (isHit) {
+
+        if (isHit) {
             life = - 1;
             isHit = false;
         }
-         
+
         if (life <= 0) {
             dead = true;
         }
-        
-        if(isShooting){
+
+        if (isShooting) {
             // weapon.setShooting(true);
         }
     }

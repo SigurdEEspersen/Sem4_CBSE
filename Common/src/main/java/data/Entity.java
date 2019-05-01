@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package data;
 
 import Interfaces.IShooter;
@@ -14,11 +9,10 @@ import Interfaces.ICombatEntity;
 
 /**
  *
- * @author Peter
+ * @author Gruppe 11
  */
 public class Entity {
-    
-    
+
     private final UUID ID = UUID.randomUUID();
 
     private float positionX, positionY, positionRadians;
@@ -27,30 +21,30 @@ public class Entity {
     private Map<Class, ICombatEntity> movingParts;
     private Map<Class, IShooter> weaponParts;
     protected float playerX, playerY;
-    
+
     private float radians;
-    
-    public Entity(){
+
+    public Entity() {
         movingParts = new ConcurrentHashMap<>();
         radians = (float) Math.PI / 2;
     }
-    
-    public <E extends IShooter> E getWeapons(Class shootClass){
+
+    public <E extends IShooter> E getWeapons(Class shootClass) {
         return (E) weaponParts.get(shootClass);
     }
 
     public void addWeapons(IShooter shoot) {
         this.weaponParts.put(shoot.getClass(), shoot);
     }
-    
-    public void addCombat(ICombatEntity movement){
+
+    public void addCombat(ICombatEntity movement) {
         movingParts.put(movement.getClass(), movement);
     }
-    
-    public <E extends ICombatEntity> E getCombat(Class movementClass){
+
+    public <E extends ICombatEntity> E getCombat(Class movementClass) {
         return (E) movingParts.get(movementClass);
     }
-    
+
     public float[] getShapeX() {
         return shapeX;
     }
@@ -74,11 +68,11 @@ public class Entity {
     public void setSprite(Image[] sprite) {
         this.sprite = sprite;
     }
-    
-    public String getID(){
+
+    public String getID() {
         return ID.toString();
     }
-    
+
     public float getPositionX() {
         return positionX;
     }
@@ -118,7 +112,5 @@ public class Entity {
     public void setPlayerY(float playerY) {
         this.playerY = playerY;
     }
-    
-    
-    
+
 }

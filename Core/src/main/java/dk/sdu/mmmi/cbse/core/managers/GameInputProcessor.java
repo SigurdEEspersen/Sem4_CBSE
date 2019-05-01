@@ -5,6 +5,10 @@ import com.badlogic.gdx.InputAdapter;
 import data.GameData;
 import data.KeyBindings;
 
+/**
+ *
+ * @author Gruppe 11
+ */
 public class GameInputProcessor extends InputAdapter {
 
     private final GameData gameData;

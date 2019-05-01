@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.enemy;
 
+import Interfaces.ICombatEntity;
 import Interfaces.IMap;
 import data.Entity;
 import data.GameData;
@@ -11,7 +12,7 @@ import services.IControlService;
 
 /**
  *
- * @author Sigurd E. Espersen
+ * @author Gruppe 11
  */
 @ServiceProviders(value = {
     @ServiceProvider(service = IControlService.class),})
@@ -20,13 +21,12 @@ public class EnemyControlSystem implements IControlService {
     @Override
     public void execute(GameData gameData, World world) {
 
-        
         if (world.getMapArray().get(0) != null) {
-            System.out.println("Vi fandt et map!");
             IMap map = world.getMapArray().get(0);
             if (map.isSpawning()) {
                 Random r = new Random();
                 Entity enemy = createEnemy(gameData, world, map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
+                enemy.addCombat((ICombatEntity) enemy);
                 world.addEntity(enemy);
                 map.setSpawn(false);
             }
