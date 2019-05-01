@@ -71,13 +71,31 @@ public class Game implements ApplicationListener {
         String rootDir = partDir[0] + "Sem4_CBSE";
         
         backgroundSprite = new Sprite(new Texture(rootDir + "/Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
-        //playerSprite = new Sprite(new Texture(System.getProperty("user.dir") + "/../Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif"));
         bulletSprite = new Sprite(new Texture(rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
         enemySprite = new Sprite(new Texture(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
         
-        for (Entity e: world.getEntities(Player.class)) {
-           e.setSprite(new Sprite(new Texture(e.getSpritePath())));
-           playerSprite = e.getSprite();
+        /**
+         * sets sprites
+         */
+        for (Entity e: world.getEntities()) {
+           
+            // player
+            if (e instanceof Player) {
+                e.setSprite(new Sprite(new Texture(e.getSpritePath())));
+                playerSprite = e.getSprite();
+            }
+            
+            // bullet
+            if (e instanceof Weapon) {
+                e.setSprite(new Sprite(new Texture(e.getSpritePath())));
+                bulletSprite = e.getSprite();
+            }
+            
+            // enemy
+            if (e instanceof Weapon) {
+                e.setSprite(new Sprite(new Texture(e.getSpritePath())));
+                enemySprite = e.getSprite();
+            }
         }
         
     }
