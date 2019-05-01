@@ -5,8 +5,6 @@ import data.GameData;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import Interfaces.ICombatEntity;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -36,8 +34,7 @@ public class Player extends Entity implements ICombatEntity {
     }
 
     public Player() {
-        this.spritePath = "C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif";
-        // this.sprite = new Sprite(new Texture(spritePath));
+        this.spritePath = System.getProperty("user.dir") + "/../Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif";
     }
 
     

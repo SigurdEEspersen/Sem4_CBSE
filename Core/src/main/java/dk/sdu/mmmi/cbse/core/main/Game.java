@@ -67,10 +67,10 @@ public class Game implements ApplicationListener {
         
         spriteBatch = new SpriteBatch();
         
-        backgroundSprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
-       // playerSprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif"));
-        bulletSprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
-        enemySprite = new Sprite(new Texture("C:/Users/jonas/Documents/GitHub/Sem4_CBSE/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
+        backgroundSprite = new Sprite(new Texture(System.getProperty("user.dir") + "/../Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
+        //playerSprite = new Sprite(new Texture(System.getProperty("user.dir") + "/../Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif"));
+        bulletSprite = new Sprite(new Texture(System.getProperty("user.dir") + "/../Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
+        enemySprite = new Sprite(new Texture(System.getProperty("user.dir") + "/../Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
         
         for (Entity e: world.getEntities(Player.class)) {
            e.setSprite(new Sprite(new Texture(e.getSpritePath())));

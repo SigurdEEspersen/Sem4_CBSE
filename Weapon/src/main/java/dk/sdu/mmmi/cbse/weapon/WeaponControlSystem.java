@@ -7,14 +7,11 @@ package dk.sdu.mmmi.cbse.weapon;
 
 import data.Entity;
 import data.GameData;
-import data.KeyBindings;
 import data.World;
-import dk.sdu.mmmi.cbse.player.Player;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import services.IControlService;
 import Interfaces.ICombatEntity;
-import Interfaces.IShooter;
 
 /**
  *
