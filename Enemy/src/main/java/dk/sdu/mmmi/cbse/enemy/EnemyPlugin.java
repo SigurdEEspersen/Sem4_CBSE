@@ -29,38 +29,15 @@ public class EnemyPlugin implements IPluginService {
         // Add entities to the world
         
         
-        for (int i = 0; i < 3; i++) {
-            enemy = createEnemy(gameData, world);
-            enemy.addCombat((ICombatEntity) enemy);
-            world.addEntity(enemy);
-        }
+//        for (int i = 0; i < 3; i++) {
+//            enemy = createEnemy(gameData, world);
+//            enemy.addCombat((ICombatEntity) enemy);
+//            world.addEntity(enemy);
+//        }
         
     }
 
-    private Enemy createEnemy(GameData gameData, World world) {
 
-        float speed = 30 + (float) Math.random() * (150 - 30);
-        IMap map = world.getMapArray().get(0);
-        Random r = new Random();
-        float x = map.getEnemyCoordinatesX()[r.nextInt(3)];
-        float y = map.getEnemyCoordinatesY()[0];
-        float radians = 3.1415f / 2;
-
-        float[] colour = new float[4];
-        colour[0] = 1.0f;
-        colour[1] = 1.0f;
-        colour[2] = 1.0f;
-        colour[3] = 1.0f;
-
-        Enemy enemy = new Enemy();
-
-        enemy.setPositionX(x);
-        enemy.setPositionY(y);
-        enemy.setSpeed(speed);
-        enemy.setRadians(radians);
-        
-        return enemy;
-    }
 
     @Override
     public void stop(GameData gameData, World world) {

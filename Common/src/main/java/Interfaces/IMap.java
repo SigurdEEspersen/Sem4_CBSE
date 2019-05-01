@@ -18,4 +18,10 @@ public interface IMap {
     public float[] getEnemyCoordinatesX();
 
     public float[] getEnemyCoordinatesY();
+    
+     public boolean isSpawning();
+
+    public void setSpawn(boolean spawn);
+    
+    
 }

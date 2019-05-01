@@ -18,6 +18,7 @@ public class MapPlugin implements IPluginService{
     
     @Override
     public void start(GameData gameData, World world) {
+        System.out.println("HEllo Map!");
         map = new Map();
         System.out.println("test af map " + map.getEnemyCoordinatesX());
         world.addMap(map);

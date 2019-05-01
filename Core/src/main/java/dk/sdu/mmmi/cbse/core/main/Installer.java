@@ -13,7 +13,6 @@ public class Installer extends ModuleInstall {
 
         g = new Game();
 
-        System.out.println("Hello :");
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Asteroids";
         cfg.width = 1200;

@@ -61,6 +61,7 @@ public class Game implements ApplicationListener {
         result.allItems();
 
         for (IPluginService plugin : result.allInstances()) {
+            System.out.println("Found plugin: " + plugin);
             plugin.start(gameData, world);
             gamePlugins.add(plugin);
         }
@@ -124,6 +125,8 @@ public class Game implements ApplicationListener {
         for (IPostProcessor postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.execute(gameData, world);
         }
+        
+        
     }
 
     private void draw() {
