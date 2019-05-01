@@ -71,7 +71,6 @@ public class Entity {
         this.sprite = sprite;
     }
 
-
     public String getSpritePath() {
         return spritePath;
     }
@@ -80,11 +79,7 @@ public class Entity {
         this.spritePath = spritePath;
     }
 
-    
-    public String getID(){
-
     public String getID() {
-
         return ID.toString();
     }
 
