@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import Interfaces.ICombatEntity;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  *
@@ -23,7 +24,8 @@ public class Entity {
 
     private float positionX, positionY, positionRadians;
     private float[] shapeX, shapeY;
-    private Image[] sprite;
+    protected Sprite sprite;
+    protected String spritePath;
     private Map<Class, ICombatEntity> movingParts;
     private Map<Class, IShooter> weaponParts;
     protected float playerX, playerY;
@@ -67,13 +69,22 @@ public class Entity {
         this.shapeY = shapeY;
     }
 
-    public Image[] getSprite() {
+    public Sprite getSprite() {
         return sprite;
     }
 
-    public void setSprite(Image[] sprite) {
+    public void setSprite(Sprite sprite) {
         this.sprite = sprite;
     }
+
+    public String getSpritePath() {
+        return spritePath;
+    }
+
+    public void setSpritePath(String spritePath) {
+        this.spritePath = spritePath;
+    }
+
     
     public String getID(){
         return ID.toString();
