@@ -18,7 +18,7 @@ public class Installer extends ModuleInstall {
         g = new Game();
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Asteroids";
+        cfg.title = "SDU Royale";
         cfg.width = 1200;
         cfg.height = 700;
         cfg.useGL30 = false;
