@@ -1,7 +1,6 @@
 package data;
 
 import Interfaces.IShooter;
-import java.awt.Image;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,7 +17,6 @@ public class Entity {
 
     private float positionX, positionY, positionRadians;
     private float[] shapeX, shapeY;
-    protected Sprite sprite;
     protected String spritePath;
     private Map<Class, ICombatEntity> movingParts;
     private Map<Class, IShooter> weaponParts;
@@ -61,14 +59,6 @@ public class Entity {
 
     public void setShapeY(float[] shapeY) {
         this.shapeY = shapeY;
-    }
-
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
     }
 
     public String getSpritePath() {

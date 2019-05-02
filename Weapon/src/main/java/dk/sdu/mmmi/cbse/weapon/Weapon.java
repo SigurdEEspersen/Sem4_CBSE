@@ -17,12 +17,6 @@ public class Weapon extends Entity implements ICombatEntity {
     private boolean up;
     private boolean dead = false;
     private long timeAlive;
-    
-    public Weapon() {
-        String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
-        String rootDir = partDir[0] + "Sem4_CBSE";
-        this.spritePath = rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png";
-    }
 
     public void setUp(boolean up) {
         this.up = up;

@@ -20,12 +20,15 @@ public class EnemyControlSystem implements IControlService {
 
     @Override
     public void execute(GameData gameData, World world) {
+        String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
+        String rootDir = partDir[0] + "Sem4_CBSE";
 
         if (world.getMapArray().get(0) != null) {
             IMap map = world.getMapArray().get(0);
             if (map.isSpawning()) {
                 Random r = new Random();
                 Entity enemy = createEnemy(gameData, world, map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
+                enemy.setSpritePath(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png");
                 enemy.addCombat((ICombatEntity) enemy);
                 world.addEntity(enemy);
                 map.setSpawn(false);
@@ -36,7 +39,6 @@ public class EnemyControlSystem implements IControlService {
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
             Enemy enemyMovement = enemy.getCombat(Enemy.class);
-
             float rotation = (float) Math.atan2(enemy.getPlayerY() - enemy.getPositionY(), enemy.getPlayerX() - enemy.getPositionX());
             enemyMovement.setRadians(rotation);
 

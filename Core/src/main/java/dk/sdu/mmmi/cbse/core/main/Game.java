@@ -12,10 +12,9 @@ import data.Entity;
 import data.GameData;
 import data.World;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
-import dk.sdu.mmmi.cbse.enemy.Enemy;
-import dk.sdu.mmmi.cbse.player.Player;
-import dk.sdu.mmmi.cbse.weapon.Weapon;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.openide.util.Lookup;
@@ -38,15 +37,9 @@ public class Game implements ApplicationListener {
     private List<IPluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private Lookup.Result<IPluginService> result;
     private SpriteBatch spriteBatch;
-    private Sprite playerSprite;
     private Sprite backgroundSprite;
-    private Sprite bulletSprite;
-    private Sprite enemySprite;
-    private float playerX;
-    private float playerY;
-    private float bulletX;
-    private float bulletY;
-    private float playerRadians;
+    private HashMap<Sprite, ArrayList> spriteMap = new HashMap<>();
+    private float pX, pY;
 
     @Override
     public void create() {
@@ -70,38 +63,12 @@ public class Game implements ApplicationListener {
         }
 
         spriteBatch = new SpriteBatch();
-        
+
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
         String rootDir = partDir[0] + "Sem4_CBSE";
-        
+
         backgroundSprite = new Sprite(new Texture(rootDir + "/Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
-        bulletSprite = new Sprite(new Texture(rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
-        enemySprite = new Sprite(new Texture(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
-        
-        /**
-         * sets sprites
-         */
-        for (Entity e: world.getEntities()) {
-           
-            // player
-            if (e instanceof Player) {
-                e.setSprite(new Sprite(new Texture(e.getSpritePath())));
-                playerSprite = e.getSprite();
-            }
-            
-            // bullet
-            if (e instanceof Weapon) {
-                e.setSprite(new Sprite(new Texture(e.getSpritePath())));
-                bulletSprite = e.getSprite();
-            }
-            
-            // enemy
-            if (e instanceof Weapon) {
-                e.setSprite(new Sprite(new Texture(e.getSpritePath())));
-                enemySprite = e.getSprite();
-            }
-        }
-        
+
     }
 
     @Override
@@ -114,26 +81,32 @@ public class Game implements ApplicationListener {
         gameData.getKeys().update();
 
         spriteBatch.setProjectionMatrix(cam.combined);
+        float entityRadians = 0;
+        for (Entity entity : world.getEntities()) {
+            float positionX = entity.getPositionX();
+            float positionY = entity.getPositionY();
 
-        for (Entity p : world.getEntities(Player.class)) {
-            playerX = p.getPositionX();
-            playerY = p.getPositionY();
-            playerRadians = (float) Math.atan2(
-                    Gdx.graphics.getHeight() - Gdx.input.getY() - playerY,
-                    Gdx.input.getX() - playerX
-            );
-
-            p.setRadians(playerRadians);
-        }
-
-        for (Entity p : world.getEntities()) {
-            p.setPlayerX(playerX - playerSprite.getWidth() / 2);
-            p.setPlayerY(playerY - playerSprite.getHeight() / 2);
-        }
-
-        for (Entity p : world.getEntities(Weapon.class)) {
-            bulletX = p.getPositionX();
-            bulletY = p.getPositionY();
+            if (entity.getSpritePath().contains("/Player/")) {
+                pX = entity.getPositionX();
+                pY = entity.getPositionY();
+                entityRadians = (float) Math.atan2(
+                        Gdx.graphics.getHeight() - Gdx.input.getY() - positionY,
+                        Gdx.input.getX() - positionX
+                );
+                entity.setRadians(entityRadians);
+            } else {
+                entityRadians = entity.getRadians();
+            }
+            if (entity.getSpritePath().contains("/Enemy/")) {
+                entity.setPlayerX(pX);
+                entity.setPlayerY(pY);
+            }
+            Sprite sprite = new Sprite(new Texture(entity.getSpritePath()));
+            ArrayList list = new ArrayList();
+            list.add(positionX);
+            list.add(positionY);
+            list.add(entityRadians);
+            spriteMap.put(sprite, list);
         }
 
         update();
@@ -154,51 +127,20 @@ public class Game implements ApplicationListener {
     }
 
     private void draw() {
-        for (Entity entity : world.getEntities()) {
-
-        }
-
-        float angle = playerRadians * MathUtils.radDeg;
-
-        if (angle < 0) {
-            angle += 360;
-        }
-
         spriteBatch.begin();
         backgroundSprite.setPosition(-355, -165);
         backgroundSprite.draw(spriteBatch);
-
-        playerSprite.setPosition(
-                playerX - playerSprite.getWidth() / 2,
-                playerY - playerSprite.getHeight() / 2
-        );
-
-        playerSprite.setSize(playerSprite.getWidth(), playerSprite.getHeight());
-        playerSprite.setRotation(angle);
-        playerSprite.setScale(0.2F);
-
-        for (Entity b : world.getEntities(Weapon.class)) {
-            bulletSprite.setPosition(b.getPositionX(), b.getPositionY());
-            bulletSprite.setSize(32, 65);
-            bulletSprite.draw(spriteBatch);
+        for (Sprite s : spriteMap.keySet()) {
+            float x = (float) spriteMap.get(s).get(0);
+            float y = (float) spriteMap.get(s).get(1);
+            float radians = (float) spriteMap.get(s).get(2);
+            s.setRotation((radians * MathUtils.radDeg) % 360);
+            s.setPosition(x, y);
+            s.draw(spriteBatch);
         }
-        for (Entity e : world.getEntities(Enemy.class)) {
-            enemySprite.setScale(0.2F);
-            enemySprite.setPosition(e.getPositionX(), e.getPositionY());
-            float rotation = e.getRadians() * MathUtils.radDeg;
 
-            if (rotation < 0) {
-                rotation += 360;
-            }
-
-            enemySprite.setRotation(rotation);
-            enemySprite.draw(spriteBatch);
-        }
-        for (Entity pl : world.getEntities(Player.class)) {
-            playerSprite.draw(spriteBatch);
-        }
-        
         spriteBatch.end();
+        spriteMap.clear();
     }
 
     @Override

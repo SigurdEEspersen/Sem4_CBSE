@@ -20,6 +20,8 @@ public class WeaponControlSystem implements IControlService {
 
     @Override
     public void execute(GameData gameData, World world) {
+        String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
+        String rootDir = partDir[0] + "Sem4_CBSE";
 
         for (Entity entity : world.getEntities()) {
             x = entity.getPositionX();
@@ -30,6 +32,7 @@ public class WeaponControlSystem implements IControlService {
             if (entity instanceof ICombatEntity && !(entity instanceof Weapon)) {
                 if (((ICombatEntity) entity).isShooting()) {
                     Entity wpn = createWeapon(x, y, rad);
+                    wpn.setSpritePath(rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png");
                     ((ICombatEntity) entity).setShooting(false);
                     world.addEntity(wpn);
                 }
