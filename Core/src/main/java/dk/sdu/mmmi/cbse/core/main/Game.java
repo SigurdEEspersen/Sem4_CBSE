@@ -74,6 +74,7 @@ public class Game implements ApplicationListener {
     @Override
     public void render() {
         // clear screen to black
+       spriteBatch.flush();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -86,9 +87,12 @@ public class Game implements ApplicationListener {
             float positionX = entity.getPositionX();
             float positionY = entity.getPositionY();
 
+            
+            
             if (entity.getSpritePath().contains("/Player/")) {
                 pX = entity.getPositionX();
                 pY = entity.getPositionY();
+                
                 entityRadians = (float) Math.atan2(
                         Gdx.graphics.getHeight() - Gdx.input.getY() - positionY,
                         Gdx.input.getX() - positionX
@@ -102,6 +106,7 @@ public class Game implements ApplicationListener {
                 entity.setPlayerY(pY);
             }
             Sprite sprite = new Sprite(new Texture(entity.getSpritePath()));
+            sprite.setScale(0.2F);
             ArrayList list = new ArrayList();
             list.add(positionX);
             list.add(positionY);
@@ -138,7 +143,6 @@ public class Game implements ApplicationListener {
             s.setPosition(x, y);
             s.draw(spriteBatch);
         }
-
         spriteBatch.end();
         spriteMap.clear();
     }
@@ -157,6 +161,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void dispose() {
+
     }
 
     private Collection<? extends IControlService> getEntityProcessingServices() {

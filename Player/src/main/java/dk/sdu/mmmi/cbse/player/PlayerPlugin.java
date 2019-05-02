@@ -61,6 +61,7 @@ public class PlayerPlugin implements IPluginService {
     public void stop(GameData gameData, World world) {
         // Remove entities
         world.removeEntity(player);
+        
     }
 
 }
