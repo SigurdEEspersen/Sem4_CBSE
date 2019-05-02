@@ -23,6 +23,7 @@ public class Installer extends ModuleInstall {
         cfg.height = 700;
         cfg.useGL30 = false;
         cfg.resizable = false;
+        cfg.overrideDensity = 1000;
 
         new LwjglApplication(g, cfg);
     }

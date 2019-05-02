@@ -1,7 +1,7 @@
 package data;
 
+import Interfaces.IAI;
 import Interfaces.IShooter;
-import java.awt.Image;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,6 +20,7 @@ public class Entity {
     private float[] shapeX, shapeY;
     protected Sprite sprite;
     protected String spritePath;
+    private Map<Class, IAI> AIParts;
     private Map<Class, ICombatEntity> movingParts;
     private Map<Class, IShooter> weaponParts;
     protected float playerX, playerY;
@@ -45,6 +46,14 @@ public class Entity {
 
     public <E extends ICombatEntity> E getCombat(Class movementClass) {
         return (E) movingParts.get(movementClass);
+    }
+    
+    public void addAI(IAI ai){
+        AIParts.put(ai.getClass(), ai);
+    }
+    
+    public <E extends IAI> E getAI (Class aiClass){
+        return (E) AIParts.get(aiClass);
     }
 
     public float[] getShapeX() {

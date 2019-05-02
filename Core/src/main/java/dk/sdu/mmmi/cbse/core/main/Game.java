@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.core.main;
 
+import Interfaces.IAI;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -47,9 +48,11 @@ public class Game implements ApplicationListener {
     private float bulletX;
     private float bulletY;
     private float playerRadians;
-
+    
     @Override
     public void create() {
+        
+        
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -100,8 +103,12 @@ public class Game implements ApplicationListener {
                 e.setSprite(new Sprite(new Texture(e.getSpritePath())));
                 enemySprite = e.getSprite();
             }
+            
         }
-        
+
+        for (IAI ai: world.getAIList()){
+            System.out.println(ai.getInitialNode() + " HEJ HEJ " + world.getAIList().size());
+        }
     }
 
     @Override

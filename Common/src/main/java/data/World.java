@@ -1,5 +1,6 @@
 package data;
 
+import Interfaces.IAI;
 import Interfaces.IMap;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +16,20 @@ public class World {
 
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private final ArrayList<IMap> mapArray = new ArrayList<>();
+    private final ArrayList<IAI> AIList = new ArrayList<>();
 
+    public ArrayList<IAI> getAIList(){
+        return AIList;
+    }
+
+    public void addAI(IAI ai){
+        AIList.add(ai);
+    }
+    
+    public void removeAI(IAI ai){
+        AIList.remove(ai);
+    }
+    
     public ArrayList<IMap> getMapArray() {
         return mapArray;
     }
