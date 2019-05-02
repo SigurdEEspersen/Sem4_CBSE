@@ -31,11 +31,8 @@ public class Player extends Entity implements ICombatEntity {
     public Player() {
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
         String rootDir = partDir[0] + "Sem4_CBSE";
-        this.spritePath = rootDir + "/Player/src/main/java/dk/sdu/mmmi/cbse/player/player.gif";
+        this.spritePath = rootDir + "/Player/src/main/java/dk/sdu/mmmi/cbse/player/player.png";
     }
-
-    
-    
     
     public void setDead(boolean dead) {
         this.dead = dead;

@@ -44,8 +44,6 @@ public class Game implements ApplicationListener {
     private Sprite enemySprite;
     private float playerX;
     private float playerY;
-    private float bulletX;
-    private float bulletY;
     private float playerRadians;
 
     @Override
@@ -85,21 +83,26 @@ public class Game implements ApplicationListener {
            
             // player
             if (e instanceof Player) {
+                e.setPlayerScale(0.2F);
                 e.setSprite(new Sprite(new Texture(e.getSpritePath())));
                 playerSprite = e.getSprite();
             }
             
             // bullet
-            if (e instanceof Weapon) {
-                e.setSprite(new Sprite(new Texture(e.getSpritePath())));
-                bulletSprite = e.getSprite();
-            }
-            
-            // enemy
-            if (e instanceof Weapon) {
-                e.setSprite(new Sprite(new Texture(e.getSpritePath())));
-                enemySprite = e.getSprite();
-            }
+//            if (e instanceof Weapon) {
+//                e.setSprite(new Sprite(new Texture(e.getSpritePath())));
+//                bulletSprite = e.getSprite();
+//            }
+//            
+//            // enemy
+//            if (e instanceof Enemy) {
+//                e.setSprite(new Sprite(new Texture(e.getSpritePath())));
+//                enemySprite = e.getSprite();
+//            }
+        }
+        
+        for (Entity e: world.getEntities(Weapon.class)) {
+            e.setPlayerScale(0.15F);
         }
         
     }
@@ -127,13 +130,8 @@ public class Game implements ApplicationListener {
         }
 
         for (Entity p : world.getEntities()) {
-            p.setPlayerX(playerX - playerSprite.getWidth() / 2);
-            p.setPlayerY(playerY - playerSprite.getHeight() / 2);
-        }
-
-        for (Entity p : world.getEntities(Weapon.class)) {
-            bulletX = p.getPositionX();
-            bulletY = p.getPositionY();
+            p.setPlayerX(playerX);
+            p.setPlayerY(playerY);
         }
 
         update();
@@ -154,11 +152,11 @@ public class Game implements ApplicationListener {
     }
 
     private void draw() {
-        for (Entity entity : world.getEntities()) {
+//        for (Entity entity : world.getEntities()) {
+//
+//        }
 
-        }
-
-        float angle = playerRadians * MathUtils.radDeg;
+        float angle = (playerRadians - ((float)Math.PI / 2)) * MathUtils.radDeg;
 
         if (angle < 0) {
             angle += 360;
@@ -175,16 +173,23 @@ public class Game implements ApplicationListener {
 
         playerSprite.setSize(playerSprite.getWidth(), playerSprite.getHeight());
         playerSprite.setRotation(angle);
-        playerSprite.setScale(0.2F);
+        playerSprite.setScale(0.5F);
 
-        for (Entity b : world.getEntities(Weapon.class)) {
-            bulletSprite.setPosition(b.getPositionX(), b.getPositionY());
-            bulletSprite.setSize(32, 65);
-            bulletSprite.draw(spriteBatch);
-        }
+//        for (Entity b : world.getEntities(Weapon.class)) {
+//            bulletSprite.setPosition(b.getPositionX(), b.getPositionY());
+//            bulletSprite.setSize(bulletSprite.getWidth(), bulletSprite.getHeight());
+//            bulletSprite.setScale(0.15F);
+//            bulletSprite.draw(spriteBatch);
+//        }
+        
         for (Entity e : world.getEntities(Enemy.class)) {
+            enemySprite.setPosition(
+                    e.getPositionX() - enemySprite.getWidth() / 2,
+                    e.getPositionY() - enemySprite.getHeight() / 2
+            );
+            
             enemySprite.setScale(0.2F);
-            enemySprite.setPosition(e.getPositionX(), e.getPositionY());
+            
             float rotation = e.getRadians() * MathUtils.radDeg;
 
             if (rotation < 0) {
@@ -194,7 +199,23 @@ public class Game implements ApplicationListener {
             enemySprite.setRotation(rotation);
             enemySprite.draw(spriteBatch);
         }
+        
         for (Entity pl : world.getEntities(Player.class)) {
+            for (Entity b : world.getEntities(Weapon.class)) {
+                float bulang = b.getRadians() * MathUtils.radDeg;
+                
+                if (bulang < 0)
+                    bulang += 360;
+                
+                bulletSprite.setPosition(
+                        b.getPositionX() - bulletSprite.getWidth() / 2, 
+                        b.getPositionY() - bulletSprite.getHeight() / 2);
+                bulletSprite.setSize(bulletSprite.getWidth(), bulletSprite.getHeight());
+                bulletSprite.setScale(0.15F);
+                bulletSprite.setRotation(bulang);
+                bulletSprite.draw(spriteBatch);
+            }
+            
             playerSprite.draw(spriteBatch);
         }
         

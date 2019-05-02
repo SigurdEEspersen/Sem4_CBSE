@@ -21,7 +21,7 @@ public class Weapon extends Entity implements ICombatEntity {
     public Weapon() {
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
         String rootDir = partDir[0] + "Sem4_CBSE";
-        this.spritePath = rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png";
+        this.spritePath = rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png";
     }
 
     public void setUp(boolean up) {
@@ -53,8 +53,8 @@ public class Weapon extends Entity implements ICombatEntity {
     public void execute(GameData gd, Entity entity) {
         float dt = gd.getDelta();
         if (up) {
-            entity.setPositionX((float) (cos(entity.getRadians()) * speed * dt + entity.getPositionX()));
-            entity.setPositionY((float) (sin(entity.getRadians()) * speed * dt + entity.getPositionY()));
+            entity.setPositionX((float) (cos(entity.getRadians()) * speed * dt + (entity.getPositionX())));
+            entity.setPositionY((float) (sin(entity.getRadians()) * speed * dt + (entity.getPositionY())));
         }
         if ((timeAlive + 2000) < System.currentTimeMillis()) {
             dead = true;

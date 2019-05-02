@@ -1,7 +1,6 @@
 package data;
 
 import Interfaces.IShooter;
-import java.awt.Image;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,7 +22,7 @@ public class Entity {
     private Map<Class, ICombatEntity> movingParts;
     private Map<Class, IShooter> weaponParts;
     protected float playerX, playerY;
-
+    protected float playerScale;
     private float radians;
 
     public Entity() {
@@ -121,6 +120,14 @@ public class Entity {
 
     public void setPlayerY(float playerY) {
         this.playerY = playerY;
+    }
+
+    public float getPlayerScale() {
+        return playerScale;
+    }
+
+    public void setPlayerScale(float scale) {
+        this.playerScale = scale;
     }
 
 }

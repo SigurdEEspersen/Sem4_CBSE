@@ -29,7 +29,11 @@ public class WeaponControlSystem implements IControlService {
 
             if (entity instanceof ICombatEntity && !(entity instanceof Weapon)) {
                 if (((ICombatEntity) entity).isShooting()) {
-                    Entity wpn = createWeapon(x, y, rad);
+                    float angle = (float) Math.cos(rad);
+                    float xOffset = (float) Math.cos(rad) * 50;
+                    float yOffset = (float) Math.sin(rad) * 50;
+                    
+                    Entity wpn = createWeapon(x + xOffset, y + yOffset, rad);
                     ((ICombatEntity) entity).setShooting(false);
                     world.addEntity(wpn);
                 }

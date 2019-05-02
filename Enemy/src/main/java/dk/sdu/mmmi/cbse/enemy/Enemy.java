@@ -26,7 +26,7 @@ public class Enemy extends Entity implements ICombatEntity {
     public Enemy() {
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
         String rootDir = partDir[0] + "Sem4_CBSE";
-        this.spritePath = rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png";
+        this.spritePath = rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png";
     }
 
     public void setIsShooting(boolean isShooting) {
