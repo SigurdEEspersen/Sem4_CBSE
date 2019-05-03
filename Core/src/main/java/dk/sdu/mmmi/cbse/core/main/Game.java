@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
@@ -38,7 +39,8 @@ public class Game implements ApplicationListener {
     private Lookup.Result<IPluginService> result;
     private SpriteBatch spriteBatch;
     private Sprite backgroundSprite;
-    private HashMap<Sprite, ArrayList> spriteMap = new HashMap<>();
+    private ConcurrentHashMap<Entity, Boolean> entityMap = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Entity, ArrayList> spriteMap = new ConcurrentHashMap<>();
     private float pX, pY;
 
     @Override
@@ -67,6 +69,18 @@ public class Game implements ApplicationListener {
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
         String rootDir = partDir[0] + "Sem4_CBSE";
 
+        for (Entity entity : world.getEntities()) {
+            entityMap.put(entity, false);
+            ArrayList list = new ArrayList();
+            Sprite sprite = new Sprite(new Texture(entity.getSpritePath()));
+            sprite.setScale(0.2F);
+            list.add(sprite);
+            list.add(entity.getPositionX());
+            list.add(entity.getPositionY());
+            list.add(entity.getRadians());
+            spriteMap.put(entity, list);
+        }
+
         backgroundSprite = new Sprite(new Texture(rootDir + "/Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
 
     }
@@ -74,7 +88,7 @@ public class Game implements ApplicationListener {
     @Override
     public void render() {
         // clear screen to black
-       spriteBatch.flush();
+        spriteBatch.flush();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -84,34 +98,50 @@ public class Game implements ApplicationListener {
         spriteBatch.setProjectionMatrix(cam.combined);
         float entityRadians = 0;
         for (Entity entity : world.getEntities()) {
+            if (entityMap.containsKey(entity)) {
+                entityMap.replace(entity, true);
+                spriteMap.get(entity).set(1, entity.getPositionX());
+                spriteMap.get(entity).set(2, entity.getPositionY());
+                spriteMap.get(entity).set(3, entity.getRadians());
+            } else {
+                entityMap.put(entity, true);
+                ArrayList list = new ArrayList();
+                Sprite sprite = new Sprite(new Texture(entity.getSpritePath()));
+                sprite.setScale(0.2F);
+                list.add(sprite);
+                list.add(entity.getPositionX());
+                list.add(entity.getPositionY());
+                list.add(entity.getRadians());
+                spriteMap.put(entity, list);
+            }
+
             float positionX = entity.getPositionX();
             float positionY = entity.getPositionY();
-
-            
-            
             if (entity.getSpritePath().contains("/Player/")) {
                 pX = entity.getPositionX();
                 pY = entity.getPositionY();
-                
+
                 entityRadians = (float) Math.atan2(
                         Gdx.graphics.getHeight() - Gdx.input.getY() - positionY,
                         Gdx.input.getX() - positionX
                 );
                 entity.setRadians(entityRadians);
+                spriteMap.get(entity).set(3, entityRadians);
             } else {
-                entityRadians = entity.getRadians();
+                entityRadians = entity.getRadians(); 
             }
             if (entity.getSpritePath().contains("/Enemy/")) {
                 entity.setPlayerX(pX);
                 entity.setPlayerY(pY);
+                
             }
-            Sprite sprite = new Sprite(new Texture(entity.getSpritePath()));
-            sprite.setScale(0.2F);
-            ArrayList list = new ArrayList();
-            list.add(positionX);
-            list.add(positionY);
-            list.add(entityRadians);
-            spriteMap.put(sprite, list);
+        }
+
+        for (Entity e : entityMap.keySet()) {
+            if (entityMap.get(e).equals(false)) {
+                spriteMap.remove(e);
+                entityMap.remove(e);
+            }
         }
 
         update();
@@ -135,16 +165,20 @@ public class Game implements ApplicationListener {
         spriteBatch.begin();
         backgroundSprite.setPosition(-355, -165);
         backgroundSprite.draw(spriteBatch);
-        for (Sprite s : spriteMap.keySet()) {
-            float x = (float) spriteMap.get(s).get(0);
-            float y = (float) spriteMap.get(s).get(1);
-            float radians = (float) spriteMap.get(s).get(2);
-            s.setRotation((radians * MathUtils.radDeg) % 360);
-            s.setPosition(x, y);
-            s.draw(spriteBatch);
+        for (Entity e : spriteMap.keySet()) {
+            Sprite sp = (Sprite) spriteMap.get(e).get(0);
+            float x = (float) spriteMap.get(e).get(1);
+            float y = (float) spriteMap.get(e).get(2);
+            float radians = (float) spriteMap.get(e).get(3);
+            sp.setRotation((radians * MathUtils.radDeg) % 360);
+            sp.setPosition(x, y);
+            sp.draw(spriteBatch);
         }
         spriteBatch.end();
-        spriteMap.clear();
+        for (Entity e : entityMap.keySet()) {
+            entityMap.replace(e, false);
+        }
+
     }
 
     @Override
