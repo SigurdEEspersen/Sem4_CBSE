@@ -2,12 +2,18 @@ package dk.sdu.mmmi.cbse.core.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.sun.javafx.stage.ScreenHelper;
 import data.Entity;
 import data.GameData;
 import data.World;
@@ -31,7 +37,7 @@ import services.IControlService;
  */
 public class Game implements ApplicationListener {
 
-    private static OrthographicCamera cam;
+    
     private final Lookup lookup = Lookup.getDefault();
     private final GameData gameData = new GameData();
     private World world = new World();
@@ -45,16 +51,15 @@ public class Game implements ApplicationListener {
     private float playerX;
     private float playerY;
     private float playerRadians;
+    
+    // tile map
+    private TiledMap map;
+    private static OrthographicCamera cam;
+    private OrthogonalTiledMapRenderer renderer;
 
     @Override
     public void create() {
-        gameData.setDisplayWidth(Gdx.graphics.getWidth());
-        gameData.setDisplayHeight(Gdx.graphics.getHeight());
-
-        cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
-        cam.update();
-
+            
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         result = lookup.lookupResult(IPluginService.class);
@@ -72,9 +77,24 @@ public class Game implements ApplicationListener {
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
         String rootDir = partDir[0] + "Sem4_CBSE";
         
-        backgroundSprite = new Sprite(new Texture(rootDir + "/Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
         bulletSprite = new Sprite(new Texture(rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
         enemySprite = new Sprite(new Texture(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
+        
+        // tile map
+        map = new TmxMapLoader().load(rootDir + "/Core/src/main/java/dk/sdu/mmmi/cbse/core/main/sduMap.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map);
+        MapProperties prop = map.getProperties();
+        
+        gameData.setDisplayWidth(prop.get("width", Integer.class) * prop.get("tilewidth", Integer.class));
+        gameData.setDisplayHeight(prop.get("height", Integer.class) * prop.get("tileheight", Integer.class));
+    
+        
+        cam = new OrthographicCamera(
+                prop.get("width", Integer.class) * prop.get("tilewidth", Integer.class),
+                prop.get("height", Integer.class) * prop.get("tileheight", Integer.class)
+        );
+        cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
+        cam.update();
         
         /**
          * sets sprites
@@ -112,11 +132,14 @@ public class Game implements ApplicationListener {
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        renderer.setView(cam);
+        renderer.render();
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
 
-        spriteBatch.setProjectionMatrix(cam.combined);
+        //priteBatch.setProjectionMatrix(cam.combined);
 
         for (Entity p : world.getEntities(Player.class)) {
             playerX = p.getPositionX();
@@ -163,8 +186,8 @@ public class Game implements ApplicationListener {
         }
 
         spriteBatch.begin();
-        backgroundSprite.setPosition(-355, -165);
-        backgroundSprite.draw(spriteBatch);
+//        backgroundSprite.setPosition(-355, -165);
+//        backgroundSprite.draw(spriteBatch);
 
         playerSprite.setPosition(
                 playerX - playerSprite.getWidth() / 2,
@@ -224,6 +247,9 @@ public class Game implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
+        cam.viewportWidth = width;
+        cam.viewportHeight = height;
+        cam.update();
     }
 
     @Override
@@ -236,6 +262,8 @@ public class Game implements ApplicationListener {
 
     @Override
     public void dispose() {
+        map.dispose();
+        renderer.dispose();
     }
 
     private Collection<? extends IControlService> getEntityProcessingServices() {
