@@ -93,6 +93,8 @@ public class Game implements ApplicationListener {
                 prop.get("width", Integer.class) * prop.get("tilewidth", Integer.class),
                 prop.get("height", Integer.class) * prop.get("tileheight", Integer.class)
         );
+        
+        cam.zoom = 1.28F;
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
         
