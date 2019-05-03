@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import data.Entity;
 import data.GameData;
+import data.State;
 import data.World;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.enemy.Enemy;
@@ -45,14 +46,18 @@ public class Game implements ApplicationListener {
     private Sprite enemySprite;
     private float playerX;
     private float playerY;
+    private float enemyX;
+    private float enemyY;
+    private float aStarX;
+    private float aStarY;
     private float bulletX;
     private float bulletY;
     private float playerRadians;
     
+
     @Override
     public void create() {
-        
-        
+
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -73,42 +78,49 @@ public class Game implements ApplicationListener {
         }
 
         spriteBatch = new SpriteBatch();
-        
+
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
         String rootDir = partDir[0] + "Sem4_CBSE";
-        
+
         backgroundSprite = new Sprite(new Texture(rootDir + "/Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
         bulletSprite = new Sprite(new Texture(rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
         enemySprite = new Sprite(new Texture(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
-        
+
         /**
          * sets sprites
          */
-        for (Entity e: world.getEntities()) {
-           
+        for (Entity e : world.getEntities()) {
+
             // player
             if (e instanceof Player) {
                 e.setSprite(new Sprite(new Texture(e.getSpritePath())));
                 playerSprite = e.getSprite();
             }
-            
+
             // bullet
             if (e instanceof Weapon) {
                 e.setSprite(new Sprite(new Texture(e.getSpritePath())));
                 bulletSprite = e.getSprite();
             }
-            
+
             // enemy
             if (e instanceof Weapon) {
                 e.setSprite(new Sprite(new Texture(e.getSpritePath())));
                 enemySprite = e.getSprite();
             }
-            
-        }
 
-        for (IAI ai: world.getAIList()){
-            System.out.println(ai.getInitialNode() + " HEJ HEJ " + world.getAIList().size());
         }
+        
+         for (Entity p : world.getEntities(Enemy.class)) {
+            enemyX = p.getPositionX();
+            enemyY = p.getPositionY();
+        }
+        
+         for (IAI aStar : world.getAIList()) {
+             aStar.init((int)enemyX, (int)enemyY, 0, 0);
+         
+         }
+
     }
 
     @Override
@@ -138,6 +150,7 @@ public class Game implements ApplicationListener {
             p.setPlayerY(playerY - playerSprite.getHeight() / 2);
         }
 
+        
         for (Entity p : world.getEntities(Weapon.class)) {
             bulletX = p.getPositionX();
             bulletY = p.getPositionY();
@@ -189,8 +202,18 @@ public class Game implements ApplicationListener {
             bulletSprite.setSize(32, 65);
             bulletSprite.draw(spriteBatch);
         }
+        for (IAI aStar : world.getAIList()) {
+             aStar.updateGoal((int)playerX, (int)playerY);
+             List<State> path = aStar.getPath();
+             for (State i : path) {
+                 aStarX = i.x;
+                 aStarY = i.y;
+             }
+         
+         }
         for (Entity e : world.getEntities(Enemy.class)) {
-            enemySprite.setPosition(e.getPositionX(), e.getPositionY());
+            
+            enemySprite.setPosition(aStarX, aStarY);
             float rotation = e.getRadians() * MathUtils.radDeg;
 
             if (rotation < 0) {
@@ -203,7 +226,7 @@ public class Game implements ApplicationListener {
         for (Entity pl : world.getEntities(Player.class)) {
             playerSprite.draw(spriteBatch);
         }
-        
+
         spriteBatch.end();
     }
 

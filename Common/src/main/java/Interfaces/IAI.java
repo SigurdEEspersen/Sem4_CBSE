@@ -5,10 +5,9 @@
  */
 package Interfaces;
 
-import data.Node;
+import data.State;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Set;
 
 /**
  *
@@ -16,56 +15,56 @@ import java.util.Set;
  */
 public interface IAI {
 
-    void setNodes();
+    void CalculateKeys();
 
-    void setBlocks(int[][] blocksArray);
+    void init(int sX, int sY, int gX, int gY);
 
-    List<Node> findPath();
+    State calculateKey(State u);
 
-    List<Node> getPath(Node currentNode);
+    double getRHS(State u);
 
-    void addAdjacentNodes(Node currentNode);
+    double getG(State u);
 
-    void addAdjacentLowerRow(Node currentNode);
+    double heuristic(State a, State b);
 
-    void addAdjacentMiddleRow(Node currentNode);
+    double eightCondist(State a, State b);
 
-    void addAdjacentUpperRow(Node currentNode);
+    boolean replan();
 
-    void checkNode(Node currentNode, int col, int row, int cost);
+    int computeShortestPath();
 
-    boolean isFinalNode(Node currentNode);
+    LinkedList<State> getSucc(State u);
 
-    boolean isEmpty(PriorityQueue<Node> openList);
+    LinkedList<State> getPred(State u);
 
-    void setBlock(int row, int col);
+    void updateStart(int x, int y);
 
-    Node getInitialNode();
+    void updateGoal(int x, int y);
 
-    void setInitialNode(Node initialNode);
+    void updateVertex(State u);
 
-    Node getFinalNode();
+    boolean isValid(State u);
 
-    void setFinalNode(Node finalNode);
+    void setG(State u, double g);
 
-    Node[][] getSearchArea();
+    void setRHS(State u, double rhs);
 
-    void setSearchArea(Node[][] searchArea);
+    void makeNewCell(State u);
 
-    PriorityQueue<Node> getOpenList();
+    void updateCell(int x, int y, double val);
 
-    void setOpenList(PriorityQueue<Node> openList);
+    void insert(State u);
 
-    Set<Node> getClosedSet();
+    float keyHashCode(State u);
 
-    void setClosedSet(Set<Node> closedSet);
+    boolean occupied(State u);
 
-    int getHvCost();
+    double trueDist(State a, State b);
 
-    void setHvCost(int hvCost);
+    double cost(State a, State b);
 
-    int getDiagonalCost();
+    boolean close(double x, double y);
 
-    void setDiagonalCost(int diagonalCost);
+    List<State> getPath();
 
 }
