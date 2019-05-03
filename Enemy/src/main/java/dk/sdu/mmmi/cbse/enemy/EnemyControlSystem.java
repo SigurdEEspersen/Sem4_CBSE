@@ -30,7 +30,7 @@ public class EnemyControlSystem implements IControlService {
                 Enemy enemy = createEnemy(gameData, world, map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
                 enemy.setSpritePath(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png");
                 enemy.addCombat((ICombatEntity) enemy);
-                enemy.setRadius(2);
+                enemy.setRadius(1);
                 enemy.setLife(10);
                 world.addEntity(enemy);
                 map.setSpawn(false);
