@@ -38,6 +38,9 @@ public class Player extends Entity implements ICombatEntity {
     }
 
     public void setLife(int life) {
+             if(life <= 0){
+            dead = true;
+        }
         this.life = life;
     }
 

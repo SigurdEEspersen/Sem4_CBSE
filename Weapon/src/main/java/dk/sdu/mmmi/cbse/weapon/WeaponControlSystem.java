@@ -34,6 +34,8 @@ public class WeaponControlSystem implements IControlService {
                     Entity wpn = createWeapon(x, y, rad);
                     wpn.setSpritePath(rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png");
                     ((ICombatEntity) entity).setShooting(false);
+                    ((Weapon) wpn).setLife(1);
+                    wpn.setRadius(2);
                     world.addEntity(wpn);
                 }
             }
@@ -74,7 +76,7 @@ public class WeaponControlSystem implements IControlService {
         wpn.setPositionX(x);
         wpn.setPositionY(y);
         wpn.setRadians(rad);
-        ((Weapon) wpn).setSpeed(200);
+        ((Weapon) wpn).setSpeed(300);
         wpn.addCombat((ICombatEntity) wpn);
         return wpn;
     }

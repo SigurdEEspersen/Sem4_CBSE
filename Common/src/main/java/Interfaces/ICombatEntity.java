@@ -13,6 +13,8 @@ public interface ICombatEntity {
     
     int getLife();
     
+    void setLife(int i);
+    
     boolean isDead();
     
     boolean isHit();

@@ -17,6 +17,7 @@ public class Weapon extends Entity implements ICombatEntity {
     private boolean up;
     private boolean dead = false;
     private long timeAlive;
+    private int life;
 
     public void setUp(boolean up) {
         this.up = up;
@@ -81,6 +82,14 @@ public class Weapon extends Entity implements ICombatEntity {
     @Override
     public void setShooting(boolean b) {
         shoot = b;
+    }
+
+    @Override
+    public void setLife(int life) {
+             if(life <= 0){
+            dead = true;
+        }
+        this.life = life;
     }
 
 }

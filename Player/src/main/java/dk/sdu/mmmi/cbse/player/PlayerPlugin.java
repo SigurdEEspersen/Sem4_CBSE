@@ -53,6 +53,8 @@ public class PlayerPlugin implements IPluginService {
         player.setPositionY(y);
         player.setSpeed(speed);
         player.setRadians(radians);
+        player.setRadius(2);
+        player.setLife(10);
 
         return player;
     }

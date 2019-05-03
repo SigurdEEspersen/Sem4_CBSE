@@ -22,7 +22,7 @@ public class Entity {
     private Map<Class, IShooter> weaponParts;
     protected float playerX, playerY;
 
-    private float radians;
+    private float radians, radius;
 
     public Entity() {
         movingParts = new ConcurrentHashMap<>();
@@ -38,6 +38,7 @@ public class Entity {
     }
 
     public void addCombat(ICombatEntity movement) {
+        System.out.println("A combat part was added!!! " + movement.getClass() + " " +  movement);
         movingParts.put(movement.getClass(), movement);
     }
 
@@ -112,5 +113,15 @@ public class Entity {
     public void setPlayerY(float playerY) {
         this.playerY = playerY;
     }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+    
+    
 
 }

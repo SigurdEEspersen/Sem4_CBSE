@@ -72,6 +72,7 @@
         <module>Enemy</module>
         <module>Weapon</module>
         <module>Map</module>
+        <module>Collision</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
