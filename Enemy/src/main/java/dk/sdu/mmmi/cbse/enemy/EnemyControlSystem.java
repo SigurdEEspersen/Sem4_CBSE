@@ -37,36 +37,36 @@ public class EnemyControlSystem implements IControlService {
         for (Entity enemy : world.getEntities(Enemy.class)) {
             Enemy enemyMovement = enemy.getCombat(Enemy.class);
 
-            float rotation = (float) Math.atan2(enemy.getPlayerY() - enemy.getPositionY(), enemy.getPlayerX() - enemy.getPositionX());
+            float rotation = 0; //(float) Math.atan2(enemy.getPlayerY() - enemy.getPositionY(), enemy.getPlayerX() - enemy.getPositionX());
             enemyMovement.setRadians(rotation);
 
-            enemyMovement.setUp(true);
+            // enemyMovement.setUp(true);
             enemyMovement.execute(gameData, enemy);
 
-            updateShape(enemy);
+            // updateShape(enemy);
         }
     }
 
-    private void updateShape(Entity entity) {
-        float[] shapex = new float[4];
-        float[] shapey = new float[4];
-        float radians = entity.getRadians();
-
-        shapex[0] = (float) (entity.getPositionX() + Math.cos(radians) * 10);
-        shapey[0] = (float) (entity.getPositionY() + Math.sin(radians) * 10);
-
-        shapex[1] = (float) (entity.getPositionX() + Math.cos(radians - 4 * 3.1415f / 5) * 10);
-        shapey[1] = (float) (entity.getPositionY() + Math.sin(radians - 4 * 3.1145f / 5) * 10);
-
-        shapex[2] = (float) (entity.getPositionX() + Math.cos(radians + 3.1415f) * 10 * 0.5);
-        shapey[2] = (float) (entity.getPositionY() + Math.sin(radians + 3.1415f) * 10 * 0.5);
-
-        shapex[3] = (float) (entity.getPositionX() + Math.cos(radians + 4 * 3.1415f / 5) * 10);
-        shapey[3] = (float) (entity.getPositionY() + Math.sin(radians + 4 * 3.1415f / 5) * 10);
-
-        entity.setShapeX(shapex);
-        entity.setShapeY(shapey);
-    }
+//    private void updateShape(Entity entity) {
+//        float[] shapex = new float[4];
+//        float[] shapey = new float[4];
+//        float radians = entity.getRadians();
+//
+//        shapex[0] = (float) (entity.getPositionX() + Math.cos(radians) * 10);
+//        shapey[0] = (float) (entity.getPositionY() + Math.sin(radians) * 10);
+//
+//        shapex[1] = (float) (entity.getPositionX() + Math.cos(radians - 4 * 3.1415f / 5) * 10);
+//        shapey[1] = (float) (entity.getPositionY() + Math.sin(radians - 4 * 3.1145f / 5) * 10);
+//
+//        shapex[2] = (float) (entity.getPositionX() + Math.cos(radians + 3.1415f) * 10 * 0.5);
+//        shapey[2] = (float) (entity.getPositionY() + Math.sin(radians + 3.1415f) * 10 * 0.5);
+//
+//        shapex[3] = (float) (entity.getPositionX() + Math.cos(radians + 4 * 3.1415f / 5) * 10);
+//        shapey[3] = (float) (entity.getPositionY() + Math.sin(radians + 4 * 3.1415f / 5) * 10);
+//
+//        entity.setShapeX(shapex);
+//        entity.setShapeY(shapey);
+//    }
 
     private Enemy createEnemy(GameData gameData, World world, float x, float y) {
 

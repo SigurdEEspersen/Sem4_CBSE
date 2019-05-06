@@ -46,7 +46,7 @@ public class Map implements IMap {
         };
 
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(spawnEnemy, 3, 3, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(spawnEnemy, 0, 3, TimeUnit.SECONDS);
 
     }
 

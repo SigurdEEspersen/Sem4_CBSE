@@ -20,6 +20,7 @@ import dk.sdu.mmmi.cbse.weapon.Weapon;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
@@ -46,18 +47,28 @@ public class Game implements ApplicationListener {
     private Sprite enemySprite;
     private float playerX;
     private float playerY;
-    private float enemyX;
-    private float enemyY;
-    private float aStarX;
-    private float aStarY;
     private float bulletX;
     private float bulletY;
     private float playerRadians;
+    private List<State> path;
+    private float aStarX;
+    private float aStarY;
     
-
     @Override
     public void create() {
-
+        
+        for (IAI aStar : world.getAIList()) {
+            aStar.init(0, 0, 10, 10);
+           
+              for (int i = 0; i < 300; i++) {
+                for (int j = 0; j < 300; j++) {
+                    aStar.updateCell(i, j, -1); 
+                }
+    
+            }
+           
+        }
+        
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -78,49 +89,40 @@ public class Game implements ApplicationListener {
         }
 
         spriteBatch = new SpriteBatch();
-
+        
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
         String rootDir = partDir[0] + "Sem4_CBSE";
-
+        
         backgroundSprite = new Sprite(new Texture(rootDir + "/Core/src/main/java/dk/sdu/mmmi/cbse/core/main/background.png"));
         bulletSprite = new Sprite(new Texture(rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png"));
         enemySprite = new Sprite(new Texture(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png"));
-
+        
         /**
          * sets sprites
          */
-        for (Entity e : world.getEntities()) {
-
+        for (Entity e: world.getEntities()) {
+           
             // player
             if (e instanceof Player) {
                 e.setSprite(new Sprite(new Texture(e.getSpritePath())));
                 playerSprite = e.getSprite();
             }
-
+            
             // bullet
             if (e instanceof Weapon) {
                 e.setSprite(new Sprite(new Texture(e.getSpritePath())));
                 bulletSprite = e.getSprite();
             }
-
+            
             // enemy
             if (e instanceof Weapon) {
                 e.setSprite(new Sprite(new Texture(e.getSpritePath())));
                 enemySprite = e.getSprite();
             }
-
+            
         }
-        
-         for (Entity p : world.getEntities(Enemy.class)) {
-            enemyX = p.getPositionX();
-            enemyY = p.getPositionY();
-        }
-        
-         for (IAI aStar : world.getAIList()) {
-             aStar.init((int)enemyX, (int)enemyY, 0, 0);
-         
-         }
 
+      
     }
 
     @Override
@@ -150,17 +152,53 @@ public class Game implements ApplicationListener {
             p.setPlayerY(playerY - playerSprite.getHeight() / 2);
         }
 
-        
         for (Entity p : world.getEntities(Weapon.class)) {
             bulletX = p.getPositionX();
             bulletY = p.getPositionY();
         }
 
-        update();
+        try {
+            update();
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
         draw();
     }
 
-    private void update() {
+    private void update() throws InterruptedException {
+        
+        
+        
+        for(IAI aStar : world.getAIList()) {
+            
+           
+            aStar.updateGoal((int)playerX, (int)playerY);
+            aStar.replan();
+            
+            
+            path = aStar.getPath();
+            
+               for (State i : path) {
+            aStarX = i.x;
+            aStarY = i.y;
+            
+             for (Entity e : world.getEntities(Enemy.class)) {
+            enemySprite.setScale(0.2f);
+            enemySprite.setPosition(i.x, i.y);
+            System.out.println("X: " + i.x);
+            System.out.println("Y: " + i.y);
+
+         }
+            
+        }
+    
+     
+            
+           // System.out.println("PlayerX: " + playerX + "&&" + "PlayerY: " + playerY);
+           // System.out.println("X: " + aStarX + "&&" + "Y: " + aStarY);
+        }
+        
+        
         // Update
         for (IControlService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.execute(gameData, world);
@@ -202,31 +240,21 @@ public class Game implements ApplicationListener {
             bulletSprite.setSize(32, 65);
             bulletSprite.draw(spriteBatch);
         }
-        for (IAI aStar : world.getAIList()) {
-             aStar.updateGoal((int)playerX, (int)playerY);
-             List<State> path = aStar.getPath();
-             for (State i : path) {
-                 aStarX = i.x;
-                 aStarY = i.y;
-             }
-         
-         }
-        for (Entity e : world.getEntities(Enemy.class)) {
-            
-            enemySprite.setPosition(aStarX, aStarY);
-            float rotation = e.getRadians() * MathUtils.radDeg;
+       
+        //  e.setRadians((float) Math.atan2(aStarY - e.getPositionY(), aStarX - e.getPositionX()));
+      //    float rotation = e.getRadians() * MathUtils.radDeg;
 
-            if (rotation < 0) {
-                rotation += 360;
-            }
+        //    if (rotation < 0) {
+          //      rotation += 360;
+           // }
 
-            enemySprite.setRotation(rotation);
+          // enemySprite.setRotation(rotation);
             enemySprite.draw(spriteBatch);
-        }
+        
         for (Entity pl : world.getEntities(Player.class)) {
             playerSprite.draw(spriteBatch);
         }
-
+        
         spriteBatch.end();
     }
 
