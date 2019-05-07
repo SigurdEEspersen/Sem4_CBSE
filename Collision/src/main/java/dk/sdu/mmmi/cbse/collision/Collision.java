@@ -52,7 +52,7 @@ public class Collision implements IPostProcessor {
 
     private boolean detectCollsion(Entity e1, Entity e2) {
         
-        System.out.println((e1.getPositionX() - e2.getPositionX() * (e1.getPositionX() - e2.getPositionX()) + e1.getPositionY() - e2.getPositionY()) * (e1.getPositionY() - e2.getPositionY()) + " < " + (e1.getRadius() + e2.getRadius()) * (e1.getRadius() + e2.getRadius()));
+//        System.out.println((e1.getPositionX() - e2.getPositionX() * (e1.getPositionX() - e2.getPositionX()) + e1.getPositionY() - e2.getPositionY()) * (e1.getPositionY() - e2.getPositionY()) + " < " + (e1.getRadius() + e2.getRadius()) * (e1.getRadius() + e2.getRadius()));
         if ((e1.getPositionX() - e2.getPositionX() * (e1.getPositionX() - e2.getPositionX())
                 + e1.getPositionY() - e2.getPositionY()) * (e1.getPositionY() - e2.getPositionY())
                 < (e1.getRadius() + e2.getRadius()) * (e1.getRadius() + e2.getRadius())) {

@@ -135,6 +135,8 @@ public class Game implements ApplicationListener {
                 entity.setPlayerY(pY);
                 
             }
+            
+            
         }
 
         for (Entity e : entityMap.keySet()) {
@@ -171,7 +173,10 @@ public class Game implements ApplicationListener {
             float y = (float) spriteMap.get(e).get(2);
             float radians = (float) spriteMap.get(e).get(3);
             sp.setRotation((radians * MathUtils.radDeg) % 360);
-            sp.setPosition(x, y);
+            sp.setPosition(
+                    x - sp.getWidth() / 2,
+                    y - sp.getHeight() / 2
+            );
             sp.draw(spriteBatch);
         }
         spriteBatch.end();

@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.enemy;
 
+import Interfaces.IAI;
 import Interfaces.ICombatEntity;
 import Interfaces.IMap;
 import data.Entity;
@@ -40,9 +41,20 @@ public class EnemyControlSystem implements IControlService {
         }
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
+
             Enemy enemyMovement = enemy.getCombat(Enemy.class);
-            float rotation = (float) Math.atan2(enemy.getPlayerY() - enemy.getPositionY(), enemy.getPlayerX() - enemy.getPositionX());
-            enemyMovement.setRadians(rotation);
+            for (IAI ai : world.getAIList()) {
+                ai.updateStart((int) enemy.getPositionX(), (int) enemy.getPositionY());
+                ai.updateGoal((int) enemy.getPlayerX(), (int) enemy.getPlayerY());
+                ai.replan();
+                ai.getPath();
+                System.out.println(ai.getPath().get((ai.getPath().size())/2).x);
+                
+
+                float rotation = (float) Math.atan2(ai.getPath().get((ai.getPath().size())/2).y - enemy.getPositionY(), ai.getPath().get((ai.getPath().size())/2).x - enemy.getPositionX());
+                enemyMovement.setRadians(rotation);
+
+            }
 
             enemyMovement.setUp(true);
             enemyMovement.execute(gameData, enemy);

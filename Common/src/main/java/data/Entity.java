@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import Interfaces.ICombatEntity;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  *
@@ -38,7 +37,7 @@ public class Entity {
     }
 
     public void addCombat(ICombatEntity movement) {
-        System.out.println("A combat part was added!!! " + movement.getClass() + " " +  movement);
+        System.out.println("A combat part was added!!! " + movement.getClass() + " " + movement);
         movingParts.put(movement.getClass(), movement);
     }
 
@@ -121,7 +120,5 @@ public class Entity {
     public void setRadius(float radius) {
         this.radius = radius;
     }
-    
-    
 
 }
