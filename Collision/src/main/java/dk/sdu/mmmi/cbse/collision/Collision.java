@@ -34,9 +34,7 @@ public class Collision implements IPostProcessor {
                     if (detectCollsion(e1, e2)) {
                         ICombatEntity player = (ICombatEntity) e1;
                         ICombatEntity enemy = (ICombatEntity) e2;
-                        System.out.println("Collides " + e1.getSpritePath() + " med " + e2.getSpritePath());
                         enemy.setLife(enemy.getLife() - 1);
-                        System.out.println("Life: " + enemy.getLife());
                         if (player.isDead()) {
                             world.removeEntity((Entity) player);
                         }
