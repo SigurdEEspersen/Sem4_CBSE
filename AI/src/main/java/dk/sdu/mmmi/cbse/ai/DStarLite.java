@@ -183,7 +183,6 @@ public class DStarLite implements java.io.Serializable, IAI{
 
 			if (n.isEmpty())
 			{
-				System.out.println("No Path to Goal");
 				return false;
 			}
 
@@ -235,7 +234,6 @@ public class DStarLite implements java.io.Serializable, IAI{
 			   (getRHS(s_start) != getG(s_start))) {
 
 			if (k++ > maxSteps) {
-				System.out.println("At maxsteps");
 				return -1;
 			}
 

@@ -128,15 +128,14 @@ public class Game implements ApplicationListener {
                 entity.setRadians(entityRadians);
                 spriteMap.get(entity).set(3, entityRadians);
             } else {
-                entityRadians = entity.getRadians(); 
+                entityRadians = entity.getRadians();
             }
             if (entity.getSpritePath().contains("/Enemy/")) {
                 entity.setPlayerX(pX);
                 entity.setPlayerY(pY);
-                
+
             }
-            
-            
+
         }
 
         for (Entity e : entityMap.keySet()) {
