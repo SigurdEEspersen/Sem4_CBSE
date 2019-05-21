@@ -58,7 +58,6 @@ public class Weapon extends Entity implements ICombatEntity {
 
     @Override
     public int getLife() {
-        System.out.println("Durability");
         return 0;
     }
 

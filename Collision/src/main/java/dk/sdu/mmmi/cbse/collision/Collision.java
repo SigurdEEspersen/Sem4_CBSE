@@ -51,17 +51,23 @@ public class Collision implements IPostProcessor {
     public boolean detectCollsion(Entity e1, Entity e2) {
         
         //System.out.println((e1.getPositionX() - e2.getPositionX() * (e1.getPositionX() - e2.getPositionX()) + e1.getPositionY() - e2.getPositionY()) * (e1.getPositionY() - e2.getPositionY()) + " < " + (e1.getRadius() + e2.getRadius()) * (e1.getRadius() + e2.getRadius()));
-        if ((Math.abs(e1.getPositionX() - e2.getPositionX()) * 
-             Math.abs((e1.getPositionX() - e2.getPositionX())) +
-             Math.abs(e1.getPositionY() - e2.getPositionY())) *
-             Math.abs(e1.getPositionY() - e2.getPositionY()) <
-             (e1.getRadius() + e2.getRadius()) *
-             (e1.getRadius() + e2.getRadius()))
+        if ((Math.abs(e1.getPositionX() - e2.getPositionX()) +
+             Math.abs(e1.getPositionY() - e2.getPositionY())) <
+             Math.abs(e1.getRadius() + e2.getRadius()))
         {
             return true;
         }
         
         return false;
     }
+    
+//        if (((e1.getPositionX() - e2.getPositionX() * (e1.getPositionX() - e2.getPositionX())
+//                + e1.getPositionY() - e2.getPositionY()) * (e1.getPositionY() - e2.getPositionY())
+//                < (e1.getRadius() + e2.getRadius()) * (e1.getRadius() + e2.getRadius()))) {
+//            return true;
+//        }
+//
+//        return false;
+//    }
 
 }

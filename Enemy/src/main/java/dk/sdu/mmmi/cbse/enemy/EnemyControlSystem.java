@@ -31,7 +31,7 @@ public class EnemyControlSystem implements IControlService {
                 Enemy enemy = createEnemy(gameData, world, map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
                 enemy.setSpritePath(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png");
                 enemy.addCombat((ICombatEntity) enemy);
-                enemy.setRadius(1);
+                enemy.setRadius(25);
                 enemy.setLife(10);
                 world.addEntity(enemy);
                 map.setSpawn(false);
@@ -48,7 +48,7 @@ public class EnemyControlSystem implements IControlService {
                 ai.updateGoal((int) enemy.getPlayerX(), (int) enemy.getPlayerY());
                 ai.replan();
                 ai.getPath();
-                System.out.println(ai.getPath().get((ai.getPath().size())/2).x);
+//                System.out.println(ai.getPath().get((ai.getPath().size())/2).x);
                 
 
                 float rotation = (float) Math.atan2(ai.getPath().get((ai.getPath().size())/2).y - enemy.getPositionY(), ai.getPath().get((ai.getPath().size())/2).x - enemy.getPositionX());

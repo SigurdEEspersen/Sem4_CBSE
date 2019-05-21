@@ -88,20 +88,32 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>Player</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>dk.sdu.mmmi.cbse</groupId>
+                    <artifactId>PlayerSpring</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Enemy</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Collision</artifactId>
-            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>dk.sdu.mmmi.cbse</groupId>
+                    <artifactId>CommonEnemy</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>AI</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Collision</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

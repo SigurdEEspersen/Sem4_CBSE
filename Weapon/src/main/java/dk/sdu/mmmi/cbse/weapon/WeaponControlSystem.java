@@ -35,7 +35,7 @@ public class WeaponControlSystem implements IControlService {
                     wpn.setSpritePath(rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png");
                     ((ICombatEntity) entity).setShooting(false);
                     ((Weapon) wpn).setLife(1);
-                    wpn.setRadius(1);
+                    wpn.setRadius(5);
                     world.addEntity(wpn);
                 }
             }

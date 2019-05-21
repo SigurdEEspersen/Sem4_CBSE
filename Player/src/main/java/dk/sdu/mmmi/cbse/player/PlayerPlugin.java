@@ -54,7 +54,7 @@ public class PlayerPlugin implements IPluginService {
         player.setSpeed(speed);
         player.setRadians(radians);
         player.setRadius(1);
-        player.setLife(1000);
+        player.setLife(50);
 
         return player;
     }

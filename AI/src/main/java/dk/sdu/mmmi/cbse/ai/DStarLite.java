@@ -162,7 +162,6 @@ public class DStarLite implements java.io.Serializable, IAI{
 		int res = computeShortestPath();
 		if (res < 0)
 		{
-			System.out.println("No Path to Goal");
 			return false;
 		}
 
@@ -171,7 +170,6 @@ public class DStarLite implements java.io.Serializable, IAI{
 
 		if (getG(s_start) == Double.POSITIVE_INFINITY)
 		{
-			System.out.println("No Path to Goal");
 			return false;
 		}
 

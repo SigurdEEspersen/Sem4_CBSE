@@ -97,7 +97,6 @@ public class Enemy extends Entity implements ICombatEntity {
 
     @Override
     public void setShooting(boolean b) {
-        System.out.println("Enemy shooting");
     }
 
 }

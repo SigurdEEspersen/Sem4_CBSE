@@ -37,7 +37,7 @@ public class Entity {
     }
 
     public void addCombat(ICombatEntity movement) {
-        System.out.println("A combat part was added!!! " + movement.getClass() + " " + movement);
+//        System.out.println("A combat part was added!!! " + movement.getClass() + " " + movement);
         movingParts.put(movement.getClass(), movement);
     }
 
