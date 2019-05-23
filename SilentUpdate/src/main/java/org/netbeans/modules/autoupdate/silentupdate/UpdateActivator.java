@@ -29,6 +29,18 @@ public class UpdateActivator extends ModuleInstall {
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
         String rootDir = partDir[0] + "Sem4_CBSE";
         
+        char[] temp = rootDir.toCharArray();
+        StringBuilder builder = new StringBuilder();
+        
+        for (int i = 0; i < temp.length; i++) {
+            if (temp[i] == '\\')
+                builder.append('/');
+            else
+                builder.append(temp[i]);
+        }
+        
+        rootDir = builder.toString();
+        
         String pathToUpdateCenter = rootDir + "/application/target/netbeans_site/updates.xml";
         String pathToBundleProperties = rootDir + "/SilentUpdate/src/main/resources/org/netbeans/modules/autoupdate/silentupdate/resources/Bundle.properties";
         
