@@ -1,6 +1,5 @@
 package data;
 
-import Interfaces.IShooter;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,7 +17,6 @@ public class Entity {
     private float[] shapeX, shapeY;
     protected String spritePath;
     private Map<Class, ICombatEntity> movingParts;
-    private Map<Class, IShooter> weaponParts;
     protected float playerX, playerY;
 
     private float radians, radius;
@@ -26,14 +24,6 @@ public class Entity {
     public Entity() {
         movingParts = new ConcurrentHashMap<>();
         radians = (float) Math.PI / 2;
-    }
-
-    public <E extends IShooter> E getWeapons(Class shootClass) {
-        return (E) weaponParts.get(shootClass);
-    }
-
-    public void addWeapons(IShooter shoot) {
-        this.weaponParts.put(shoot.getClass(), shoot);
     }
 
     public void addCombat(ICombatEntity movement) {

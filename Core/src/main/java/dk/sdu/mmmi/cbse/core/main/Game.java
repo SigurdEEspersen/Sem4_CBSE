@@ -14,7 +14,6 @@ import data.World;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
