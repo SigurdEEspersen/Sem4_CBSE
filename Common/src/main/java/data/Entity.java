@@ -1,11 +1,9 @@
 package data;
 
-import Interfaces.IShooter;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import Interfaces.ICombatEntity;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  *
@@ -14,28 +12,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class Entity {
 
     private final UUID ID = UUID.randomUUID();
-
     private float positionX, positionY, positionRadians;
     private float[] shapeX, shapeY;
-    protected Sprite sprite;
     protected String spritePath;
     private Map<Class, ICombatEntity> movingParts;
-    private Map<Class, IShooter> weaponParts;
     protected float playerX, playerY;
-    protected float playerScale;
-    private float radians;
+    private float radians, radius;
 
     public Entity() {
         movingParts = new ConcurrentHashMap<>();
         radians = (float) Math.PI / 2;
-    }
-
-    public <E extends IShooter> E getWeapons(Class shootClass) {
-        return (E) weaponParts.get(shootClass);
-    }
-
-    public void addWeapons(IShooter shoot) {
-        this.weaponParts.put(shoot.getClass(), shoot);
     }
 
     public void addCombat(ICombatEntity movement) {
@@ -60,14 +46,6 @@ public class Entity {
 
     public void setShapeY(float[] shapeY) {
         this.shapeY = shapeY;
-    }
-
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
     }
 
     public String getSpritePath() {
@@ -122,12 +100,11 @@ public class Entity {
         this.playerY = playerY;
     }
 
-    public float getPlayerScale() {
-        return playerScale;
+    public float getRadius() {
+        return radius;
     }
 
-    public void setPlayerScale(float scale) {
-        this.playerScale = scale;
+    public void setRadius(float radius) {
+        this.radius = radius;
     }
-
 }

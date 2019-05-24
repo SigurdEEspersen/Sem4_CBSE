@@ -26,7 +26,7 @@ public class Map implements IMap {
         playerCoordinatesY[0] = 100;
 
         enemyCoordinatesY = new float[1];
-        enemyCoordinatesY[0] = 700;
+        enemyCoordinatesY[0] = 650;
         enemyCoordinatesX = new float[4];
         enemyCoordinatesX[0] = 0;
         enemyCoordinatesX[1] = 400;

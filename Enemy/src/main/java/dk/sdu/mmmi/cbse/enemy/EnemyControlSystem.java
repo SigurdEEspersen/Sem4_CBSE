@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.enemy;
 
+import Interfaces.IAI;
 import Interfaces.ICombatEntity;
 import Interfaces.IMap;
 import data.Entity;
@@ -20,13 +21,18 @@ public class EnemyControlSystem implements IControlService {
 
     @Override
     public void execute(GameData gameData, World world) {
+        String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
+        String rootDir = partDir[0] + "Sem4_CBSE";
 
         if (world.getMapArray().get(0) != null) {
             IMap map = world.getMapArray().get(0);
             if (map.isSpawning()) {
                 Random r = new Random();
-                Entity enemy = createEnemy(gameData, world, map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
+                Enemy enemy = createEnemy(gameData, world, map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
+                enemy.setSpritePath(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png");
                 enemy.addCombat((ICombatEntity) enemy);
+                enemy.setRadius(25);
+                enemy.setLife(10);
                 world.addEntity(enemy);
                 map.setSpawn(false);
             }
@@ -35,38 +41,27 @@ public class EnemyControlSystem implements IControlService {
         }
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
-            Enemy enemyMovement = enemy.getCombat(Enemy.class);
 
-            float rotation = (float) Math.atan2(enemy.getPlayerY() - enemy.getPositionY(), enemy.getPlayerX() - enemy.getPositionX());
-            enemyMovement.setRadians(rotation);
+            Enemy enemyMovement = enemy.getCombat(Enemy.class);
+            for (IAI ai : world.getAIList()) {
+                ai.updateStart((int) enemy.getPositionX(), (int) enemy.getPositionY());
+                ai.updateGoal((int) enemy.getPlayerX(), (int) enemy.getPlayerY());
+                ai.replan();
+                ai.getPath();
+//                System.out.println(ai.getPath().get((ai.getPath().size())/2).x);
+                
+
+                float rotation = (float) Math.atan2(ai.getPath().get((ai.getPath().size())/2).y - enemy.getPositionY(), ai.getPath().get((ai.getPath().size())/2).x - enemy.getPositionX());
+                enemyMovement.setRadians(rotation);
+
+            }
 
             enemyMovement.setUp(true);
             enemyMovement.execute(gameData, enemy);
-
-            updateShape(enemy);
         }
     }
 
-    private void updateShape(Entity entity) {
-        float[] shapex = new float[4];
-        float[] shapey = new float[4];
-        float radians = entity.getRadians();
 
-        shapex[0] = (float) (entity.getPositionX() + Math.cos(radians) * 10);
-        shapey[0] = (float) (entity.getPositionY() + Math.sin(radians) * 10);
-
-        shapex[1] = (float) (entity.getPositionX() + Math.cos(radians - 4 * 3.1415f / 5) * 10);
-        shapey[1] = (float) (entity.getPositionY() + Math.sin(radians - 4 * 3.1145f / 5) * 10);
-
-        shapex[2] = (float) (entity.getPositionX() + Math.cos(radians + 3.1415f) * 10 * 0.5);
-        shapey[2] = (float) (entity.getPositionY() + Math.sin(radians + 3.1415f) * 10 * 0.5);
-
-        shapex[3] = (float) (entity.getPositionX() + Math.cos(radians + 4 * 3.1415f / 5) * 10);
-        shapey[3] = (float) (entity.getPositionY() + Math.sin(radians + 4 * 3.1415f / 5) * 10);
-
-        entity.setShapeX(shapex);
-        entity.setShapeY(shapey);
-    }
 
     private Enemy createEnemy(GameData gameData, World world, float x, float y) {
 

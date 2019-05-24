@@ -20,6 +20,8 @@ public class WeaponControlSystem implements IControlService {
 
     @Override
     public void execute(GameData gameData, World world) {
+        String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
+        String rootDir = partDir[0] + "Sem4_CBSE";
 
         for (Entity entity : world.getEntities()) {
             x = entity.getPositionX();
@@ -29,12 +31,11 @@ public class WeaponControlSystem implements IControlService {
 
             if (entity instanceof ICombatEntity && !(entity instanceof Weapon)) {
                 if (((ICombatEntity) entity).isShooting()) {
-                    float angle = (float) Math.cos(rad);
-                    float xOffset = (float) Math.cos(rad) * 50;
-                    float yOffset = (float) Math.sin(rad) * 50;
-                    
-                    Entity wpn = createWeapon(x + xOffset, y + yOffset, rad);
+                    Entity wpn = createWeapon(x, y, rad);
+                    wpn.setSpritePath(rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png");
                     ((ICombatEntity) entity).setShooting(false);
+                    ((Weapon) wpn).setLife(1);
+                    wpn.setRadius(5);
                     world.addEntity(wpn);
                 }
             }
@@ -45,37 +46,18 @@ public class WeaponControlSystem implements IControlService {
                 world.removeEntity(entity);
             }
             ((Weapon) entity).execute(gameData, entity);
-            updateShape(entity);
         }
 
     }
 
-    private void updateShape(Entity weapon) {
-        float[] shapex = new float[4];
-        float[] shapey = new float[4];
-
-        shapex[0] = (float) (weapon.getPositionX() + Math.cos(weapon.getRadians()) * 5);
-        shapey[0] = (float) (weapon.getPositionY() + Math.sin(weapon.getRadians()) * 5);
-
-        shapex[1] = (float) (weapon.getPositionX() + Math.cos(weapon.getRadians() - 4 * 3.1415f / 5) * 5);
-        shapey[1] = (float) (weapon.getPositionY() + Math.sin(weapon.getRadians() - 4 * 3.1145f / 5) * 5);
-
-        shapex[2] = (float) (weapon.getPositionX() + Math.cos(weapon.getRadians() + 3.1415f) * 5 * 0.5);
-        shapey[2] = (float) (weapon.getPositionY() + Math.sin(weapon.getRadians() + 3.1415f) * 5 * 0.5);
-
-        shapex[3] = (float) (weapon.getPositionX() + Math.cos(weapon.getRadians() + 4 * 3.1415f / 5) * 5);
-        shapey[3] = (float) (weapon.getPositionY() + Math.sin(weapon.getRadians() + 4 * 3.1415f / 5) * 5);
-
-        weapon.setShapeX(shapex);
-        weapon.setShapeY(shapey);
-    }
+ 
 
     private Entity createWeapon(float x, float y, float rad) {
         Entity wpn = new Weapon(true);
         wpn.setPositionX(x);
         wpn.setPositionY(y);
         wpn.setRadians(rad);
-        ((Weapon) wpn).setSpeed(200);
+        ((Weapon) wpn).setSpeed(300);
         wpn.addCombat((ICombatEntity) wpn);
         return wpn;
     }

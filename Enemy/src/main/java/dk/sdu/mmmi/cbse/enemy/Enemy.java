@@ -22,12 +22,6 @@ public class Enemy extends Entity implements ICombatEntity {
     private int life;
 
     private boolean hit = false;
-    
-    public Enemy() {
-        String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
-        String rootDir = partDir[0] + "Sem4_CBSE";
-        this.spritePath = rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png";
-    }
 
     public void setIsShooting(boolean isShooting) {
         this.isShooting = isShooting;
@@ -38,6 +32,9 @@ public class Enemy extends Entity implements ICombatEntity {
     }
 
     public void setLife(int life) {
+        if(life <= 0){
+            dead = true;
+        }
         this.life = life;
     }
 
@@ -100,7 +97,6 @@ public class Enemy extends Entity implements ICombatEntity {
 
     @Override
     public void setShooting(boolean b) {
-        System.out.println("Enemy shooting");
     }
 
 }

@@ -17,12 +17,7 @@ public class Weapon extends Entity implements ICombatEntity {
     private boolean up;
     private boolean dead = false;
     private long timeAlive;
-    
-    public Weapon() {
-        String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
-        String rootDir = partDir[0] + "Sem4_CBSE";
-        this.spritePath = rootDir + "/Weapon/src/main/java/dk/sdu/mmmi/cbse/weapon/bullet4.png";
-    }
+    private int life;
 
     public void setUp(boolean up) {
         this.up = up;
@@ -63,7 +58,6 @@ public class Weapon extends Entity implements ICombatEntity {
 
     @Override
     public int getLife() {
-        System.out.println("Durability");
         return 0;
     }
 
@@ -87,6 +81,14 @@ public class Weapon extends Entity implements ICombatEntity {
     @Override
     public void setShooting(boolean b) {
         shoot = b;
+    }
+
+    @Override
+    public void setLife(int life) {
+             if(life <= 0){
+            dead = true;
+        }
+        this.life = life;
     }
 
 }
