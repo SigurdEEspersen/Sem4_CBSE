@@ -32,11 +32,20 @@ public class UpdateActivator extends ModuleInstall {
         char[] temp = rootDir.toCharArray();
         StringBuilder builder = new StringBuilder();
         
+        boolean thereWasAColon = false;
+        
         for (int i = 0; i < temp.length; i++) {
-            if (temp[i] == '\\')
+            if (temp[i] == '\\') {
                 builder.append('/');
-            else
+            } else if (temp[i] == ':') {
+                thereWasAColon = true;
+                builder.append(':');
+            } else if (thereWasAColon && temp[i] == '/') {
+                // dont print shit
+                thereWasAColon = false;
+            } else {
                 builder.append(temp[i]);
+            }
         }
         
         rootDir = builder.toString();
