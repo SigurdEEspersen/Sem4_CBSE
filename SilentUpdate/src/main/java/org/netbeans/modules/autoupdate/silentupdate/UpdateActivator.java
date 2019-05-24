@@ -32,17 +32,11 @@ public class UpdateActivator extends ModuleInstall {
         char[] temp = rootDir.toCharArray();
         StringBuilder builder = new StringBuilder();
         
-        boolean thereWasAColon = false;
-        
         for (int i = 0; i < temp.length; i++) {
             if (temp[i] == '\\') {
                 builder.append('/');
-            } else if (temp[i] == ':') {
-                thereWasAColon = true;
-                builder.append(':');
-            } else if (thereWasAColon && temp[i] == '/') {
+            } else if (i == 0 & temp[i] == '/') {
                 // dont print shit
-                thereWasAColon = false;
             } else {
                 builder.append(temp[i]);
             }
@@ -51,7 +45,7 @@ public class UpdateActivator extends ModuleInstall {
         rootDir = builder.toString();
         
         String pathToUpdateCenter = rootDir + "/application/target/netbeans_site/updates.xml";
-        String pathToBundleProperties = rootDir + "/SilentUpdate/src/main/resources/org/netbeans/modules/autoupdate/silentupdate/resources/Bundle.properties";
+        String pathToBundleProperties = "/" + rootDir + "/SilentUpdate/src/main/resources/org/netbeans/modules/autoupdate/silentupdate/resources/Bundle.properties";
         
         File file = new File(pathToBundleProperties);
         System.out.println(file.canRead());
@@ -70,7 +64,7 @@ public class UpdateActivator extends ModuleInstall {
                     pathLine = line;
                     String partLine[] = pathLine.split("=");
         
-                    pathLine = partLine[0] + "=file://" + pathToUpdateCenter;
+                    pathLine = partLine[0] + "=file:///" + pathToUpdateCenter;
 
                     System.out.println(pathLine);
                     
