@@ -24,6 +24,7 @@ public class Player extends Entity implements ICombatEntity {
 
     private boolean isHit = false;
 
+    @Override
     public boolean isDead() {
         return dead;
     }
@@ -37,6 +38,7 @@ public class Player extends Entity implements ICombatEntity {
         return life;
     }
 
+    @Override
     public void setLife(int life) {
              if(life <= 0){
             dead = true;
@@ -44,6 +46,7 @@ public class Player extends Entity implements ICombatEntity {
         this.life = life;
     }
 
+    @Override
     public boolean isHit() {
         return isHit;
     }
@@ -52,10 +55,12 @@ public class Player extends Entity implements ICombatEntity {
         this.isHit = isHit;
     }
 
+    @Override
     public boolean isShooting() {
         return isShooting;
     }
 
+    @Override
     public void setShooting(boolean isShooting) {
         this.isShooting = isShooting;
     }
@@ -102,7 +107,6 @@ public class Player extends Entity implements ICombatEntity {
 
     @Override
     public void execute(GameData gameData, Entity entity) {
-        float radians = entity.getRadians();
         float dt = gameData.getDelta();
 
         // skal ind i en collision klasse
@@ -140,10 +144,6 @@ public class Player extends Entity implements ICombatEntity {
 
         if (life <= 0) {
             dead = true;
-        }
-
-        if (isShooting) {
-            // weapon.setShooting(true);
         }
     }
 }

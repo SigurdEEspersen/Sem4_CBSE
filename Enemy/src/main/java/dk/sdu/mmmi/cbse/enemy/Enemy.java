@@ -31,6 +31,7 @@ public class Enemy extends Entity implements ICombatEntity {
         this.dead = dead;
     }
 
+    @Override
     public void setLife(int life) {
         if(life <= 0){
             dead = true;
@@ -98,5 +99,4 @@ public class Enemy extends Entity implements ICombatEntity {
     @Override
     public void setShooting(boolean b) {
     }
-
 }

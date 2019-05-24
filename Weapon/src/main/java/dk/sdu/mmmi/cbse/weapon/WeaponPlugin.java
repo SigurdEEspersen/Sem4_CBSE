@@ -19,7 +19,6 @@ public class WeaponPlugin implements IPluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-
     }
 
     @Override

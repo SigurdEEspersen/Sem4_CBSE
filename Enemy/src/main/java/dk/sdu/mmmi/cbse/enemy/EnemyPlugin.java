@@ -15,8 +15,6 @@ import services.IPluginService;
     @ServiceProvider(service = IPluginService.class),})
 public class EnemyPlugin implements IPluginService {
 
-    private Entity enemy;
-
     public EnemyPlugin() {
     }
 
@@ -33,5 +31,4 @@ public class EnemyPlugin implements IPluginService {
             }
         }
     }
-
 }

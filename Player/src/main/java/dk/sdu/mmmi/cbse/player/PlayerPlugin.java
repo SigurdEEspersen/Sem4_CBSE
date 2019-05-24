@@ -41,12 +41,6 @@ public class PlayerPlugin implements IPluginService {
         float y = 15;
         float radians = 3.1415f / 2;
 
-        float[] colour = new float[4];
-        colour[0] = 1.0f;
-        colour[1] = 1.0f;
-        colour[2] = 1.0f;
-        colour[3] = 1.0f;
-
         Player player = new Player();
 
         player.setPositionX(x);

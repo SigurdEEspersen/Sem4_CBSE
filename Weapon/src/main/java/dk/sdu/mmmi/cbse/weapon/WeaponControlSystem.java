@@ -27,7 +27,6 @@ public class WeaponControlSystem implements IControlService {
             x = entity.getPositionX();
             y = entity.getPositionY();
             float rad = entity.getRadians();
-            String id = entity.getID();
 
             if (entity instanceof ICombatEntity && !(entity instanceof Weapon)) {
                 if (((ICombatEntity) entity).isShooting()) {
@@ -47,10 +46,7 @@ public class WeaponControlSystem implements IControlService {
             }
             ((Weapon) entity).execute(gameData, entity);
         }
-
     }
-
- 
 
     private Entity createWeapon(float x, float y, float rad) {
         Entity wpn = new Weapon(true);

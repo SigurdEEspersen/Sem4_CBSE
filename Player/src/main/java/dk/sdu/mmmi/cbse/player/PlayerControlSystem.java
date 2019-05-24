@@ -16,8 +16,6 @@ import services.IControlService;
     @ServiceProvider(service = IControlService.class),})
 public class PlayerControlSystem implements IControlService {
 
-
-
     @Override
     public void execute(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Player.class)) {

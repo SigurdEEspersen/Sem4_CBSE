@@ -28,7 +28,7 @@ public class EnemyControlSystem implements IControlService {
             IMap map = world.getMapArray().get(0);
             if (map.isSpawning()) {
                 Random r = new Random();
-                Enemy enemy = createEnemy(gameData, world, map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
+                Enemy enemy = createEnemy(map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
                 enemy.setSpritePath(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png");
                 enemy.addCombat((ICombatEntity) enemy);
                 enemy.setRadius(25);
@@ -48,14 +48,10 @@ public class EnemyControlSystem implements IControlService {
                 ai.updateGoal((int) enemy.getPlayerX(), (int) enemy.getPlayerY());
                 ai.replan();
                 ai.getPath();
-//                System.out.println(ai.getPath().get((ai.getPath().size())/2).x);
-                
 
                 float rotation = (float) Math.atan2(ai.getPath().get((ai.getPath().size())/2).y - enemy.getPositionY(), ai.getPath().get((ai.getPath().size())/2).x - enemy.getPositionX());
                 enemyMovement.setRadians(rotation);
-
             }
-
             enemyMovement.setUp(true);
             enemyMovement.execute(gameData, enemy);
         }
@@ -63,16 +59,10 @@ public class EnemyControlSystem implements IControlService {
 
 
 
-    private Enemy createEnemy(GameData gameData, World world, float x, float y) {
+    private Enemy createEnemy(float x, float y) {
 
         float speed = 30 + (float) Math.random() * (150 - 30);
         float radians = 3.1415f / 2;
-
-        float[] colour = new float[4];
-        colour[0] = 1.0f;
-        colour[1] = 1.0f;
-        colour[2] = 1.0f;
-        colour[3] = 1.0f;
 
         Enemy enemy = new Enemy();
 
