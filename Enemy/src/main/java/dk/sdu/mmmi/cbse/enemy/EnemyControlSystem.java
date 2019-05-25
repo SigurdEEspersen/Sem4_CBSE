@@ -19,25 +19,26 @@ import services.IControlService;
     @ServiceProvider(service = IControlService.class),})
 public class EnemyControlSystem implements IControlService {
 
+    private IMap map;
+
     @Override
     public void execute(GameData gameData, World world) {
         String partDir[] = System.getProperty("user.dir").split("Sem4_CBSE");
         String rootDir = partDir[0] + "Sem4_CBSE";
-
-        if (world.getMapArray().get(0) != null) {
-            IMap map = world.getMapArray().get(0);
-            if (map.isSpawning()) {
-                Random r = new Random();
-                Enemy enemy = createEnemy(map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
-                enemy.setSpritePath(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png");
-                enemy.addCombat((ICombatEntity) enemy);
-                enemy.setRadius(25);
-                enemy.setLife(10);
-                world.addEntity(enemy);
-                map.setSpawn(false);
+        if (!world.getMapArray().isEmpty()) {
+            if (world.getMapArray().get(0) != null) {
+                map = world.getMapArray().get(0);
+                if (map.isSpawning()) {
+                    Random r = new Random();
+                    Enemy enemy = createEnemy(map.getEnemyCoordinatesX()[r.nextInt(3)], map.getEnemyCoordinatesY()[0]);
+                    enemy.setSpritePath(rootDir + "/Enemy/src/main/java/dk/sdu/mmmi/cbse/enemy/enemy.png");
+                    enemy.addCombat((ICombatEntity) enemy);
+                    enemy.setRadius(25);
+                    enemy.setLife(10);
+                    world.addEntity(enemy);
+                    map.setSpawn(false);
+                }
             }
-        } else {
-            System.out.println("No map to load");
         }
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
@@ -49,15 +50,13 @@ public class EnemyControlSystem implements IControlService {
                 ai.replan();
                 ai.getPath();
 
-                float rotation = (float) Math.atan2(ai.getPath().get((ai.getPath().size())/2).y - enemy.getPositionY(), ai.getPath().get((ai.getPath().size())/2).x - enemy.getPositionX());
+                float rotation = (float) Math.atan2(ai.getPath().get((ai.getPath().size()) / 2).y - enemy.getPositionY(), ai.getPath().get((ai.getPath().size()) / 2).x - enemy.getPositionX());
                 enemyMovement.setRadians(rotation);
             }
             enemyMovement.setUp(true);
             enemyMovement.execute(gameData, enemy);
         }
     }
-
-
 
     private Enemy createEnemy(float x, float y) {
 
